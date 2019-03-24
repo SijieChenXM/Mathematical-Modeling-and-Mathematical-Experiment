@@ -1,0 +1,676 @@
+\documentclass[a4paper,12pt]{article} %文档类型
+\usepackage{CJK}
+\usepackage{ctex}
+\usepackage{color}
+\usepackage{amsmath,amssymb,amstext} %多种公式环境和数学命令
+\usepackage{float}
+\usepackage{array}           %数组和表格制作
+\usepackage{fancyhdr}        %页眉页脚设置
+\usepackage{graphicx}        %插图
+\usepackage{tabularx}        %自动设置表格列宽
+\usepackage{multirow}        %跨行表格
+\usepackage{multicol}        %跨列表格
+\usepackage{titlesec}        %标题设置
+\usepackage{titletoc}        %目录格式设置
+\usepackage{epstopdf}        %编译生成pdf 时，能够插入eps格式图片
+\usepackage[top=2.5cm,bottom=2.0cm,left=2.0cm,right=2.0cm]{geometry} % 页边距
+\newcommand{\hei}{\CJKfamily{hei}}  % 定义的新命令
+\newcommand{\li}{\CJKfamily{li}}
+\renewcommand{\figurename}{{图}}
+\linespread{1.7}   %1.5倍行距
+\usepackage{listings}
+\usepackage{xcolor}
+ %\lstset{
+%   %行号
+%   numbers=left,
+%   %背景框
+%   framexleftmargin=10mm,
+%   frame=none,
+%   %背景色
+%   %backgroundcolor=\color[rgb]{1,1,0.76},
+%   backgroundcolor=\color[RGB]{245,245,244},
+%   %样式
+%   keywordstyle=\bf\color{blue},
+%   identifierstyle=\bf,
+%   numberstyle=\color[RGB]{0,192,192},
+%   commentstyle=\it\color[RGB]{0,96,96},
+%   stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+%   %显示空格
+%   showstringspaces=false
+%}
+%\lstset{numbers=left, numberstyle=\tiny, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, frame=shadowbox, rulesepcolor=\color{red!20!green!20!blue!20},escapeinside=``, xleftmargin=2em,xrightmargin=2em, aboveskip=1em, escapeinside=``}
+
+\lstset{numbers=left, %设置行号位置
+        numberstyle=\tiny, %设置行号大小
+        keywordstyle=\color{blue!70}, %设置关键字颜色
+        commentstyle=\color[cmyk]{1,0,1,0}, %设置注释颜色
+        frame=shadowbox, %设置边框格式
+        rulesepcolor=\color{red!20!green!20!blue!20},
+        escapeinside=``, %逃逸字符(1 左面的键)，用于显示中文
+        breaklines, %自动折行
+        extendedchars=false, %解决代码跨页时，章节标题，页眉等汉字不显示的问题
+        xleftmargin=2em,xrightmargin=2em, aboveskip=1em, %设置边距
+        %tabsize=4, %设置tab空格数
+        %showspaces=false %不显示空格
+       }
+\begin{document}
+
+\begin{center}
+\large
+\heiti{530~~陈斯杰~~电子信息工程~~第4次作业}
+\end{center}
+\textbf{一、初等代数方法建模}\\
+1、设a为本周煤矿的总产值，b为本周发电厂总产值，c为本周地方铁路总产值。\\
+\begin{equation*}
+\begin{cases}
+$$a=50000+0\times a+0.65b+0.55c$$\\
+$$b=2500+0.25a+0\times b+0.1c$$\\
+$$c=0+0.25a+0.05b+0\times c$$\\
+\end{cases}
+\end{equation*}
+\begin{center}
+$\Rightarrow$
+$\left(\begin{array}{ccc}%左括号
+a \\
+b \\
+c
+\end{array}\right)$%右括号
+-
+$\left(\begin{array}{ccc}%左括号
+0 & 0.65 & 0.55 \\
+0.25 & 0 & 0.1 \\
+0.25 & 0.05 & 0
+\end{array}\right)$%右括号
+$\left(\begin{array}{ccc}%左括号
+a \\
+b \\
+c
+\end{array}\right)$%右括号
+=
+$\left(\begin{array}{ccc}%左括号
+5000 \\
+2500 \\
+0
+\end{array}\right)$\\%右括号
+\end{center}
+解得
+\begin{center}
+$\left(\begin{array}{ccc}%左括号
+a \\
+b \\
+c
+\end{array}\right)$%右括号
+=
+$\left(\begin{array}{ccc}%左括号
+76567 \\
+23674 \\
+20326\\
+\end{array}\right)$\\%右括号
+\end{center}
+~\\
+2、
+\small
+\begin{lstlisting}[language=Matlab][b]
+x(1)=30;
+y(1)=70;
+for i=2:51
+    x(i)=0.94*x(i-1)+0.02*y(i-1);
+    y(i)=0.98*y(i-1)+0.06*x(i-1);
+end
+fprintf('十年后的市区郊区人口比例为%.4f\n',x(11)/y(11));
+fprintf('三十年后的市区郊区人口比例为%.4f\n',x(31)/y(31));
+fprintf('五十年后的市区郊区人口比例为%.4f\n',x(51)/y(51));
+\end{lstlisting}
+\large
+
+由matlab循环模拟得：十年后的市区郊区人口比例为0.3731，
+三十年后的市区郊区人口比例为0.3407，
+五十年后的市区郊区人口比例为0.3347。\\
+~\\
+3、
+设木工、电工、油漆工日工资分别为：$x,y,z$\
+\begin{equation*}
+\begin{cases}
+8x=y+6z\\
+5y=4x+z\\
+9z=4x+4y\\
+\end{cases}
+\end{equation*}
+解得：
+\begin{equation*}
+\begin{cases}
+z=\frac{36}{31}x\\
+y=\frac{32}{31}x\\
+\end{cases}
+\end{equation*}
+由于工资在60~80，取$x=62$，那么$y=64$，$x=72$\\
+~\\
+4、
+    解：首先我们用单位向量来表示一个群体。为此，我们取每一种频率的平方根，记$x_{ki}=\sqrt{f_{ki}}$.由于这四种群体每一种都有$\sum_{i=1}^{4}f_{ki}=1$,所以我们得到$\sum_{i=1}^{4}x_{ki}^{2}=1$,这意味着下列四个向量都是单位向量:
+       \begin{center}$
+         \vec{a_{1}}=\begin{bmatrix}
+            x_{11}\\x_{12}\\x_{13}\\x_{14}
+        \end{bmatrix},
+         \vec{a_{2}}=\begin{bmatrix}
+            x_{21}\\x_{22}\\x_{23}\\x_{24}
+        \end{bmatrix},
+         \vec{a_{3}}=\begin{bmatrix}
+            x_{31}\\x_{32}\\x_{33}\\x_{34}
+        \end{bmatrix},
+         \vec{a_{4}}=\begin{bmatrix}
+            x_{41}\\x_{42}\\x_{43}\\x_{44}
+        \end{bmatrix}
+       $\end{center}
+    ~~~~在四维空间中，这四个向量的顶端都位于一个半径为1的球面上，因此可以用向量之间的夹角来度量两个向量之间的距离.如果把$\vec{a_{1}},\vec{a_{2}}$ 之间的夹角记为$\theta$,因为$\vec{|a_{1}|}=\vec{|a_{1}|}=1$, 所以$\cos\theta=\vec{a_{1}}\cdot \vec{a_{2}}$, 而
+    \begin{center}
+      $\vec{a_{1}}=\begin{bmatrix}
+            0.5398\\0\\0.1778\\0.8228
+        \end{bmatrix},
+         \vec{a_{2}}=\begin{bmatrix}
+            0.3216\\0.2943\\0.3464\\0.8307
+        \end{bmatrix}$
+    \end{center}
+    故
+    \begin{center}
+      $\cos\theta_{12}=\vec{a_{1}}\cdot \vec{a_{2}}=0.9186$ \\
+      $\theta_{12}=23.28^{\circ}$
+    \end{center}
+    同理计算剩余向量之间的夹角,可列出以下表格:
+      \begin{table}[htp]
+      \centering
+        \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        & 爱斯基摩人 & 班图人 & 英国人 & 朝鲜人 \\ \hline
+        爱斯基摩人 & $0^{\circ}$ &  &  &  \\ \hline
+        班图人 & $23.2^{\circ}$ & $0^{\circ}$ &  &  \\ \hline
+        英国人 & $16.4^{\circ}$ & $9.8^{\circ}$ & $0^{\circ}$ &  \\ \hline
+        朝鲜人 & $16.8^{\circ}$ & $20.4^{\circ}$ & $19.6^{\circ}$ & $0^{\circ}$ \\ \hline
+        \end{tabular}
+      \end{table}
+    \par ~~~~由表格可以看出,最小的基因距离是班图人和英国人之间的"距离",而爱斯基摩人和班图人之间的基因"距离最大".\\
+~\\
+5、交通流量问题\\
+由假设(1)(2),可列10个线性方程,即：
+\begin{equation*}
+\begin{aligned}
+300+300+100+600+500+200&=300+x_3+x_6+x_8+700\\
+x_2+x_4&=300+x_3\\
+100+400&=x_4+x_5\\
+x_7+200&=400+x_6\\
+300+500&=x_1+x_2\\
+x_5+x_1&=200+600\\
+600+400&=x_7+x_8\\
+600+300&=500+x_9\\
+x_9+200&=x_{10}\\
+x_{10}+500&=400+700
+\end{aligned}
+\end{equation*}
+用矩阵的形式表示$Ax=b$,
+\begin{equation*}
+A=
+ \left\{
+ \begin{matrix}
+   0&0&1&0&0&1&0&1&0&0\\
+   0&1&-1&1&0&0&0&0&0&0\\
+   0&0&0&1&1&0&0&0&0&0\\
+   0&0&0&0&0&1&-1&0&0&0\\
+   1&1&0&0&0&0&0&0&0&0\\
+   1&0&0&0&1&0&0&0&0&0\\
+   0&0&0&0&0&0&1&1&0&0\\
+   0&0&0&0&0&0&0&0&1&0\\
+   0&0&0&0&0&0&0&0&1&-1\\
+   0&0&0&0&0&0&0&0&0&1\\
+  \end{matrix}
+  \right\}
+\end{equation*}
+\begin{equation*}
+b=
+ \left\{
+ \begin{matrix}
+   1000&300&500&-200&800&800&1000&400&-200&600
+  \end{matrix}
+  \right\}'
+\end{equation*}
+由矩阵后三行，可解得$x_9=400,x_{10}=600$;\\
+由于前七个方程组要确定8个未知数，所以解不唯一，运用matlab，求得其中一种可能解为：\\
+$[x1~x2 ~x3 ~x4 ~x5 ~x6~ x7 ~x8 ~x9~ x10]=[ 800, 0, 200, 500, 0, 800, 1000, 0, 400, 600]$;\\
+代码如下：
+\begin{lstlisting}
+[x1 x2 x3 x4 x5 x6 x7 x8 x9 x10]=solve('x3+x6+x8=1000','x2-x3+x4=300','x4+x5=500','x6-x7=-200','x1+x2=800','x1+x5=800','x7+x8=1000','x9=400','x9-x10=-200','x10=600')
+[x1 x2 x3 x4 x5 x6 x7 x8 x9 x10]
+%输出结果：[ 800, 0, 200, 500, 0, 800, 1000, 0, 400, 600]
+\end{lstlisting}
+~\\
+6、
+设[x,y]为变换前的坐标，[X,Y]为变换后的坐标。
+
+(1)平移
+
+设X=x+dx;Y=y+dy
+
+以矩阵表示即为
+
+\begin{center}
+$\left(
+  \begin{array}{ccc}
+    X & Y & 1 \\
+  \end{array}
+\right)$
+=
+$\left(
+  \begin{array}{ccc}
+    x & y & 1 \\
+  \end{array}
+\right)$
+$\left(
+  \begin{array}{ccc}
+    1 & 0 & 0 \\
+    0 & 1 & 0 \\
+    dx & dy & 1 \\
+  \end{array}
+\right)$
+\end{center}
+
+(2)旋转\\
+\begin{center}
+$x=Rcosb;y=Rsinb$\\
+$X=Rcos(a+b)=xcosa-ysina$\\
+$Y=Rsin(a+b)=Rsinacosb+Rcosasinb=xsina+ycosa$\\
+\end{center}
+
+以矩阵表示即为
+
+\begin{center}
+$\left(
+  \begin{array}{ccc}
+    X & Y & 1 \\
+  \end{array}
+\right)$
+=
+$\left(
+  \begin{array}{ccc}
+    x & y & 1 \\
+  \end{array}
+\right)$
+$\left(
+  \begin{array}{ccc}
+    cosa & sina & 0 \\
+    -sina & cosa & 0 \\
+    0 & 0 & 1 \\
+  \end{array}
+\right)$
+\end{center}
+
+(3)缩放
+
+设某点坐标，在x轴方向扩大 sx倍，y轴方向扩大 sy倍，[x,y]为变换前坐标， [X,Y]为变换后坐标。
+\begin{center}
+$X=sx\times x;Y=sy\times y$;
+\end{center}
+
+以矩阵表示即为
+
+\begin{center}
+$\left(
+  \begin{array}{ccc}
+    X & Y & 1 \\
+  \end{array}
+\right)$
+=
+$\left(
+  \begin{array}{ccc}
+    x & y & 1 \\
+  \end{array}
+\right)$
+$\left(
+  \begin{array}{ccc}
+    sx & 0 & 0 \\
+    0 & sy & 0 \\
+    0 & 0 & 1 \\
+  \end{array}
+\right)$
+\end{center}
+~\\
+7、
+
+n年后一月份统计的熟练工占比为：$-\frac{7}{34}(\frac{13}{30})^{n-1}+\frac{12}{17}$
+
+n年后一月份统计的非熟练工占比为：$\frac{7}{34}(\frac{13}{30})^{n-1}+\frac{5}{17}$\\
+~\\
+8、设$M_{i}$为第$i$周后，A城与B城资金的矩阵；$F$为系数矩阵\\
+\begin{equation*}
+M_{0}=\begin{bmatrix}
+2600 & 2800
+\end{bmatrix} F=\begin{bmatrix}
+0.9 & 0.1\\
+0.12 & 0.88
+\end{bmatrix}
+\end{equation*}
+\begin{equation*}
+M_{i}=M_{0}F^{i}=\begin{bmatrix}
+2600 & 2800
+\end{bmatrix}\begin{bmatrix}
+0.9 & 0.1\\
+0.12 & 0.88
+\end{bmatrix}^{i}
+\end{equation*}
+当i很大时，A城资金趋近2.9455，B城资金趋近2.4545，认为不需要再调动资金\\
+\small
+\begin{lstlisting}[language=Matlab][b]
+clear all;
+clc;
+M0=[2600 2800];
+A=[0.9 0.1;0.12 0.88];
+for i=1:1000
+   M=M0*A^i;
+end
+\end{lstlisting}
+\large
+~\\
+9、设猫头鹰和森林鼠在月份k的数量为$x_{k}=\begin{bmatrix}
+O_{k}\\
+R_{k}
+\end{bmatrix}$，$O_{k}$和$R_{k}$分别为猫头鹰和老鼠的数量(千只)\\
+\begin{equation*}
+\begin{cases}
+O_{k+1}=0.5O_{k}+0.4R_{k}\\
+R_{k+1}=-0.104O_{k}+1.1R_{k}
+\end{cases}
+\end{equation*}
+令$A=\begin{bmatrix}
+0.5 & 0.4\\
+-0.104 & 1.1
+\end{bmatrix}$，则特征值$r1=1.02$，$r2=0.58$，对应特征向量：\\
+$v_{1}=\begin{bmatrix}
+10\\
+13
+\end{bmatrix},v_{2}=\begin{bmatrix}
+5\\
+1
+\end{bmatrix}$
+\begin{equation*}
+\begin{cases}
+x_{0}=c_{1}v_{1}+c_{2}v_{2},k=0\\
+x_{k}=c_{1}(1.02)^{k}v_{1}+c_{2}(0.58)^{k}v_{2},k>0\\
+x_{k}\approx c_{1}(1.02)^k\begin{bmatrix}
+10\\
+13
+\end{bmatrix},k\rightarrow\infty\\
+\mbox{对于充分大的k：}x_{k+1}\approx 10.2x_{k} (*)\\
+\end{cases}
+\end{equation*}
+上式(*)表明，最后猫头鹰和老鼠几乎每个月都近似有2\%的增长率且$\frac{O_{k}}{R_{k}}\approx=\frac{10}{13}$\\
+~\\
+\textbf{二、初等几何方法建模}\\
+1、车祸原因：司机的从外反光镜所接收到的视野有限，无法看到车的侧面\\
+\begin{center}
+  \includegraphics[width=0.7\textwidth]{2_6_1.jpg}\\
+\end{center}
+如图，封闭区域A即为司机的可视视野。
+
+模型建立
+
+若直接将平面镜换成后视镜，由于视线扭曲，将造成安全隐患。不妨在外后视镜外端添加凸面镜，扩展司机的视野。下面求凸面镜的半径。\\
+~\\
+
+假设汽车的长为a,宽为b，车距为d，有\\
+\begin{equation}
+ \varphi=\arctan\frac{b}{a+d}
+\end{equation}
+假设入射光与反射光的夹角为$\alpha$ ，则入射角为$\frac{\alpha}{2}$。$\phi$ 表示法线$（O_{1}A）$与凸面镜边夹角，m 为凸面镜在平面镜上的长度，可得\\
+\begin{equation}
+ \phi=\frac{\alpha}{2}+\theta -\varphi \\
+\end{equation}
+球面的半径为：\\
+\begin{equation}
+ r=\frac{m}{2cos \phi}
+\end{equation}
+\begin{center}
+  \includegraphics[width=0.7\textwidth]{2_6_2.jpg}\\
+\end{center}
+~\\
+2、
+\begin{center}
+ \includegraphics[width=0.6\textwidth]{2_2.jpg}\\
+\end{center}
+
+由弹性力学的公式：
+
+$b\propto\frac{fL^{3}}{Sd^{2}}$
+
+由重力及柱体体积公式可得：
+
+$f\propto V=S\cdot L$
+
+由正比关系的传递性得：
+
+$b\propto\frac{L^{4}}{d^{2}} \Rightarrow \frac{b}{L}\propto\frac{L^{3}}{d^{2}}$
+
+其中是$\frac{b}{L}$动物躯干的相对下垂,我们即可通过动物的身长和下垂比判断动物种类。
+
+进一步可得$f\propto L^{4}$，同一物种其比例应接近同一常数，即可通过身长判断生猪体重。\\
+~\\
+3、把问题进行简化，设床为一根杆子，过道宽度为$a$和$b$，$PQ$线段长度即固定$\theta$角时能安放的最大杆长$l(\theta)$\\
+$l(\theta)=PN+NQ\\
+=SN*csc(\theta)+RN*sec(\theta)\\
+=b*csc(\theta)+a*sec(\theta)\\
+\frac{dl}{d\theta}=a*sec(\theta)tan(\theta)-b*csc(\theta)cot(\theta)\\
+=0$\\
+解得:\\
+$tan^{3}(\theta)=\frac{b}{a}$\\
+$l_{min}=(a^{\frac{2}{3}}+B^{\frac{2}{3}})^{\frac{3}{2}}$\\
+此时给定病床尺寸可求出过道宽度a与b的取值范围
+\begin{center}
+ \includegraphics[width=1\textwidth]{4_2_3_1.jpg}\\
+\end{center}
+~\\
+4、解：
+        \begin{itemize}
+         \item 模型假设：
+         \begin{description}
+           \item[(1)] 假设血管无严重扭曲;
+           \item[(2)] 假设管道中轴线与每张切片有且只有一个交点;
+           \item[(3)] 假设球半径固定;
+           \item[(4)] 假设切片间距以及图象象素的尺寸均为1;
+           \item[(5)] 假设切片拍摄不存在误差，数据误差仅与切片数字图像的分辨率有关;
+         \end{description}
+         血管示意图如下：
+         \begin{figure}[h]
+	    \centering
+         \includegraphics[width=0.48\linewidth]{vas.png}
+        \caption{血管示意图}
+       \end{figure}
+         \item 求解半径
+          \begin{description}
+           \item[(1)] 模型建立
+
+            调用imread、imshow函数将100张切片的bmp 图像录入到MATLAB中,并将其转化为512*512*100的三维0-1 矩阵，其中1 代表黑色像素点，0 代表白色像素点。在每一个512*512像素的图像中，每一个像素都有一个确定的坐标，可以找出这100 张图片的像素矩阵，代码如下：
+             \begin{lstlisting}[language=matlab, linewidth=0.8\linewidth, caption={the results at different intervals}]
+p=zeros(512,512,100);
+p2=zeros(512,512,100);
+for i=0:99
+s=sprintf('E:\\ 请你认真学习谢谢\\ 建模!!!!!!!!\\8.3\\ 作业\\ picture_vas\\%d.bmp',i);
+p(:,:,i+1)=imread(s);
+p2(:,:,i+1)=edge(p(:,:,i+1));
+imshow(p2(:,:,i+1));
+end
+\end{lstlisting}
+
+            调用MATLAB中的内部函数edge可以得到所有切片的轮廓线；
+
+            对切片内部任意一个点，求出它到轮廓线上所有点的距离，并取其最小值，由于所有内点都对应一个最小值，在这些最小值中取最大值，即为：最大内切圆的半径；
+
+            假设切片内部有p个点，第i个点的坐标为 ($x_{i}$,$y_{i}$)，切片轮廓线上有q个点，第j 个点的坐标为($m_{j}$,$n_{j}$), 则切片内部第i 点到轮廓线上第j 点的距离为：
+            $$d_{(i,j)} = \sqrt{(x_{i}-m_{j})^{2}+(y_{i}-n_{j})^{2}}$$
+            第i个点对应的最小距离$r_{i}$为
+            $$r_{i} = \min\limits_{j} d(i,j)$$
+            即最大内切圆的半径为：
+            $$R = \max\limits_{i} r_{i}$$
+            将100个切片所对应的最大内切圆半径求取平均值，即为：血管的半径。
+           \item[(2)] 模型求解\\
+           首先在MATLAB中利用imread函数和imshow函数画出切片的轮廓点，接着调用内部函数edge得到所有切片的轮廓线，求出了切片内部的点到轮廓上点的最小距离，在这些最小值中取最大值，即为最大内切圆的半径，代码如下：
+            \begin{lstlisting}[language=matlab, linewidth=0.8\linewidth, caption={the results at different intervals}]
+tx=zeros(100,4);
+R = 0;
+for d=0:99
+     k=strcat('E:\ 请你认真学习谢谢\ 建模!!!!!!!!\8.3\ 作业\ picture_vas\',int2str(d),'.bmp');
+    A=imread(k);
+    for i=1:1:512
+        for j=1:1:512
+            A(i,j)=1-A(i,j);
+        end
+    end
+BW=edge(A,'sobel');
+ BW2=bwmorph(A,'skel',inf);
+[x,y,z]=find(BW);
+ [a,b,c]=find(BW2);
+m=length(a);
+n=length(x);
+e=zeros(m,n);
+f=zeros(m,2);
+for i=1:m
+    for j=1:n
+        p1=a(i);
+        q1=b(i);
+        p2=x(j);
+        q2=y(j);
+        e(i,j)=sqrt((p1-p2)^2+(q1-q2)^2);
+    end
+   [zr,zxh]=min(e(i,:));
+   f(i,1)=zr;
+   f(i,2)=zxh;
+ end
+[zR,zxxh]=max(f(:,1));
+x=a(zxxh)-256;
+y=b(zxxh)-256;
+tx(d+1,1)=x;
+tx(d+1,2)=y;
+tx(d+1,3)=d+1;
+tx(d+1,4)=zR;
+R = R+zR;
+end
+R = R/100
+\end{lstlisting}
+最后输出的R即为最终结果：
+$$R = 29.4167\mu m$$
+\end{description}
+         \item 中轴线\\
+         \begin{description}
+           \item[(1)] 有求解半径时得到的tx矩阵中tx(i,1)、tx(i,2)可得每个切片中内切圆的圆心坐标。将100个圆心在matlab中曲线拟合，得到的曲线即为中轴线.
+           \item[(2)] 首先利用polyfit函数对100个圆心点做五次多项式拟合，接着利用plot 函数画出中轴线的拟合曲线，代码、图片如下所示：
+               \begin{lstlisting}[language=matlab, linewidth=0.8\linewidth, caption={the results at different intervals}]
+x = tx(:,1);
+y = tx(:,2);
+z = tx(:,3);
+format long
+px=polyfit(z,x,5);
+ x1=polyval(px,z);
+py=polyfit(z,y,5);
+ y1=polyval(py,z);
+figure(1);
+plot3(x1,y1,z)
+grid on
+xlabel('X轴');
+ylabel('Y轴');
+zlabel('Z轴');
+title('中轴线图');
+\end{lstlisting}
+
+\begin{figure}[h]
+	  \centering
+      \includegraphics[width=0.48\linewidth]{line.png}
+      \caption{中轴线图}
+      \end{figure}
+         \end{description}
+       \end{itemize}
+~\\
+5、相机定位：\\
+(1)设焦距为f，物距为u，像距为v，根据凸透镜成像原理，有：
+\begin{equation*}
+\frac{1}{f}=\frac{1}{u}+\frac{1}{v}
+\end{equation*}
+\\
+建立空间直角坐标系，设相机位置为坐标原点O，假设$A(x,y,z)$,则$B(x+30\times3.78,y,z),
+C(x+100\times3.78,y,z),D(x+100\times3.78,y+100\times3.78,z),E(x,y+100\times3.78,z)$.
+\\A,B,C,D,E所对应的像为A',B',C',D',E'.
+设$A'=-a(x,y,z)$,由上述公式，可得$f=\frac{a}{a+1}\sqrt{x^2+y^2+z^2}$\\
+同理，$B'=-b(x+30\times3.78,y,z),
+C'=-c(x+100\times3.78,y,z),D'=-d(x+100\times3.78,y+100\times3.78,z),E'=-e(x,y+100\times3.78,z)$
+得
+\begin{equation*}
+\begin{aligned}
+f&=\frac{b}{b+1}\sqrt{(x+30*3.78)^2+y^2+z^2}\\
+&=\frac{c}{c+1}\sqrt{(x+100*3.78)^2+y^2+z^2}\\
+&=\frac{d}{d+1}\sqrt{(x+100*3.78)^2+(y+100*3.78)^2+z^2}\\
+&=\frac{e}{e+1}\sqrt{x^2+(y+100*3.78)^2+z^2}\\
+\end{aligned}
+\end{equation*}
+~\\
+6、B最可能为一个2a=max{H(z)},短边为min{H(z)}的薄板。\\
+
+解不唯一，因为该椭圆中间可能有空缺。\\
+~\\
+7、刀头模型如图：
+
+\begin{center}
+ \includegraphics[width=0.4\textwidth]{2_7.jpg}\\
+\end{center}
+
+圆柱球头铣刀：$R=R_{2}=h=\frac{D}{2} , \alpha=\beta=R_{1}=0$
+
+带圆角圆柱立铣刀：$\alpha=\beta=0 , R+R_{1}=\frac{D}{2} , R_{2}=R$\\
+~\\
+8、
+
+(1).将人体简化为$a*b*c$的长方体；设淋雨量$V$，跑步速度$v$，跑步距离$d$，降水量$w$，雨速$u$，降雨的角度$\theta$ \\
+(2).雨水正面吹来：\\
+\begin{equation*}
+V=\frac{bcdw*cos(\theta)}{v}+\frac{abcdw(u*sin(\theta))}{uv}\\
+\end{equation*}
+(3).雨从背面吹来：\\
+\begin{equation*}
+\begin{cases}
+V=bdw\frac{(c*cos(\theta)+a*sin(\theta))}{v}-\frac{a}{u},v\leq u*sin(\theta)\\
+V=bdw\frac{(c*cos(\theta)-a*sin(\theta))}{v}+\frac{a}{u},v>u*sin(\theta)
+\end{cases}
+\end{equation*}
+(4).将$a=1.5,b=0.5,c=0.2,d=1000,v_{max}=5,u=4,w=2$代入得到：\\
+2'$v=v_{max}=5$时，$V$最小\\
+3'$v=u*sin(\theta)$时，$V$最小\\
+~\\
+9、\begin{itemize}
+          \item 问题分析\\
+          本题要解决的是利用拖船使冰山到达目的地后得到每立方米水所花费的费用多少，由此建立关于费用$y$的数学模型.\\
+          首先确定相关因素，即要收集和确定的数据：\\
+          \begin{tabular}{|c|c|}
+              \hline
+              符号 & 符号说明 \\
+              $m$ & 拖船的日租金 \\
+              $v$ & 拖船速度 \\
+              $T$ & 拖船到达伦敦所用的总时间 \\
+              $t$ & 距离北极为$d$时所需的时间 \\
+              $s$ & 冰山融化速率 \\
+              $d$ & 拖船与北极的距离 \\
+              $D$ & 北极到伦敦的总距离 \\
+              $q_{0}$ & 每千米燃料消耗费用 \\
+              $q$ & 每天燃料消耗费用 \\
+              $Q$ & 燃料消耗的总费用 \\
+              $M$ & 拖船到达伦敦所用租金 \\
+              $R_{0}$ & 冰山原来的半径 \\
+              $R_{t}$ & 冰山融化后的半径\\
+              $N_{0}$ & 冰山开始的体积 \\
+              $N$ & 变化后冰山体积 \\
+              $y$ & 每立方水所需费用 \\
+              $Y$ & 拖船到达伦敦时所需的总费用 \\
+              \hline
+              \end{tabular}
+          \item 模型假设\\
+          \begin{description}
+            \item[(1)] 拖船航行过程中船速不变，航行不考虑天气等任何因素的影响;
+            \item[(2)] 冰山形状为球形，球面各点的融化速率相同;
+            \item[(3)] 冰山到达目的地后，1$m^{3}$ 的冰可以融化成0.85$m^{3}$的水;
+            \item[(4)] 冰山运输距离距离北极4000$m$ 之后忽略温度对冰山融化的影响.
+          \end{description}
+        \end{itemize}
+
+\end{document}
