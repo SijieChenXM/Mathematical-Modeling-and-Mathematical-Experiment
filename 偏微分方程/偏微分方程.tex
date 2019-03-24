@@ -1,0 +1,140 @@
+\documentclass[a4paper,12pt]{article} %文档类型
+\usepackage{CJK}
+\usepackage{ctex}
+\usepackage{color}
+\usepackage{amsmath,amssymb,amstext} %多种公式环境和数学命令
+\usepackage{float}
+\usepackage{array}           %数组和表格制作
+\usepackage{fancyhdr}        %页眉页脚设置
+\usepackage{graphicx}        %插图
+\usepackage{tabularx}        %自动设置表格列宽
+\usepackage{multirow}        %跨行表格
+\usepackage{multicol}        %跨列表格
+\usepackage{titlesec}        %标题设置
+\usepackage{titletoc}        %目录格式设置
+\usepackage{epstopdf}        %编译生成pdf时，能够插入eps格式图片
+\usepackage[top=2.5cm,bottom=2.0cm,left=2.0cm,right=2.0cm]{geometry} % 页边距
+\newcommand{\hei}{\CJKfamily{hei}}  % 定义的新命令
+\newcommand{\li}{\CJKfamily{li}}
+\renewcommand{\figurename}{{图}}
+\linespread{1.7}   %1.5倍行距
+\usepackage{listings}
+\usepackage{xcolor}
+ %\lstset{
+%   %行号
+%   numbers=left,
+%   %背景框
+%   framexleftmargin=10mm,
+%   frame=none,
+%   %背景色
+%   %backgroundcolor=\color[rgb]{1,1,0.76},
+%   backgroundcolor=\color[RGB]{245,245,244},
+%   %样式
+%   keywordstyle=\bf\color{blue},
+%   identifierstyle=\bf,
+%   numberstyle=\color[RGB]{0,192,192},
+%   commentstyle=\it\color[RGB]{0,96,96},
+%   stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+%   %显示空格
+%   showstringspaces=false
+%}
+%\lstset{numbers=left, numberstyle=\tiny, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, frame=shadowbox, rulesepcolor=\color{red!20!green!20!blue!20},escapeinside=``, xleftmargin=2em,xrightmargin=2em, aboveskip=1em, escapeinside=``}
+
+\lstset{numbers=left, %设置行号位置
+        numberstyle=\tiny, %设置行号大小
+        keywordstyle=\color{blue!70}, %设置关键字颜色
+        commentstyle=\color[cmyk]{1,0,1,0}, %设置注释颜色
+        frame=shadowbox, %设置边框格式
+        rulesepcolor=\color{red!20!green!20!blue!20},
+        escapeinside=``, %逃逸字符(1 左面的键)，用于显示中文
+        breaklines, %自动折行
+        extendedchars=false, %解决代码跨页时，章节标题，页眉等汉字不显示的问题
+        xleftmargin=2em,xrightmargin=2em, aboveskip=1em, % 设置边距
+        %tabsize=4, %设置tab空格数
+        %showspaces=false %不显示空格
+       }
+\begin{document}
+
+\begin{center}
+\large
+\heiti{530~~陈斯杰~~电子信息工程~~第22次作业}
+\end{center}
+\textbf{一、偏微分}\\
+1.1) 若对于$a\leq x\leq b,\frac{\partial \psi}{\partial x}>0$,则热通量$\psi$是x的增函数。流向右边$x = b$点的热大于流向$x = a$ 点的热（假设$b>a$）。又因为$Q = 0$,所以在$x = a$ 和$x = b$之间的热能一定是减少的，因此导致了式中的负号。
+          2) 设$u(x,0) = f(x)$列以下方程：
+                    \begin{equation*}
+                        \begin{cases}
+                            u_t = a^2u_{xx} \\
+                            u_x|_{x=0} = u_x|_{x=l} = 0\\
+                            u|_{t=0} = f(x)
+                        \end{cases}
+                    \end{equation*}
+                    $$u(x,t) = \sum\limits_{k=0}\limits^{\infty}C_kexp(-\frac{k^2\pi^2}{l^2}a^2t)cos\frac{k\pi}{l}x$$
+                    其中，
+                    $$C_0 = \frac{1}{l}\int^l_0f(\xi)d\xi, C_k = \frac{2}{l}\int^l_0f(\xi)cos\frac{k\pi}{l}\xi d\xi(k\neq0)$$\\
+~\\
+2.(1)通过单位面积在单位时间内流过的热量为e(x,t)。则Adx体积内流过的热量为e(x,t)Adx，
+总热能为杆上流过热量之和，即
+\begin{equation*}
+\int^{b}_{a}e(x,t)Adx
+\end{equation*}
+
+(2)一维杆上热能的变化是由流过两端的热能和在该段内产生的热能所造成的。
+
+t时刻时单位时间流过x=a与x=b两端的热能分别为$\phi(a,t)$和$\phi(b,t)$。
+
+在该段内单位时间产生的热能为$\int^{b}_{a}Qdx$。
+
+单位时间热能的变化量为总热能的导数，即$\frac{d}{dt}\int^{b}_{a}edx$。
+
+综上所述，得
+\begin{equation*}
+\frac{d}{dt}\int^{b}_{a}edx=\phi(a,t)-\phi(b,t)+\int^{b}_{a}Qdx
+\end{equation*}
+
+(3)当杆两端有热量以固定速率流入时，该边界条件成立。\\
+~\\
+3.负号表示热能由高温向低温传导。即若$\frac{\partial\mu}{\partial x}>0$,则说明在此点处温度随x增加而增加，则热能将向负半轴传导，即与$\frac{\partial\mu}{\partial x}$方向相反。\\
+~\\
+5.根据无热源和恒定热条件下的热传导方程：
+        $$\frac{\partial u}{\partial t} = \frac{K_0}{c\rho}\frac{\partial^2u}{\partial x^2}$$\\
+        ~\\
+6.、
+
+由恒定热条件下的一维杆热传导问题得
+$\frac{\partial u}{\partial t}=a^{2}\frac{\partial^{2}u}{\partial x}$
+
+又由无热源求出边界条件$\frac{\partial u}{\partial x}(0,t)=0,\frac{\partial u}{\partial x}(l,t)=0$
+
+原杆上的热能分布为初始条件：$u(x,0)=\varphi(x)$
+
+综上所述得热传导方程：
+
+\begin{equation*}
+\begin{cases}
+\frac{\partial u}{\partial t}=a^{2}\frac{\partial^{2}u}{\partial x}\\
+\frac{\partial u}{\partial x}(0,t)=0,\frac{\partial u}{\partial x}(l,t)=0\\
+u(x,0)=\varphi(x)\\
+\end{cases}
+\end{equation*}
+~\\
+7.(a)当考虑在微小区域内的化学总量时。\\
+微小区域$\triangle x$内的化学总量可表示为$\mu(x,t)A\triangle x$\\
+引入通量$\phi(x,t)$的概念，表示单位面积单位时间单向流动的化学物的量。因此可得守恒式\\
+$\frac{\mu(x,t)A\triangle x\\}{\partial t}=-\frac{\phi(x,t)A\triangle x\\}{\partial x}$\\
+两边同时除以$A\triangle x$，即可得到污染物扩散过程的微分守恒式\\
+$\frac{\partial\mu}{\partial t}+\frac{\partial\phi}{\partial x}=0$\\
+又由Fick扩散定律$\phi=-k\frac{\partial\phi}{\partial x}$\\
+可得到化学物的传导方程$\frac{\partial\mu}{\partial t}-k\frac{\partial^{2}\mu}{\partial x^{2}}$。\\
+(b)当考虑在a与b之间的化学总量时，推导过程类似。
+在a与b之间的化学物总量为$\int\limits_{a}\limits^{b}\mu(x,t)Adx$\\
+同时引入通量，可得在(a,b)内化学物总量的变化率等于单位时间内流入该区间的化学物量减去流出该区间的化学物量，即\\
+$\frac{d}{dt}\int\limits_{a}\limits^{b}\mu(x,t)Adx=A\phi(a,t)-A\phi(b,t)$\\
+整理可得\\
+$\int\limits_{a}\limits^{b}\frac{\partial \mu(x,t)}{\partial t}dx=\int\limits_{a}\limits^{b}\frac{\partial\phi(x,t)}{\partial x}dx$\\
+即可推出微分守恒式$\frac{\partial\mu}{\partial t}+\frac{\partial\phi}{\partial x}=0$\\
+又由Fick扩散定律$\phi=-k\frac{\partial\phi}{\partial x}$\\
+可得到化学物的传导方程$\frac{\partial\mu}{\partial t}-k\frac{\partial^{2}\mu}{\partial x^{2}}$。\\
+
+
+\end{document}

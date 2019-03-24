@@ -1,0 +1,289 @@
+\documentclass[a4paper,12pt]{article} %文档类型
+\usepackage{CJK}
+\usepackage{ctex}
+\usepackage{color}
+\usepackage{amsmath,amssymb,amstext} %多种公式环境和数学命令
+\usepackage{float}
+\usepackage{array}           %数组和表格制作
+\usepackage{fancyhdr}        %页眉页脚设置
+\usepackage{graphicx}        %插图
+\usepackage{tabularx}        %自动设置表格列宽
+\usepackage{multirow}        %跨行表格
+\usepackage{multicol}        %跨列表格
+\usepackage{titlesec}        %标题设置
+\usepackage{titletoc}        %目录格式设置
+\usepackage{epstopdf}        %编译生成pdf时，能够插入eps格式图片
+\usepackage[top=2.5cm,bottom=2.0cm,left=2.0cm,right=2.0cm]{geometry} % 页边距
+\newcommand{\hei}{\CJKfamily{hei}}  % 定义的新命令
+\newcommand{\li}{\CJKfamily{li}}
+\renewcommand{\figurename}{{图}}
+\linespread{1.7}   %1.5倍行距
+\usepackage{listings}
+\usepackage{xcolor}
+ %\lstset{
+%   %行号
+%   numbers=left,
+%   %背景框
+%   framexleftmargin=10mm,
+%   frame=none,
+%   %背景色
+%   %backgroundcolor=\color[rgb]{1,1,0.76},
+%   backgroundcolor=\color[RGB]{245,245,244},
+%   %样式
+%   keywordstyle=\bf\color{blue},
+%   identifierstyle=\bf,
+%   numberstyle=\color[RGB]{0,192,192},
+%   commentstyle=\it\color[RGB]{0,96,96},
+%   stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+%   %显示空格
+%   showstringspaces=false
+%}
+%\lstset{numbers=left, numberstyle=\tiny, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, frame=shadowbox, rulesepcolor=\color{red!20!green!20!blue!20},escapeinside=``, xleftmargin=2em,xrightmargin=2em, aboveskip=1em, escapeinside=``}
+
+\lstset{numbers=left, %设置行号位置
+        numberstyle=\tiny, %设置行号大小
+        keywordstyle=\color{blue!70}, %设置关键字颜色
+        commentstyle=\color[cmyk]{1,0,1,0}, %设置注释颜色
+        frame=shadowbox, %设置边框格式
+        rulesepcolor=\color{red!20!green!20!blue!20},
+        escapeinside=``, %逃逸字符(1 左面的键)，用于显示中文
+        breaklines, %自动折行
+        extendedchars=false, %解决代码跨页时，章节标题，页眉等汉字不显示的问题
+        xleftmargin=2em,xrightmargin=2em, aboveskip=1em, %设置边距
+        %tabsize=4, %设置tab空格数
+        %showspaces=false %不显示空格
+       }
+\begin{document}
+
+\begin{center}
+\large
+\heiti{530~~陈斯杰~~电子信息工程~~第19次作业}
+\end{center}
+\textbf{一、时间序列\\}
+ 1.\\
+实现代码如下
+\small
+\begin{lstlisting}[language=R][b]
+data(robot)
+  x<-data.frame(robot)
+  ro<-ts(x)
+  > air.fit <- arima(aplog,order=c(0,1,1), seasonal=list(order=c(0,1,1), period=12))
+  > m1=arima(x = ro, order = c(1, 0, 0))
+> m2=arima(x = ro, order = c(0, 1, 1))
+> acf(ro,80)
+> pacf(ro,30)
+> write.table(robot,"robot.csv",sep=",")
+> plot.ts(ro)
+> plot.ts(diff(aplog)
+> aplog1<-diff(aplog,diff=1)
+> aplog222<-diff(aplog1,lag = 12)
+> plot(rstandard(m1),type="o")
+> plot(rstandard(m2),type="o")
+> acf(rstandard(m1))
+> acf(rstandard(m2))
+> shapiro.test(ro)
+> tsdiag(data.fit)
+> m4 <- arima(ro, order = c(1, 0, 1))
+> airfore4<-forecast.Arima(m4,h=5,level=c(99.5))
+\end{lstlisting}
+\large
+ 2.解：
+  导入TSA包并画出原始形式和取对数之后的时间序列图，R语言代码如下：
+  \begin{lstlisting}[language=R, linewidth=0.8\linewidth]
+  library(TSA)
+  air <- AirPassengers
+  plot(air)
+  air = log(air)
+  plot(air)
+  \end{lstlisting}
+  画出的时间序列图如下所示：
+  \begin{figure}[h]
+    \begin{minipage}[t]{0.5\linewidth}
+    \centering
+    \includegraphics[width=0.88\linewidth]{air.eps}
+    \caption{Initial}
+    \label{fig:my_label}
+    \end{minipage}%
+    \begin{minipage}[t]{0.5\linewidth}
+    \centering
+    \includegraphics[width=0.88\linewidth]{logair.eps}
+    \caption{log(Initial)}
+    \label{fig:my_label}
+    \end{minipage}
+  \end{figure}
+  由图可见，原始形式和取对数之后的时间序列图是大致相似的因此对数变换在这里是适当的。\\
+  求取对数后的时间序列的一次差分时间序列图和样本ACF图的R语言代码为：
+  \begin{lstlisting}[language=R, linewidth=0.8\linewidth]
+  airdiff1 <- diff(air,differences=1)
+  plot(airdiff1)
+  acf(air, type = "correlation")
+  \end{lstlisting}
+  画出的一次差分时间序列图和ACF图如下所示：
+  \begin{figure}[htp]
+    \begin{minipage}[t]{0.5\linewidth}
+    \centering
+    \includegraphics[width=0.88\linewidth]{diff1.eps}
+    \caption{diff1}
+    \label{fig:my_label}
+    \end{minipage}%
+    \begin{minipage}[t]{0.5\linewidth}
+    \centering
+    \includegraphics[width=0.88\linewidth]{diff1acf.eps}
+    \caption{ACF}
+    \label{fig:my_label}
+    \end{minipage}
+  \end{figure}
+  用ARIMA(0,1,1)*(0,1,1)12拟合对数化序列R语言代码为：
+  \begin{lstlisting}[language=R, linewidth=0.8\linewidth]
+  fit1<-arima(air,order=c(0,1,1),seasonal=list(order=c(0,1,1),period=12))
+  \end{lstlisting}
+  得出结果为：
+  \begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.64\linewidth]{fit1.eps}
+    \caption{fit1}
+    \label{fig:my_label}
+  \end{figure}
+  对模型的自相关性和残差的正态性进行检验的R语言代码为：
+  \begin{lstlisting}[language=R, linewidth=0.8\linewidth]
+  plot(rstandard(fit1)，type="o")
+  rs = rstandard(fit1)
+  shapiro.test(rs)
+  \end{lstlisting}
+  得出结果为：
+  \begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.64\linewidth]{residuals.eps}
+    \caption{Residuals}
+    \label{fig:my_label}
+  \end{figure}
+  求出的残差p值为：0.1674>0.05,因此残差具有正态性。\\
+  预测未来两年的取值R代码为：
+  \begin{lstlisting}[language=R, linewidth=0.8\linewidth]
+  airHW <-HoltWinters(air,beta=FALSE,gamma=FALSE)
+  plot(airHW)
+  library("forecast")
+  airforecast = forecast(airHW,h=2)
+  plot(airforecast)
+  \end{lstlisting}
+  画出预测结果为：
+  \begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.8\linewidth]{airforecast.eps}
+    \caption{Airforecast}
+    \label{fig:my_label}
+  \end{figure}
+ ~\\
+3.1) 运行以下代码：
+                \footnotesize
+                \begin{lstlisting}[language=R][b]
+jj = scan("http://www.stat.pitt.edu/stoffer/tsa2/data/jj.dat");
+# read the data
+jj = ts(jj,start=1960,frequency=4) #ts()命令
+plot(jj,ylab="Earnings per Share",main="J & J")
+dljj = diff(log(jj))
+# 做log和差的处理
+plot(dljj)
+                \end{lstlisting}
+                \normalsize
+                \begin{center}
+                  \includegraphics[width=0.5\textwidth]{3_1.png}
+                  \includegraphics[width=0.5\textwidth]{3_1_2.png}
+                \end{center}
+          2) 运行以下代码：
+                \footnotesize
+                \begin{lstlisting}[language=R][b]
+dljj = diff(log(jj))
+# 做log和差的处理
+plot(dljj)
+acf(dljj,20)
+                \end{lstlisting}
+                \normalsize
+                得以下时间序列图和ACF图表
+                \begin{center}
+                  \includegraphics[width=0.5\textwidth]{3_2_1.png}
+                  \includegraphics[width=0.5\textwidth]{3_2_2.png}
+                \end{center}
+                在ACF图中横坐标标记是1,2,3,4,5，但因为数据是季度性的，每年有四个季度，所以1,2,3,4,5的标记代表的是4,8,12,16,20的延迟。
+          3) 利用R中结构拆析命令，运行以下语句：
+                \footnotesize
+                \begin{lstlisting}[language=R][b]
+plot(dog <- stl(log(jj),"per"))
+                \end{lstlisting}
+                \normalsize
+                得如下图：
+                \begin{center}
+                  \includegraphics[width=0.5\textwidth]{3_3_1.png}
+                \end{center}
+
+                这其中第一行代表原来的$log(jj)$的数据。此数据可以看到总体的上升趋势还存在一定季节循环性的变化。第二行绘图代表拆析后季节循环的作用。第三行绘图代表拆析后将季节循环作用清除剩余的上升趋势，此数据清楚地看到那种循环性变化已经不存在，剩余的只是趋势。可以看出每一年第三季度会出现一个收入高峰，随之而来的第四季度收入就会跌入低谷，然后在一、二季度收入又会逐渐上升。
+         4) 运行以下语句：
+                \footnotesize
+                \begin{lstlisting}[language=R][b]
+Q = factor(rep(1:4,21))
+trend = time(jj)-1970
+reg = lm(log(jj)~0+trend+Q,na.action=NULL)
+summary(reg)
+#
+Residuals:
+   Min      1Q      Median   3Q      Max
+-0.29318~-0.09062~-0.01180~0.08460~0.27644
+
+Coefficients:
+     Estimate Std. Error t value Pr($>|t|$)
+trend 0.167172   0.002259   74.00   <2e-16~***
+Q1    1.052793   0.027359   38.48   <2e-16~***
+Q2    1.080916   0.027365   39.50   <2e-16~***
+Q3    1.151024   0.027383   42.03   <2e-16~***
+Q4    0.882266   0.027412   32.19   <2e-16~***
+                \end{lstlisting}
+                \normalsize
+                得下面等式：
+                $$Log(jj) = 0.167172*time+1.052793*Q1+1.080916*Q2+1.151024*Q3+0.882266*Q4$$
+                绘图比较预测数据和实际数据：
+                \footnotesize
+                \begin{lstlisting}[language=R][b]
+plot(log(jj),type="o")
+lines(fitted(reg),col=2)
+                \end{lstlisting}
+                \normalsize
+                得以下图：
+                \begin{center}
+                  \includegraphics[width=0.5\textwidth]{3_4_1.png}
+                \end{center}
+          5) 运行如下语句：
+                \footnotesize
+                \begin{lstlisting}[language=R][b]
+par(mfrow=c(2,1))
+plot(resid(reg))
+acf(resid(reg),20)
+                \end{lstlisting}
+                \normalsize
+                得以下图：
+                \begin{center}
+                  \includegraphics[width=0.5\textwidth]{3_5_1.png}
+                \end{center}
+                第一个图可以看到误差的变化范围在允许范围之内，并且没大变化。第二张图只有在lag0上有数值为1的关联性，其他lag上的关联性都非常小，即说明误差和误差之间是没关系的。\\
+~\\
+4.\\
+1)时间序列图如图所示。\\
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{4_1.jpeg}\\
+\end{center}
+2)要对序列的异方差性进行检验，可先将序列平方后进行白噪声检验，得到\\
+$\chi^{2}=21.362$,$p-value=3.802\times 10^{-6}$\\
+因此可认为存在异方差。\\
+3)
+由题意，建立GARCH(1,1)模型，得出\\
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{4_2.jpg}\\
+\end{center}
+对其进行残差分析，可得出下图\\
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{4_3.jpeg}\\
+\end{center}
+对残差进行LB检验
+得出$\chi^{2}=2.8863$,$p-value=0.08933$\\
+
+
+\end{document}

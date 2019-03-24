@@ -1,0 +1,224 @@
+\documentclass[a4paper,12pt]{article} %文档类型
+\usepackage{CJK}
+\usepackage{ctex}
+\usepackage{color}
+\usepackage{amsmath,amssymb,amstext} %多种公式环境和数学命令
+\usepackage{float}
+\usepackage{array}           %数组和表格制作
+\usepackage{fancyhdr}        %页眉页脚设置
+\usepackage{graphicx}        %插图
+\usepackage{tabularx}        %自动设置表格列宽
+\usepackage{multirow}        %跨行表格
+\usepackage{multicol}        %跨列表格
+\usepackage{titlesec}        %标题设置
+\usepackage{titletoc}        %目录格式设置
+\usepackage{epstopdf}        %编译生成pdf时，能够插入eps格式图片
+\usepackage[top=2.5cm,bottom=2.0cm,left=2.0cm,right=2.0cm]{geometry} % 页边距
+\newcommand{\hei}{\CJKfamily{hei}}  % 定义的新命令
+\newcommand{\li}{\CJKfamily{li}}
+\renewcommand{\figurename}{{图}}
+\linespread{1.7}   %1.5倍行距
+\usepackage{listings}
+\usepackage{xcolor}
+ %\lstset{
+%   %行号
+%   numbers=left,
+%   %背景框
+%   framexleftmargin=10mm,
+%   frame=none,
+%   %背景色
+%   %backgroundcolor=\color[rgb]{1,1,0.76},
+%   backgroundcolor=\color[RGB]{245,245,244},
+%   %样式
+%   keywordstyle=\bf\color{blue},
+%   identifierstyle=\bf,
+%   numberstyle=\color[RGB]{0,192,192},
+%   commentstyle=\it\color[RGB]{0,96,96},
+%   stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+%   %显示空格
+%   showstringspaces=false
+%}
+%\lstset{numbers=left, numberstyle=\tiny, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, frame=shadowbox, rulesepcolor=\color{red!20!green!20!blue!20},escapeinside=``, xleftmargin=2em,xrightmargin=2em, aboveskip=1em, escapeinside=``}
+
+\lstset{numbers=left, %设置行号位置
+        numberstyle=\tiny, %设置行号大小
+        keywordstyle=\color{blue!70}, %设置关键字颜色
+        commentstyle=\color[cmyk]{1,0,1,0}, %设置注释颜色
+        frame=shadowbox, %设置边框格式
+        rulesepcolor=\color{red!20!green!20!blue!20},
+        escapeinside=``, %逃逸字符(1 左面的键)，用于显示中文
+        breaklines, %自动折行
+        extendedchars=false, %解决代码跨页时，章节标题，页眉等汉字不显示的问题
+        xleftmargin=2em,xrightmargin=2em, aboveskip=1em, %设置边距
+        %tabsize=4, %设置tab空格数
+        %showspaces=false %不显示空格
+       }
+\begin{document}
+
+\begin{center}
+\large
+\heiti{530~~陈斯杰~~电子信息工程~~第2次作业}
+\end{center}
+
+\section{观察法与初等函数方法}
+
+ \subsection*{1.8 }
+
+  \subsubsection*{1.8.1}
+  $s(6)=\frac{200*6}{6^{2}+100}=\frac{1200}{136}\thickapprox8.8235$
+
+  $s(12)=\frac{200*12}{12^{2}+100}=\frac{2400}{244}\thickapprox9.8361$
+
+  $s(36)=\frac{200*36}{36^{2}+100}\thickapprox5.1576$
+  \subsubsection*{1.8.2}
+  该产品的长期销售应为时间$t\rightarrow\infty$时的销售量
+
+  $\lim_{t\rightarrow +\infty }\frac{200t}{t^{2}+100}=\lim_{t\rightarrow +\infty }\frac{200}{t+\frac{100}{t}}=0$
+
+  上式说明当时间$t\rightarrow\infty$时，销售量的极限为0，即人们购买此游戏会越来越少直至无人购买。
+
+ \subsection*{1.11}
+ 设分n次洗，第n次洗时用$a_{n}$公斤水，初始残留污物$m_{0}$,第n次洗完残留污物$m_{n}$
+
+ 假设经过漂洗后，污物充分平均分布在水中，每次拧干后还剩含污物的水1公斤，我们可以得出：$\frac{m_{n}}{m_{n-1}}=\frac{1}{a_{n}+1}$
+
+ 可解得：$m_{n}=m_{0}\prod\limits_{i=1}\limits^{n}\frac{1}{1+a_{i}}$
+
+ 已知$m_{0}$为常数，及$\sum\limits_{i=1}\limits^{n}{1+a_{i}}=n+20$可知，当$a_{1}=a_{2}=\cdots=a_{n}=\frac{20}{n}$时$m_{n}$最小。
+
+ 此时$\frac{m_{n}}{m_{0}}=\frac{1}{(1+\frac{20}{n})^{n}}$，并利用matlab画出其图像。
+
+ \small
+ \begin{lstlisting}[language=Matlab][b]
+ syms y n;
+ y=1/(1+20/n)^n;
+ ezplot(y)
+ \end{lstlisting}
+ \large
+
+ \begin{center}
+   \includegraphics[width=0.4\textwidth]{1_11.jpg}\\
+ \end{center}
+
+ 由图像可得，当n增大时，残留物越少，由此可得出洗衣方法，每次洗衣用水相等，且洗得越多次越干净。
+
+ \subsection*{1.14}
+
+ 利润=收入-支出
+
+ \subsection*{1.17}
+
+ 设孩子个数为n个，原价为x，总费用为Y
+
+ $Y_{\mbox{甲}}=(1.5+0.5n)x$
+
+ $Y_{\mbox{乙}}=\frac{2}{3}(2+n)x$
+
+ 令$Y_{\mbox{甲}}=Y_{\mbox{乙}}$得$n=1$
+
+ 当$n>1$时甲旅行社优惠，当$n=1$时甲乙旅行社一样优惠。
+
+ \subsection*{1.20}
+
+  \subsubsection*{1.20.1}
+  $y=\frac{256m}{x}+m\sqrt{x}+2m-256$
+  \subsubsection*{1.20.2}
+  求导得$y'=\frac{m}{2x^{2}}(x^{\frac{3}{2}}-512)$
+
+  令$y'=0$得$x=64$，在此点取到函数最小值，此时桥墩数为$\frac{m}{x}-1=9$个
+
+  故需新建9个桥墩才能使y最小。
+
+ \subsection*{1.23 }
+ T年后总收入为$\int_{0}^{T}(850-40t)e^{0.05T}dt$
+
+ T年后总利润为$Y(T)=\int_{0}^{T}(850-40t)e^{0.05T}dt-400T$
+
+ 当n=10时总利润最高，所以企业应该在第十年的时候报废设备
+
+ \subsection*{1.26}
+ 已知椭圆面积公式为$S=\pi ab$
+
+ 当椭圆柱油罐正立时，油量为 $S=\pi abh$
+
+ 当椭圆柱油罐侧放时，且$b<h<2b$时，油量为 $S=\frac{al}{b}[(h-b)\sqrt{h(2b-h)}+b^{2}arcsin\frac{h-b}{b}+\frac{1}{2}\pi b^{2}]$
+
+ 当椭圆柱油罐侧放时，且$h<b$时,油量为 $abl[\frac{\pi}{2}-arcsin(1-\frac{H}{b})-\frac{1}{2}sin2arcsin(1-\frac{H}{b})]$
+
+ \subsection*{1.29}
+ $A_{0}e^{kt}$
+
+ \subsection*{1.32}
+ $C=C(t)=A(e^{-k_{e}t}-e^{-k_{a}t})$
+
+ $C'(t)=A(-k_{e}e^{-k_{e}t}+k_{a}e^{-k_{a}t})$设当$t=t_{0}$时导数等于0。服药后，体内血药浓度的变化规律是：从0到$t_{0}$这段时间内体内药物浓度不断增高，$t_{0}$以后逐渐减少。
+\section*{2 数据拟合方法与插值方法}
+ \subsection*{2.2}
+ \small
+ \begin{lstlisting}[language=Matlab][b]
+ x=[17 19 20 22 23 25 28 31 32 33 36 37 38 39 41];
+ y=[19 25 32 51 57 71 113 141 123 187 192 205 252 259 294];
+ x=log(x);
+ y=log(y);
+ A=polyfit(x,y,1);
+ z=polyval(A,x);
+ plot(x,y,'o',x,z,'b');
+ a=exp(A(2))
+ b=A(1)
+ \end{lstlisting}
+ \large
+ \begin{center}
+   \includegraphics[width=0.4\textwidth]{2_2.jpg}\\
+ \end{center}
+ 得a=0.0032;b=3.0919
+
+ \subsection*{2.5}
+ \small
+ \begin{lstlisting}[language=Matlab][b]
+ x=1:8;
+ y=[15.3 20.5 27.4 36.6 49.1 65.6 87.87 117.6];
+ y=log(y);
+ A=polyfit(x,y,1);
+ z=polyval(A,x);
+ plot(x,y,'o',x,z,'b');
+ a=exp(A(2))
+ b=A(1)
+ \end{lstlisting}
+ \large
+ \begin{center}
+   \includegraphics[width=0.4\textwidth]{2_5.jpg}\\
+ \end{center}
+ 得a=11.4358;b=0.2913
+
+ \subsection*{2.8}
+ \small
+ \begin{lstlisting}[language=Matlab][b]
+ x=[16.7 18.2 18.0 17.9 17.4 16.6 17.2 17.7 15.7 17.1];
+ y=[17.5 18.7 18.6 18.5 18.2 17.5 18.0 18.2 16.9 17.8];
+ A=polyfit(x,y,1)
+ z=polyval(A,x);
+ plot(x,y,'o',x,z,'b');
+ \end{lstlisting}
+ \large
+ \begin{center}
+   \includegraphics[width=0.4\textwidth]{2_8.jpg}\\
+ \end{center}
+ 得$y=0.7398x+5.2286$
+
+ \subsection*{2.14}
+ \small
+ \begin{lstlisting}[language=Matlab][b]
+ x=[100 200 300 400 500 100 200 300 400 500 100 200 300 400 500 100 200 300 400 500];
+ y=[100 100 100 100 100 200 200 200 200 200 300 300 300 300 300 400 400 400 400 400];
+ z=[636 697 624 478 450 698 712 630 478 420 680 674 598 412 400 662 626 552 334 310];
+ [x1,y1]=meshgrid(90:10:510,90:10:410);
+ z1=griddata(x,y,z,x1,y1,'v4');
+ mesh(x1,y1,z1);
+ \end{lstlisting}
+ \large
+ \begin{center}
+   \includegraphics[width=0.4\textwidth]{2_14.jpg}\\
+ \end{center}
+ 得最高点为（200，200），最高高程为712
+
+\end{document}

@@ -1,0 +1,323 @@
+\documentclass[a4paper,12pt]{article} %文档类型
+\usepackage{CJK}
+\usepackage{ctex}
+\usepackage{color}
+\usepackage{amsmath,amssymb,amstext} %多种公式环境和数学命令
+\usepackage{float}
+\usepackage{array}           %数组和表格制作
+\usepackage{fancyhdr}        %页眉页脚设置
+\usepackage{graphicx}        %插图
+\usepackage{tabularx}        %自动设置表格列宽
+\usepackage{multirow}        %跨行表格
+\usepackage{multicol}        %跨列表格
+\usepackage{titlesec}        %标题设置
+\usepackage{titletoc}        %目录格式设置
+\usepackage{epstopdf}        %编译生成pdf时，能够插入eps格式图片
+\usepackage[top=2.5cm,bottom=2.0cm,left=2.0cm,right=2.0cm]{geometry} % 页边距
+\newcommand{\hei}{\CJKfamily{hei}}  % 定义的新命令
+\newcommand{\li}{\CJKfamily{li}}
+\renewcommand{\figurename}{{图}}
+\linespread{1.7}   %1.5倍行距
+\usepackage{listings}
+\usepackage{xcolor}
+ %\lstset{
+%   %行号
+%   numbers=left,
+%   %背景框
+%   framexleftmargin=10mm,
+%   frame=none,
+%   %背景色
+%   %backgroundcolor=\color[rgb]{1,1,0.76},
+%   backgroundcolor=\color[RGB]{245,245,244},
+%   %样式
+%   keywordstyle=\bf\color{blue},
+%   identifierstyle=\bf,
+%   numberstyle=\color[RGB]{0,192,192},
+%   commentstyle=\it\color[RGB]{0,96,96},
+%   stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+%   %显示空格
+%   showstringspaces=false
+%}
+%\lstset{numbers=left, numberstyle=\tiny, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, frame=shadowbox, rulesepcolor=\color{red!20!green!20!blue!20},escapeinside=``, xleftmargin=2em,xrightmargin=2em, aboveskip=1em, escapeinside=``}
+
+\lstset{numbers=left, %设置行号位置
+        numberstyle=\tiny, %设置行号大小
+        keywordstyle=\color{blue!70}, %设置关键字颜色
+        commentstyle=\color[cmyk]{1,0,1,0}, %设置注释颜色
+        frame=shadowbox, %设置边框格式
+        rulesepcolor=\color{red!20!green!20!blue!20},
+        escapeinside=``, %逃逸字符(1 左面的键)，用于显示中文
+        breaklines, %自动折行
+        extendedchars=false, %解决代码跨页时，章节标题，页眉等汉字不显示的问题
+        xleftmargin=2em,xrightmargin=2em, aboveskip=1em, %设置边距
+        %tabsize=4, %设置tab空格数
+        %showspaces=false %不显示空格
+       }
+\begin{document}
+
+\begin{center}
+\large
+\heiti{530~~陈斯杰~~电子信息工程~~第14次作业}
+\end{center}
+1、
+
+$P(1)=\frac{15}{20}\times\frac{14}{19}\times\frac{5}{18}=\frac{35}{228}$
+
+$P(2)=\frac{5}{18}$
+
+$P(3)=\frac{5}{20}=\frac{1}{4}$
+
+~\\
+2、含有肝炎病毒的概率 = 1-不含有肝炎病毒的概率(100 人均不含肝炎病毒)，即
+$$P = 1-0.996^{100} = 0.3302$$
+所以，此血清中含有肝炎病毒的的概率为0.3302.\\
+~\\
+3.(1)$P($飞机被射中$)=1-P($飞机为被射中$)=1-0.3\times0.2\times0.1=0.994$;\\
+(2)$P($飞机坠毁$)=P($一门高射炮射中$)\times P($飞机坠毁$|$ 一门高射炮射中$)$
+$+P($两门高射炮射中$)\times P($飞机坠毁$|$两门高射炮射中$)$
+$+P($三门高射炮射中$)\times P($飞机坠毁$|$三门高射炮射中$)$\\
+$
+\begin{aligned}
+=&(0.7\times0.2\times0.1+0.3\times0.8\times0.1+0.3\times0.2\times0.9)\cdot0.7\\
+&+(0.7\times0.8\times0.1+0.7\times0.2\times0.9+0.3\times0.8\times0.9)\cdot0.9\\
+&+(0.7\times0.8\times0.9)\cdot1\\
+=&0.9266
+\end{aligned}$\\
+~\\
+4.\\
+模型符合正态分布.\\
+10000人招聘2500人，即招聘通过率25\%,后75\%的人将被筛去.\\
+通过查询标准正态分布表可得，$\Phi$(0.67)=0.7486，\\
+又因为90分以上359人，60分以下1151人，查表可得$\Phi$(1.80)=0.9641，$\Phi$(1.20)=0.8849\\
+$\frac{90-\mu}{\phi}$=1.8,$\frac{\mu-60}{\phi}$=1.2,解得$\mu$=72,$\phi$=10.\\
+代回$\frac{X-\mu}{\phi}$=0.67,得X=78.7,即最低分为78.7.\\
+~\\
+5.解：假设发生故障为事件A，则$p_{A}=0.01$，假设同时发生故障的机器台数为k：
+  若采用三人共同维护90台的方案：\\
+    p{不能及时维修}\\
+    =1-p(k=0)-p(k=1)-p(k=2)-p(k=3)\\
+    =1-$C_{90}^{0}*0.99^{90}-C_{90}^{1}*0.01*0.99^{89}-C_{90}^{2}*0.01^{2}*0.99^{98}-C_{90}^{3}*0.01^{3}*0.99^{97}$\\
+    =0.01294\\
+  若采用三人每个人分别维护30台的方案：
+    p{不能及时维修}\\
+    =[1-p(k=0)-p(k=1) ]$^3$\\
+    =[1-$C_{30}^{0}*0.99^{30}-C_{30}^{1}*0.01*0.99^{29}]^3$\\
+    =$4.72*10^{-5}$\\
+    ~\\
+6.\\
+$\because P(A)=p,\therefore P(\overline{A}=1-P(A)=1-p)$\\
+$E=(1-p)*x-p*a=0.05*a,\therefore x=\frac{(0.05+p)*a)}{1-p}$\\
+得到的x即是该公司要求顾客缴纳的保费\\
+~\\
+7.由贝叶斯公式可知，乘火车的概率为\\
+$P=\frac{0.3\times 0.25}{0.3\times 0.25+0.2\times \frac{1}{3}+0.1\times \frac{1}{12}}=0.5$\\
+~\\
+8、
+利用matlab模拟，代码如下：
+\footnotesize
+\begin{lstlisting}[language=matlab, linewidth=0.9\linewidth]
+clc;clear;
+m=zeros(1000,1);
+n=0;
+for i=1:1000
+    a=rand;
+    b=rand;
+    if a<0.4&&b<0.4
+        n=n+1;
+    end
+    m(i)=n/i;
+end
+plot(m);
+\end{lstlisting}
+\normalsize
+得出频率变化结果如下图：
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{8.jpg}\\
+\end{center}
+~\\
+9.每次抽取时抽到偶数的概率为$\frac{1}{2}$，因为是有放回抽取，所以三次抽取时抽到偶数的概率均为$\frac{1}{2}$，设事件$X$为三个球号均为偶数，则：
+      $$P(X) = \frac{1}{2}^3 = 0.125$$
+      所以，三个球号码均为偶数的概率为0.125\\
+~\\
+10.假设时间长度定义为[0,60]，两人到达的时间分别为$x_1,x_2$,\\
+在此，我们有如下假设：\\
+两人在60分钟内任一分钟到达的机会是均等的，即两人到达时间$x_1,x_2$均服从[0,60]上的均匀分布。\\
+故当$|x_1-x_2|\leq20$,则两人能会面。\\
+实际上这是一个几何概率问题，两人能会面的概率为图中阴影部分面积与正方形面积比值。
+\begin{center}
+\includegraphics[scale=0.9]{fig10.jpg}
+\end{center}
+所以$P=\frac{200}{360}=\frac{5}{9}$\\
+另外我们用计算机对这一过程进行模拟，
+\small
+\begin{lstlisting}[language=R][b]
+v <- c(seq(10,100,10),seq(150,2000,50),seq(2500,10000,500))
+p <- rep(0,length(v))
+m <- 1:length(v)
+for (j in m) {
+n <- 1:v[j]
+t <- rep(0,v[j])
+for (i in n) {
+x1 <- runif(1,min = 0,max = 60)
+x2 <- runif(1,min = 0,max = 60)
+if (abs(x1-x2)<20) t[i]=1
+}
+p[j] <- mean(t)
+}
+p
+plot(v,p,'l',ylim = c(0.4,0.7))
+
+#输出结果为：
+> p
+ [1] 0.6000000 0.3000000 0.5333333 0.4000000 0.6200000 0.6166667 0.4571429 0.6000000 0.5888889
+[10] 0.5700000 0.5133333 0.5900000 0.5480000 0.5833333 0.5457143 0.5625000 0.5555556 0.5520000
+[19] 0.5854545 0.5566667 0.5461538 0.5514286 0.5613333 0.5712500 0.5364706 0.5500000 0.5410526
+[28] 0.5570000 0.5447619 0.5790909 0.5495652 0.5583333 0.5584000 0.5815385 0.5466667 0.5507143
+[37] 0.5317241 0.5706667 0.5496774 0.5543750 0.5551515 0.5594118 0.5440000 0.5472222 0.5486486
+[46] 0.5621053 0.5630769 0.5535000 0.5640000 0.5543333 0.5491429 0.5587500 0.5422222 0.5610000
+[55] 0.5629091 0.5621667 0.5536923 0.5477143 0.5510667 0.5532500 0.5675294 0.5597778 0.5556842
+[64] 0.5547000
+
+\end{lstlisting}
+\begin{center}
+\includegraphics[scale=0.7]{fig10_2.jpeg}
+\end{center}
+发现在样本足够大的时候，这一概率一直落在0.55-0.56附近，与我们求得的理论值相吻合。\\
+~\\
+11.\\
+代码如下：\\
+\begin{lstlisting}[language=Matlab][b]
+clc,clear
+r=1;
+center_x=1;
+center_y=1;
+num=1000;
+s=rng;
+rng(s);
+sample_point=2*rand(2,num);
+total_in=0;
+for i=1:num
+    distance=sqrt((sample_point(1,i)-1)^2+(sample_point(2,i)-1)^2);
+    if distance<1
+        total_in=total_in+1;
+    end
+end
+my_pi=total_in/num*4;
+fprintf('result:\nπ=%.4f\n',my_pi);
+error=abs((pi-my_pi)/pi);
+fprintf('误差：%.4f\n',error);
+figure
+scatter(sample_point(1,:),sample_point(2,:),'bo');hold on
+ezplot('x^2+y^2-4')
+title('Monte Carlo方法计算圆周率π'),xlabel('x'),ylabel('y')
+axis([0,2,0,2])
+\end{lstlisting}
+结果如下：\\
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{11_o.jpg}\\
+  \includegraphics[width=0.5\textwidth]{11_p.jpg}\\
+\end{center}
+~\\
+12.解：
+  一共24个季度数据，其中共有15个季度畅销，9个季度滞销，现分别统计出：连续畅销、由畅转滞、由滞转畅和连续滞销的次数。\\
+  以$p_{11}$表示连续畅销的可能性，以频率代替概率，得：
+  \begin{center}
+    $p_{11}=\frac{7}{15-1}=0.5$
+  \end{center}
+  以$p_{12}$表示由畅转滞的可能性，以频率代替概率，得：
+  \begin{center}
+    $p_{12}=\frac{7}{15-1}=0.5$
+  \end{center}
+  以$p_{21}$表示由滞转畅的可能性，以频率代替概率，得：
+  \begin{center}
+    $p_{21}=\frac{7}{9}=0.78$
+  \end{center}
+  以$p_{22}$表示连续滞销的可能性，以频率代替概率，得：
+  \begin{center}
+    $p_{22}=\frac{2}{9}=0.22$
+  \end{center}
+  综上所述，销售状态转移概率矩阵为：
+  \begin{center}
+    P=$\begin{bmatrix}
+    p_{11} &p_{12} \\
+    p_{21} &p_{22}
+    \end{bmatrix}$=
+    $\begin{bmatrix}
+    0.5 &0.5 \\
+    0.78 &0.22
+    \end{bmatrix}$
+  \end{center}
+  所以4个季度后，
+  \begin{center}
+    P(4)=$P^{4}=\begin{bmatrix}
+    0.6118 &0.3882 \\
+    0.6056 &0.3944
+    \end{bmatrix}$
+  \end{center}
+  假设四个状态分别为情况1-4，由全概率公式得：
+  \begin{center}
+    $p_{X_{3}=1}=p(X_{n}=1|X_{0}=1)p(X_{0}=1)+p(X_{n}=1|X_{0}=3)p(X_{0}=3)=0.7831$\\
+    $p_{X_{3}=2}=p(X_{n}=2|X_{0}=1)p(X_{0}=1)+p(X_{n}=2|X_{0}=3)p(X_{0}=3)=0.4969$\\
+    $p_{X_{3}=3}=p(X_{n}=3|X_{0}=1)p(X_{0}=1)+p(X_{n}=3|X_{0}=3)p(X_{0}=3)=0.7752$\\
+    $p_{X_{3}=4}=p(X_{n}=4|X_{0}=1)p(X_{0}=1)+p(X_{n}=4|X_{0}=3)p(X_{0}=3)=0.5048$
+  \end{center}
+  因为：
+  \begin{center}
+    P(10)=$P^{10}=\begin{bmatrix}
+    0.6094 &0.3906 \\
+    0.6094 &0.3906
+    \end{bmatrix}$,
+    P(20)=$P^{20}=\begin{bmatrix}
+    0.6094 &0.3906 \\
+    0.6094 &0.3906
+    \end{bmatrix}$
+  \end{center}
+  所以销售情况会趋于一个固定的情况，即销售状态转移矩阵趋于：
+  \begin{center}
+    $\begin{bmatrix}
+    0.6094 &0.3906 \\
+    0.6094 &0.3906
+    \end{bmatrix}$
+  \end{center}
+  ~\\
+13.\\
+(1).设A,B,C,D为四个系统各个正常工作\\
+$P(A)=P(B)=P(C)=P(D)=0.99,P(\overline{A})=P(\overline{B})=P(\overline{C})=P(\overline{D})=0.01$\\
+$P(X)=P(\mbox{单个系统4单位时间后正常工作})=0.99^{4},P(\mbox{4单位时间后系统正常工作})=P(X)^{4}+C_{4}^{1}*P(X)^{3}*(1-P(X))+C_{4}^{2}*P(X)^{2}*(1-P(X))^{2}=0.9998=99.98\%$\\
+即可靠性为$99.98\%$\\
+(2).\\
+$P(\mbox{能正常工作})=P(X)^3+C_{3}^{!}*P(X)^2*(1-P(X))=0.9955=99.55\%$\\
+~\\
+14.假设输入过程为泊松流，办理事务的时间服从负指数分布，那么系统的输出也为泊松流。\\
+将三个服务台看为三个子系统，输入效率分别为$\lambda_{1}$,$\lambda_{2}$,$\lambda_{3}$
+由题目所给信息可给出合理假设，即所有顾客在单个子系统中逗留的时间不超过1小时，列出以下方程组。
+\begin{equation*}
+  \begin{cases}
+ \lambda_{1}=3.8+0.2\lambda_{2}\\
+ \lambda_{2}=0.7\lambda_{1}+0.2\lambda_{3}\\
+ \lambda_{3}=0.5\lambda_{2}\\
+     \end{cases}
+\end{equation*}
+解得
+\begin{equation*}
+  \begin{cases}
+ \lambda_{1}=4.5\\
+ \lambda_{2}=3.5\\
+ \lambda_{3}=1.75\\
+     \end{cases}
+\end{equation*}
+此为每小时输入过程的均衡状态。\\
+$\rho_{1}=\frac{\lambda_{1}}{\mu_{1}}=\frac{1}{2}$\\
+$\rho_{2}=\frac{\lambda_{2}}{\mu_{2}}=\frac{1}{2}$\\
+$\rho_{3}=\frac{\lambda_{3}}{\mu_{3}}=\frac{1}{4}$\\
+$L_{S1}=\frac{\rho_{1}}{1-\rho_{1}}=1$\\
+$L_{S2}=\frac{\rho_{2}}{1-\rho_{2}}=1$\\
+$L_{S3}=\frac{\rho_{3}}{1-\rho_{3}}=\frac{1}{3}$\\
+系统中的平均人数即为$L_{s1}+L_{s2}+L_{s3}=\frac{7}{3}$\\
+$W_{q1}=\frac{\lambda_{1}}{\mu_{1}(\mu_{1}-\lambda_{1})}=\frac{1}{9}$\\
+$W_{q2}=\frac{\lambda_{2}}{\mu_{2}(\mu_{2}-\lambda_{2})}=\frac{1}{7}$\\
+$W_{q3}=\frac{\lambda_{3}}{\mu_{3}(\mu_{3}-\lambda_{3})}=\frac{1}{21}$\\
+每小时从外部输入该系统3.8人，因此平均等待时间可认为为\\
+$W=\frac{\frac{1}{9}\times 4.5+\frac{1}{7}\times 3.5+\frac{1}{21}\times 1.75}{3.8}=0.286h$\\
+~\\
+\end{document}

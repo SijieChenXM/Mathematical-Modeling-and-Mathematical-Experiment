@@ -1,0 +1,330 @@
+\documentclass[a4paper,12pt]{article} %文档类型
+\usepackage{CJK}
+\usepackage{ctex}
+\usepackage{color}
+\usepackage{amsmath,amssymb,amstext} %多种公式环境和数学命令
+\usepackage{float}
+\usepackage{array}           %数组和表格制作
+\usepackage{fancyhdr}        %页眉页脚设置
+\usepackage{graphicx}        %插图
+\usepackage{tabularx}        %自动设置表格列宽
+\usepackage{multirow}        %跨行表格
+\usepackage{multicol}        %跨列表格
+\usepackage{titlesec}        %标题设置
+\usepackage{titletoc}        %目录格式设置
+\usepackage{epstopdf}        %编译生成pdf时，能够插入eps格式图片
+\usepackage[top=2.5cm,bottom=2.0cm,left=2.0cm,right=2.0cm]{geometry} % 页边距
+\newcommand{\hei}{\CJKfamily{hei}}  % 定义的新命令
+\newcommand{\li}{\CJKfamily{li}}
+\renewcommand{\figurename}{{图}}
+\linespread{1.7}   %1.5倍行距
+\usepackage{listings}
+\usepackage{xcolor}
+ %\lstset{
+%   %行号
+%   numbers=left,
+%   %背景框
+%   framexleftmargin=10mm,
+%   frame=none,
+%   %背景色
+%   %backgroundcolor=\color[rgb]{1,1,0.76},
+%   backgroundcolor=\color[RGB]{245,245,244},
+%   %样式
+%   keywordstyle=\bf\color{blue},
+%   identifierstyle=\bf,
+%   numberstyle=\color[RGB]{0,192,192},
+%   commentstyle=\it\color[RGB]{0,96,96},
+%   stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+%   %显示空格
+%   showstringspaces=false
+%}
+%\lstset{numbers=left, numberstyle=\tiny, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, frame=shadowbox, rulesepcolor=\color{red!20!green!20!blue!20},escapeinside=``, xleftmargin=2em,xrightmargin=2em, aboveskip=1em, escapeinside=``}
+
+\lstset{numbers=left, %设置行号位置
+        numberstyle=\tiny, %设置行号大小
+        keywordstyle=\color{blue!70}, %设置关键字颜色
+        commentstyle=\color[cmyk]{1,0,1,0}, %设置注释颜色
+        frame=shadowbox, %设置边框格式
+        rulesepcolor=\color{red!20!green!20!blue!20},
+        escapeinside=``, %逃逸字符(1 左面的键)，用于显示中文
+        breaklines, %自动折行
+        extendedchars=false, %解决代码跨页时，章节标题，页眉等汉字不显示的问题
+        xleftmargin=2em,xrightmargin=2em, aboveskip=1em, %设置边距
+        %tabsize=4, %设置tab空格数
+        %showspaces=false %不显示空格
+       }
+\begin{document}
+\begin{center}
+\large
+\heiti{530~~陈斯杰~~电子信息工程~~第8次作业}
+\end{center}
+1.\\
+使用$Dijkstra$算法得到：
+\begin{enumerate}
+  \item $a\rightarrow v_{1}=2$
+  \item $a\rightarrow v_{2}=7$
+  \item $a\rightarrow v_{3}=1$
+  \item $a\rightarrow v_{4}=3$
+  \item $a\rightarrow v_{5}=6$
+  \item $a\rightarrow v_{6}=10$
+  \item $a\rightarrow b=12$
+\end{enumerate}
+2.\\
+Kruskal即贪心（按边权升序排序）+并查（依次判断边的两端点是否在同一连通分量内）.\\
+代码方面网上模板过多,在此不加赘述.\\
+手动运算结果如下：\\
+\begin{tabular}{ccc}
+times & add\_edge & cost\\
+1&(B,D)&5\\
+2&(D,F)&6\\
+3&(B,C)&7\\
+4&(A,B)&10\\
+5&(E,F)&10\\
+\end{tabular}\\
+最小生成树的权为38.\\
+3.\\
+中国邮路可以理解为连通途中所有顶点的一个闭连通有向图，图中的边我们可以理解为双向的弧，以$v_1$为起点的中国邮路为：
+$v_1\longrightarrow v_2 \longrightarrow v_7 \longrightarrow v_3\longrightarrow v_4 \longrightarrow v_5 \longrightarrow v_6 \longrightarrow v_1$\\
+4.\\
+任取初始匹配$M_{1}={(x_{1},y_{2}),(x_{2},y_{3}),(x_{3},y_{5}),(x_{5},y_{4})}$\\
+过未饱和点$x_{4}$可得一条$M_{1}$增广路$x_{4}y_{3}x_{2}y_{2}x_{1}y_{1}$\\
+改进后得到\\$M_{2}={(x_{1},y_{1}),(x_{2},y_{2}),(x_{3},y_{5}),(x_{4},y_{3}),(x_{5},y_{4})}$\\
+此时X中均为饱和点，$M_{2}$即为一个最大匹配\\
+~\\
+5.\\
+画图如下：
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{5_1.jpg}\\
+\end{center}
+求完美匹配得下图：
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{5_2.jpg}\\
+\end{center}
+6.\\
+增广弧：得到的最大流为$11$
+\begin{enumerate}
+  \item $s\rightarrow a\rightarrow t$
+  \item $s\rightarrow b\rightarrow c\rightarrow t$
+  \item $s\rightarrow b\rightarrow a\rightarrow t$
+\end{enumerate}
+7.\\
+将两岸状态抽象为点，将状态的转移抽象为边，模型即可转化为求最短路问题。\\
+将状态抽象为点（下表标1的表示单位在左岸，表0的表示单位在右岸）：
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{7_1.jpg}\\
+\end{center}
+将状态的转移抽象为边：
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{7_2.jpg}\\
+\end{center}
+代码方面网上模板过多,在此不加赘述.\\
+答案为ABCIHFGJ或ABCDEFGJ.
+即（羊空 菜羊 狼空 羊）或（羊空 狼羊 菜空 羊）.\\
+8.\\
+总有3人相互认识与总有3人相互不认识是等价的，我们考虑前一种。\\
+我们用A、B、C、D、E、F来表示这六个人，若两人相互认识，我们用实线将两个顶点连接起来，若两人不认识，则用虚线。
+对于顶点A，与其相连的边有(A,B),(A,C),(A,D),(A,E),(A,F).五条边中，至少有三条为实线或至少三条虚线，不妨设为三条实线，不妨设为(A,B),(A,C),(A,D)。
+如图：
+\begin{center}
+\includegraphics[scale=0.5]{fig1.jpg}
+\end{center}
+我们再考虑BCD三个顶点，若三点之间的连线均为虚线，则三条虚线构成三角形，即BCD三人互相不认识，矛盾！
+所以，BC、BD、CD三条边中至少有一条实线，不妨设为BC，如图：
+\begin{center}
+\includegraphics[scale=0.5]{fig2.jpg}
+\end{center}
+所以ABC三人互相认识，同理，我们可以证明至少三人互相不认识。\\
+所以，六人集会上，总有三人互相认识或者三人互相不认识。\\
+9.\\
+由避圈法得，下图为最短路径，最短长度为790。\\
+\begin{center}
+  \includegraphics[width=0.7\textwidth]{9.jpg}\\
+\end{center}
+~\\
+10.\\
+以城镇各地区为点、两两连接为边画图，地区之间的距离设为对应边的权重，求最小支撑树，该树的权重即为总的最小车道长度。\\
+11.\\
+最小生成树如下图：
+\begin{center}
+\includegraphics[width=0.5\textwidth]{graph_11.jpg}\\
+\end{center}
+12.\\
+手动运算结果如下：\\
+\begin{tabular}{ccc}
+times & add\_edge & cost\\
+1&(10,12)&61\\
+2&(3,6)&63\\
+3&(6,9)&67\\
+4&(9,11)&73\\
+5&(4,6)&76\\
+6&(12,14)&82\\
+7&(9,10)&84\\
+8&(5,8)&86\\
+9&(10,13)&88\\
+10&(7,10)&92\\
+11&(8,9)&95\\
+12&(1,4)&107\\
+13&(1,2)&112\\
+\end{tabular}\\
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{12.jpg}\\
+\end{center}
+最小生成树的权为1086.\\
+13.\\
+该问题为求该带权无向图的最小生成树，以减小架设管道的距离。\\
+运用Kruskal算法，依次加入边$(5,6),(4,7),(10,11),(3,5),(1,2),\\
+(5,9),(1,4),(5,8),(10,14),(9,12),(9,10),(12,13).$\\
+如下图：
+\begin{center}
+\includegraphics[scale=0.5]{fig3.jpg}
+\end{center}
+14.\\
+设活动路径长度为从第i个活动开始到第j个活动开始所需时间。
+路径：1-3-6-8：17,
+1-3-7:12,
+1-4-8:7,
+2-5-8:16,
+2-9:7
+关键路径：1-3-6-8，2-9
+~\\
+15.\\
+该网络图为：
+ \begin{center}
+  \includegraphics[width=0.5\textwidth]{15.jpg}\\
+\end{center}
+识别所有路径：
+$\begin{cases}
+L_{1}:1\rightarrow 3\rightarrow 6\rightarrow 7~~~~&\mbox{长度为17}\\
+L_{2}:2\rightarrow 4\rightarrow 6\rightarrow 7&\mbox{长度为19}\\
+L_{3}:2\rightarrow 5\rightarrow 7&\mbox{长度为14}
+\end{cases}$
+关键路径为$L_{2}$.\\
+16.\\
+关键路径节点为：$\mbox{开始}\rightarrow 2\rightarrow 4\rightarrow 6\rightarrow 7$\\
+关键路径长度为：20个单位\\
+\begin{equation*}
+\begin{vmatrix}
+from & to & first & last &\Delta t \\
+0 & 2 & 0 & 0 &0 \\
+0 & 3 & 7 & 9 &2 \\
+2 & 5 & 10 & 14 &4 \\
+2 & 4 & 10 & 10 &0 \\
+3 & 6 & 13 & 15 &2 \\
+4 & 6 & 15 & 15 &0 \\
+5 & 7 & 14 & 18 &4 \\
+6 & 7 & 18 & 18 &0 \\
+\end{vmatrix}
+\end{equation*}
+17.\\
+使用最短路模型.\\
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{17.jpg}\\
+\end{center}
+黑色数字为最早开始时间，红色数字为最晚开始时间，红色线路为关键路径，总工期38个月。\\
+18.\\
+列表解决：\\
+(1)活动最早开始时间：\\
+\begin{center}
+\begin{tabular}{|c|cccccccc|c|}%一个c表示有一列，格式为居中显示(center)
+\hline
+最早开始时间&1&2&3&4&5&6&7&8&栈\\%第一行第一列和第二列  中间用&连接
+\hline
+初始状态&$\infty$&$\infty$&$\infty$&$\infty$&$\infty$&$\infty$&$\infty$&$\infty$&$\{1,2\}$\\
+一$\{2\}$&0&0&$\infty$&$\infty$&7&7&$\infty$&$\infty$&$\{1,5,6\}$\\
+二$\{6\}$&0&0&$\infty$&$\infty$&7&7&$\infty$&19&$\{1,5\}$\\
+三$\{5\}$&0&0&$\infty$&$\infty$&7&7&13&19&$\{1\}$\\
+四$\{1\}$&0&0&10&10&7&7&13&19&$\{3,4\}$\\
+五$\{4\}$&0&0&10&10&7&7&14&19&$\{3,7\}$\\
+六$\{7\}$&0&0&10&10&7&7&14&21&$\{3\}$\\
+七$\{3\}$&0&0&10&10&7&7&14&25&$\{~\}$\\
+\hline
+\end{tabular}
+\end{center}
+
+(2)最晚开始时间：
+\begin{center}
+\begin{tabular}{|c|cccccccc|}%一个c表示有一列，格式为居中显示(center)
+\hline
+最晚开始时间&1&2&3&4&5&6&7&8\\%第一行第一列和第二列  中间用&连接
+\hline
+*&0&5&10&14&12&13&18&25\\
+\hline
+\end{tabular}
+\end{center}
+
+(3)松弛：
+\begin{center}
+\begin{tabular}{|c|cccccccc|}%一个c表示有一列，格式为居中显示(center)
+\hline
+松弛&1&2&3&4&5&6&7&8\\%第一行第一列和第二列  中间用&连接
+\hline
+*&0&5&0&4&5&6&4&0\\
+\hline
+\end{tabular}
+\end{center}
+
+(4)关键路径：$1\longrightarrow3\longrightarrow8$\\
+(5)项目工期：34周。\\
+19.
+\begin{center}
+  \includegraphics[width=0.4\textwidth]{19.jpg}\\
+\end{center}
+如上图所示，$V_{i}$表示第i年初做出的决策，$V_{6}$表示第五年底。\\
+其中$V_{i}\rightarrow V_{j}$的赋权表示将第i年初购买设备一直使用到第j年初所需要的费用。\\
+即转化为由$V_{1}\rightarrow V_{6}$最短路径问题。\\
+由Dijkstra算法可得，最短路径为$V_{1}-V_{4}-V_{6}$或$V_{1}-V_{3}-V_{6}$，最短路径为53。\\
+20.\\
+画出图为：
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{20_1.jpg}\\
+\end{center}
+依题意简化图得：
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{20_2.jpg}\\
+\end{center}
+解得：
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{20_3.jpg}\\
+\end{center}
+即排座位的方式为：a,b,d,f,g,e,c依次围坐一圈\\
+21.\\
+【思路】将26个字母作为节点，每个单词作为一条有向边，弧头为单词首字母，弧尾为单词尾字母。一组单词构成节点数有限的有向图，判断单词能否完成接龙即判断有向图是否存在欧拉回路或者欧拉路。\\
+【例1】$teeth\rightarrow happy\rightarrow yet\rightarrow teach$
+\begin{center}
+\includegraphics[width=0.5\textwidth]{graph_16_1.jpg}\\
+\end{center}
+【例2】$old-ok-king-deep$
+\begin{center}
+\includegraphics[width=0.5\textwidth]{graph_16_2.jpg}\\
+\end{center}
+【解】
+\begin{itemize}
+  \item 例1满足除两个节点外（一个入度比出度多1，一个入度比出度少1），每个节点入度等于出度，存在欧拉路，可以完成接龙
+  \item 例2没有回路，不存在欧拉路，因此不能完成接龙
+\end{itemize}
+22.\\
+题目要求修建管道系统，使得任意两个存储站之间能够连接。修建成本显然需要重点考虑，即成本要最低，因此选择使用最小生成树模型.\\
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{22.jpg}\\
+\end{center}
+如图建造，花费资金830.\\
+23.\\
+运用图论知识，求算出ABC三地到8个菜市场的最短距离，如下表：
+\begin{center}
+\begin{tabular}{|c|cccccccc|}%一个c表示有一列，格式为居中显示(center)
+\hline
+~&1&2&3&4&5&6&7&8\\%第一行第一列和第二列  中间用&连接
+\hline
+A&4&8&8&16&11&6&24&20\\
+B&14&7&7&16&12&16&23&17\\
+C&20&19&11&14&6&15&5&10\\
+\hline
+\end{tabular}
+\end{center}
+再对各集散点运往各菜市场的供应量进行假设，通过线性规划求解。\\
+24.\\
+\begin{center}
+  \includegraphics[width=0.7\textwidth]{24.png}\\
+\end{center}
+如上图分析可知，每日最多可增加9万吨供水量。\\
+\end{document}

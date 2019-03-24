@@ -1,0 +1,203 @@
+\documentclass[a4paper,12pt]{article} %文档类型
+\usepackage{CJK}
+\usepackage{ctex}
+\usepackage{color}
+\usepackage{amsmath,amssymb,amstext} %多种公式环境和数学命令
+\usepackage{float}
+\usepackage{array}           %数组和表格制作
+\usepackage{fancyhdr}        %页眉页脚设置
+\usepackage{graphicx}        %插图
+\usepackage{tabularx}        %自动设置表格列宽
+\usepackage{multirow}        %跨行表格
+\usepackage{multicol}        %跨列表格
+\usepackage{titlesec}        %标题设置
+\usepackage{titletoc}        %目录格式设置
+\usepackage{epstopdf}        %编译生成pdf时，能够插入eps格式图片
+\usepackage[top=2.5cm,bottom=2.0cm,left=2.0cm,right=2.0cm]{geometry} % 页边距
+\newcommand{\hei}{\CJKfamily{hei}}  % 定义的新命令
+\newcommand{\li}{\CJKfamily{li}}
+\renewcommand{\figurename}{{图}}
+\linespread{1.7}   %1.5倍行距
+\usepackage{listings}
+\usepackage{xcolor}
+ %\lstset{
+%   %行号
+%   numbers=left,
+%   %背景框
+%   framexleftmargin=10mm,
+%   frame=none,
+%   %背景色
+%   %backgroundcolor=\color[rgb]{1,1,0.76},
+%   backgroundcolor=\color[RGB]{245,245,244},
+%   %样式
+%   keywordstyle=\bf\color{blue},
+%   identifierstyle=\bf,
+%   numberstyle=\color[RGB]{0,192,192},
+%   commentstyle=\it\color[RGB]{0,96,96},
+%   stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+%   %显示空格
+%   showstringspaces=false
+%}
+%\lstset{numbers=left, numberstyle=\tiny, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, frame=shadowbox, rulesepcolor=\color{red!20!green!20!blue!20},escapeinside=``, xleftmargin=2em,xrightmargin=2em, aboveskip=1em, escapeinside=``}
+
+\lstset{numbers=left, %设置行号位置
+        numberstyle=\tiny, %设置行号大小
+        keywordstyle=\color{blue!70}, %设置关键字颜色
+        commentstyle=\color[cmyk]{1,0,1,0}, %设置注释颜色
+        frame=shadowbox, %设置边框格式
+        rulesepcolor=\color{red!20!green!20!blue!20},
+        escapeinside=``, %逃逸字符(1 左面的键)，用于显示中文
+        breaklines, %自动折行
+        extendedchars=false, %解决代码跨页时，章节标题，页眉等汉字不显示的问题
+        xleftmargin=2em,xrightmargin=2em, aboveskip=1em, %设置边距
+        %tabsize=4, %设置tab空格数
+        %showspaces=false %不显示空格
+       }
+\begin{document}
+\begin{center}
+\large
+\heiti{530+陈斯杰+电子信息工程+第六次作业}
+\end{center}
+1.$L=vp-80000-3.5v=-5666p^{2}+36831p-139500$\\
+$\frac{dL}{dp}=-11332p+36831$\\
+令$\frac{dL}{dp}=0$可求得最大利润、最优生产量和最优定价\\
+8.$L=\sqrt{(x-15)^2+(y-85)^2}+\sqrt{(x-42)^2+(y-145)^2}+\sqrt{88^2+(y-145)^2}+\sqrt{(x-125)^2+(y-140)^2}+\sqrt{(x-135)^2+(y-125)^2}+\sqrt{(x-180)^2+(y-18)^2}$\\
+$x=1,y=121,L_{min}=387.9615$
+
+2.价格p\\
+需求v = 1800-15p\\
+总成本 = 12000+17v\\
+利润 = v * p - 12000 - 17v =-15p$^{2}$ + 2055p - 42600
+显然是个一员二次函数，易得当 p = -b/2a = 68.5 时利润最大。\\
+{题目中的数据与给的公式不符，因此按照题意价格应为685。}
+
+3.(1)我们直接用lingo对问题进行求解，在lingo中输入：
+\begin{lstlisting}[language=lingo]
+max=7*x1-0.31*x1^2+8*x2-0.4*x2^2;
+4*x1+5*x2=100;
+x1>=0;
+x2>=0;
+\end{lstlisting}
+
+得到下图，
+\begin{center}
+\includegraphics[scale=0.5]{1.jpg}
+\end{center}
+所以，我们可知，当$x_1=11.83746;x_2=10.53004$时，目标函数z最大化，其最大值为79.31095。\\\\
+(2)另外，我们用拉格朗日方法进行验算，
+设$F(x_1,x_2)=7x_1-0.31x_1^2+8x_2-0.4x_2^2-\lambda (4x_1+5x_2-100)$,
+有：
+$$\left\{
+\begin{aligned}
+\frac{\partial f}{\partial x_1}=7-0.62x_1-4\lambda x_1=0\\
+\frac{\partial f}{\partial x_2}=8-0.8x_2-5\lambda x_2=0\\
+\frac{\partial f}{\partial \lambda}=4x_1+5x_2-100=0\\
+\end{aligned}
+\right.
+$$
+可得：
+$$x_1=\frac{7}{0.62+4\lambda}\\
+x_2=\frac{8}{0.8+5\lambda}\\
+4x_1+5x_2=100$$
+得：$\frac{7\times4}{0.62+4\lambda}+\frac{5\times8}{0.8+5\lambda}=100$\\
+解得：$\lambda=-0.007625$,可求得$x_1=11.83746;x_2=10.53004$,与上面所求相同。
+
+4.设派给i地区$x_{i}$人
+目标函数\\
+\begin{equation*}
+z=max(80100-\frac{9000}{x_{1}}-\frac{15000}{x_{2}}-\frac{5300}{x_{3}}-\frac{7600}{x_{4}}-\frac{12500}{x_{5}})\\
+\end{equation*}
+\begin{equation*}
+s.t.~
+ \begin{cases}
+ 3550x_{1}+5400x_{2}+2900x_{3}+2750x_{4}+4900x_{5}\leq65000\\
+ x_{1}+x_{2}+x_{3}+x_{4}+x_{5}=15\\
+ x_{1}\geq0,x_{2}\geq0,x_{3}\geq0,x_{4}\geq0,x_{5}\geq0\\
+ \forall x \mbox{均为整数}
+ \end{cases}
+\end{equation*}
+解得最优解为
+\begin{equation*}
+ \begin{cases}
+ x_{1}=3\\
+ x_{2}=4\\
+ x_{3}=2\\
+ x_{4}=3\\
+ x_{5}=3\\
+ \end{cases}
+\end{equation*}
+5.解：电力公司的收入主要由高需求客户和低需求客户两部分组成，而这两种客户的收入分别为:
+  \begin{center}
+    $p_{h}*(5.8-0.06p_{h}+0.005p_{l})$\\
+    $p_{l}*(3.0-0.11p_{l}+0.008p_{h})$
+  \end{center}
+  因此电力公司的总收入为：
+  \begin{center}
+    $Z=5.9p_{h}+3.0p_{l}-0.06p_{h}^{2}-0.11p_{l}^{2}+0.013p_{l}p_{h}$
+  \end{center}
+  限制条件为：
+  \begin{center}
+    $0.052p_{h}+0.105p_{l}\geq 6.3$
+  \end{center}
+   将模型代入MATLAB中求解，MATLAB代码如下：
+  \begin{lstlisting}[language=matlab, linewidth=0.9\linewidth]
+    function [ f,ceq ] = nonlinearcondition( x )
+    f = -0.052*x(1)-0.105*x(2);
+    ceq = 0;
+    end
+    function f = fun( x )
+    f = -(5.8*x(1)+3*x(2)+0.013*x(1)*x(2)-0.06*x(1)^2-0.11*x(2)^2);
+    end
+    [x,fval] = fmincon('fun',[0;0],[],[],[],[],[0;0],[],'nonlinearcondition')
+  \end{lstlisting}
+  解得非线性规划最优解为:
+  \begin{center}
+    $p_{h}=50.1315,p_{l}=16.5987$\\
+    $Z=170.2784$
+  \end{center}
+  因此为保证最大化收入，低需求每度电价格为16.5987元，高需求每度电价格为50.1315元。
+
+6.\begin{itemize}
+          \item 数学模型建立：\\
+                设分配到四个区的巡逻车数量分别为$x_{1},x_{2},x_{3},x_{4}$, 得下列数学模型：
+                  \begin{center}%居中命令
+                    目标函数：$Min  z = 1.3+\frac{0.15}{x_{1}}+\frac{0.21}{x_{2}}+\frac{0.12}{x_{3}}+\frac{0.3}{x_{4}}$
+                  \end{center}
+                  \begin{equation*} %方程组的输入
+                    \begin{cases}
+                    x_{1}+x_{2}+x_{3}+x_{4}\leq20\\
+                    21+\frac{11}{x_{1}}+\frac{8}{x_{2}}+\frac{10}{x_{3}}+\frac{9}{x_{4}}\leq40\\
+                    x_{1},x_{2},x_{3},x_{4}\geq0
+                    \end{cases}
+                  \end{equation*}
+          \item 模型求解
+          \begin{description}
+            \item[(1)] 编写$fun.m$文件,存放目标函数：
+                      \begin{lstlisting}[language=matlab, linewidth=0.8\linewidth]
+function f = fun(x)
+  f = 1.3+0.15/x(1)+0.21/x(2)+0.12/x(3)+0.3/x(4);
+end
+                     \end{lstlisting}
+            \item[(2)] 编写$nonlinearcondition.m$文件,存放非线性约束函数：
+                      \begin{lstlisting}[language=matlab, linewidth=0.8\linewidth]
+function [f,ceq]=nonlinearcondition(x)
+  f = 21+11/x(1)+8/x(2)+10/x(3)+9/x(4)-40;
+  ceq = 0;
+end
+                     \end{lstlisting}
+            \item[(3)] 编写最终解题代码：
+                      \begin{lstlisting}[language=matlab, linewidth=0.8\linewidth]
+x0 = [5;5;5;5];
+A = [1 1 1 1];
+b = [20];
+lb = [0;0;0;0];
+[x,fval] = fmincon('fun',x0,A,b,[],[],lb,[],'nonlinearcondition')
+                     \end{lstlisting}
+          \end{description}
+          得出结果：$x = [4.4525,5.2683,3.9824，6.2968],z = 1.4513$,经过四舍五入得最终结果：
+          \begin{center}%居中命令
+             $x = [5,5,4,6],z = 1.4520$
+          \end{center}
+          即四个区分别分配5辆、5 辆、4 辆、6辆,此时四个区总犯罪率为1.4520
+        \end{itemize}
+\end{document}

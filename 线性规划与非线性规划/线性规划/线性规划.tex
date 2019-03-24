@@ -1,0 +1,1569 @@
+\documentclass[a4paper,12pt]{article} %文档类型
+\usepackage{CJK}
+\usepackage{ctex}
+\usepackage{color}
+\usepackage{amsmath,amssymb,amstext} %多种公式环境和数学命令
+\usepackage{float}
+\usepackage{array}           %数组和表格制作
+\usepackage{fancyhdr}        %页眉页脚设置
+\usepackage{graphicx}        %插图
+\usepackage{tabularx}        %自动设置表格列宽
+\usepackage{multirow}        %跨行表格
+\usepackage{multicol}        %跨列表格
+\usepackage{titlesec}        %标题设置
+\usepackage{titletoc}        %目录格式设置
+\usepackage{epstopdf}        %编译生成pdf时，能够插入eps格式图片
+\usepackage[top=2.5cm,bottom=2.0cm,left=2.0cm,right=2.0cm]{geometry} % 页边距
+\newcommand{\hei}{\CJKfamily{hei}}  % 定义的新命令
+\newcommand{\li}{\CJKfamily{li}}
+\renewcommand{\figurename}{{图}}
+\linespread{1.7}   %1.5倍行距
+\usepackage{listings}
+\usepackage{xcolor}
+ %\lstset{
+%   %行号
+%   numbers=left,
+%   %背景框
+%   framexleftmargin=10mm,
+%   frame=none,
+%   %背景色
+%   %backgroundcolor=\color[rgb]{1,1,0.76},
+%   backgroundcolor=\color[RGB]{245,245,244},
+%   %样式
+%   keywordstyle=\bf\color{blue},
+%   identifierstyle=\bf,
+%   numberstyle=\color[RGB]{0,192,192},
+%   commentstyle=\it\color[RGB]{0,96,96},
+%   stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+%   %显示空格
+%   showstringspaces=false
+%}
+%\lstset{numbers=left, numberstyle=\tiny, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, frame=shadowbox, rulesepcolor=\color{red!20!green!20!blue!20},escapeinside=``, xleftmargin=2em,xrightmargin=2em, aboveskip=1em, escapeinside=``}
+
+\lstset{numbers=left, %设置行号位置
+        numberstyle=\tiny, %设置行号大小
+        keywordstyle=\color{blue!70}, %设置关键字颜色
+        commentstyle=\color[cmyk]{1,0,1,0}, %设置注释颜色
+        frame=shadowbox, %设置边框格式
+        rulesepcolor=\color{red!20!green!20!blue!20},
+        escapeinside=``, %逃逸字符(1 左面的键)，用于显示中文
+        breaklines, %自动折行
+        extendedchars=false, %解决代码跨页时，章节标题，页眉等汉字不显示的问题
+        xleftmargin=2em,xrightmargin=2em, aboveskip=1em, %设置边距
+        %tabsize=4, %设置tab空格数
+        %showspaces=false %不显示空格
+       }
+\begin{document}
+
+\begin{center}
+\large
+\heiti{530~~陈斯杰~~电子信息工程~~第五次作业}
+\end{center}
+\section{一、线性规划部分}
+1.假设成分1化肥与成分2化肥的需求为$x=\begin{bmatrix}
+x_{1}\\
+x_{2}
+\end{bmatrix}$，那么成本$Z=\begin{bmatrix}
+3 & 5
+\end{bmatrix}\begin{bmatrix}
+x_{1}\\
+x_{2}
+\end{bmatrix}$\\
+可列出线性规划条件利用MATLAB进行求解：\\
+\begin{equation*}
+\begin{cases}
+\begin{bmatrix}
+10 &2 \\
+6 &6 \\
+0 &1
+\end{bmatrix}\begin{bmatrix}
+x_{1}\\
+x_{2}
+\end{bmatrix}\leq \begin{bmatrix}
+20\\
+36\\
+2
+\end{bmatrix}\\
+\begin{bmatrix}
+x_{1}\\
+x_{2}
+\end{bmatrix}\geq \begin{bmatrix}
+0\\
+0
+\end{bmatrix}
+\end{cases}
+\end{equation*}
+\small
+\begin{lstlisting}[language=Matlab][b]
+%q1_1_1.m
+clear all;
+clc;
+c=[3 5];
+A=[-5 -1
+    -1 -1
+    0 -1];
+b=[-10;-6;2];
+lb=zeros(2,1);
+[x,fval]=linprog(c,A,b,[],[],lb)
+\end{lstlisting}
+\large
+解出当$Z_{min}=18,x=\begin{bmatrix}
+6\\
+0
+\end{bmatrix}$
+\\2.构建模型：
+\begin{equation*}
+  \begin{cases}
+    Wmax=400x_1+100x_2\\
+    8x_1+10x_2<=80\\
+    2x_1+6x_2<=36\\
+    x_1<=6\\
+    x_1,x_2>=0\\
+     \end{cases}
+\end{equation*}
+求解模型：
+\small
+\begin{lstlisting}[language=Matlab][b]
+f=[-400 -100]
+a=[8 10;2 6;1 0;-1 0;0 -1]
+b=[80 36 6 0 0]
+x=linprog(f,a,b)
+\end{lstlisting}
+解得：x$_1$ = 6,x$_2$ = 3.2,\\
+收益Wmax=2720,剩余工时0,木材4.8.
+\\3.(1)我们先将所给信息进行整理，如下表：
+\begin{center}
+\begin{tabular}{cccc}%一个c表示有一列，格式为居中显示(center)
+\hline
+~&黄金(18kg)&白金(20kg)&利润\\%第一行第一列和第二列  中间用&连接
+项链$x_1$&3&2&3000\\%第二行第一列和第二列  中间用&连接
+手镯$x_2$&2&4&4000\\
+\hline
+\end{tabular}
+\end{center}
+该问题为典型的线性规划问题，我们列出目标函数$max~z=3000x_1+4000x_2$\\
+约束条件为
+$$s.t.\left\{
+\begin{aligned}
+3x_1+2x_2\leq18\\
+2x_1+4x_2\leq20\\
+x_2\leq4\\
+x_1,x_2\geq0
+\end{aligned}
+\right.
+$$
+\\
+(2)由matlab，$f=[-3000;-4000];A=[3~2;2~4;0~1];b=[18;20;4];lb=[0;0]$
+\\运行如下代码：
+\begin{lstlisting}
+f=[-3000;-4000];A=[3 2;2 4;0 1];b=[18;20;4];lb=[0;0];
+[x,fval] =linprog(f,A,b,[],[],lb)
+%输出结果：x =[4.0000;3.0000] ; fval =-2.4000e+04
+\end{lstlisting}
+所以当制作4个项链、3个手镯时，利润最大为$2.4\times10^4$元。\\
+(3)问题转化为：
+\begin{center}
+\begin{tabular}{cccc}%一个c表示有一列，格式为居中显示(center)
+\hline
+~&黄金(18kg)&白金(20kg)&利润\\%第一行第一列和第二列  中间用&连接
+项链$x_1$&3&2&3000\\%第二行第一列和第二列  中间用&连接
+手镯$x_2$&2&4&6000\\
+\hline
+\end{tabular}
+\end{center}
+
+目标函数$max~z=3000x_1+6000x_2$\\
+约束条件为\\
+$$s.t.\left\{
+\begin{aligned}
+3x_1+2x_2\leq18\\
+2x_1+4x_2\leq20\\
+x_2\leq4\\
+x_1,x_2\geq0
+\end{aligned}
+\right.
+$$
+\\
+经matlab计算，$f=[-3000;-6000];A=[3~2;2~4;0~1];b=[18;20;4];lb=[0;0]$
+\\运行如下代码：
+\begin{lstlisting}
+f=[-3000;-6000];A=[3 2;2 4;0 1];b=[18;20;4];lb=[0;0];
+[x,fval] =linprog(f,A,b,[],[],lb)
+%输出结果：x =[ 3.7255；3.1372] ; fval =-3.0000e+04
+\end{lstlisting}
+我们发现项链和手镯的数量并非整数，所以我们应该考虑使用整数线性规划求解。
+\\运行如下程序：
+\begin{lstlisting}
+f=[-3000;-6000];A=[3 2;2 4;0 1];b=[18;20;4];lb=[0;0];intcon=[1;2];
+[x,fval] =linprog(f,intcon,A,b,[],[],lb)
+%输出结果：x =[4.0000;3.0000] ; fval =-3.0000e+04
+\end{lstlisting}
+所以当制作4个项链、3个手镯时，利润最大为$3.0\times10^4$元。\\
+(4)目标函数$max~z=3000x_1+4000x_2$\\
+约束条件为\\
+$$s.t.\left\{
+\begin{aligned}
+3x_1+3x_2\leq18\\
+2x_1+4x_2\leq20\\
+x_2\leq4\\
+x_1,x_2\geq0
+\end{aligned}
+\right.
+$$
+\begin{lstlisting}
+f=[-3000;-4000];A=[3 3;2 4;0 1];b=[18;20;4];lb=[0;0];intcon=[1;2];
+[x,fval] =intlinprog(f,intcon,A,b,[],[],lb)
+%输出结果：x =[2.0000;4.0000] ; fval =-2.2000e+04
+\end{lstlisting}
+所以当制作2个项链、4个手镯时，利润最大为$2.2\times10^4$元。\\
+(5)目标函数$max~z=3000x_1+4000x_2$\\
+约束条件为\\
+$$s.t.\left\{
+\begin{aligned}
+3x_1+2x_2\leq18\\
+2x_1+4x_2\leq20\\
+x_1,x_2\geq0
+\end{aligned}
+\right.
+$$
+\begin{lstlisting}
+f=[-3000;-4000];A=[3 2;2 4];b=[18;20];lb=[0;0];intcon=[1;2];
+[x,fval] =intlinprog(f,intcon,A,b,[],[],lb)
+%输出结果：x =[4.0000;3.0000] ; fval =-2.4000e+04
+\end{lstlisting}
+所以如果商店按利润最大化的产量生产手镯和项链，也并未达到手镯的最大需求量，还相差一个。\\
+(6)在matlab中经过多次实验发现，当项链利润高于6000元，商店就不会生产手镯，此时利润最优解为36000元。
+\\4.设订购冰淇淋x升,冰冻酸奶酪y升
+
+(1)
+\begin{equation*}
+z=max(45x+35y)\\
+\end{equation*}
+\begin{equation*}
+s.t.~
+ \begin{cases}
+ x+y\leq500\\
+ 9.3x+7.5y\leq900\\
+ x-2y\geq0\\
+ x\geq0,y\geq0
+ \end{cases}
+\end{equation*}
+ ~\\
+ (2)
+\small
+\begin{lstlisting}[language=Matlab][b]
+f=[45 36]
+A=[1 1;9.3 7.5;-1 2]
+b=[500;900;0]
+lb=zeros(2,1)
+[x,z]=linprog(-f,A,b,[],[],lb,[])
+\end{lstlisting}
+\large
+解得x=96.7742,y=0时，利润最大为4354.8元
+~\\
+(3)
+\begin{equation*}
+z=max(45x+35y)\\
+\end{equation*}
+\begin{equation*}
+s.t.~
+ \begin{cases}
+ x+y\leq590\\
+ 9.3x+7.5y\leq900\\
+ x-2y\geq0\\
+ x\geq0,y\geq0
+ \end{cases}
+\end{equation*}
+ 解得x=96.7742,y=0时，利润最大为4354.8元，每周实现的额外利润为0，因受到进货成本的约束。
+\\5.
+      解：假设分别生产1号产品和2号产品$x_{1},x_{2}$件，由题目条件构建线性规划模型为：
+      \begin{center}
+        $Z=300x_{1}+700x_{2}$\\
+        $\begin{cases}
+        4x_{1}+10x_{2}\leqslant 80  \\
+        14x_{1}+8x_{2}\leqslant 112   \\
+        x_{1}+x_{2}\leqslant 10  \\
+         x_{1}\geqslant 0,x_{2}\geqslant 0  \\
+      \end{cases}$
+      \end{center}
+      将模型代入MATLAB中求解，MATLAB代码如下：
+      \begin{lstlisting}[language=matlab, linewidth=0.9\linewidth]
+        f = [-300 -700];
+        A = [4 10;14 8;1 1];
+        b = [80;112;10];
+        lb = [0;0];
+        ub = [];
+        [x,fval] = linprog(f,A,b,[],[],lb,ub)
+      \end{lstlisting}
+      解得线性规划最优解为:
+      \begin{center}
+        $x_{1}=3.3333,x_{2}=6.6666,Z=5666.7$
+      \end{center}
+      若目标函数由$Z=30x_{1}+70x_{2}$改为$Z=90x_{1}+70x_{2}$,通过计算得到线性规划最优解为:
+      \begin{center}
+        $x_{1}=5.3333,x_{2}=4.6667,Z=8066.7$
+      \end{center}
+      因此斜率对最优解的影响在于，斜率不同，对最优解的选择也不同。
+\\6.
+
+         假设酿造山谷花露$x$批，山谷红$y$批，由题干条件可得以下线性规划数学模型：
+
+              目标函数：$Min  z = -90000x-120000y$
+
+              \begin{equation*} %方程组的输入
+                \begin{cases}
+                4x+8y\leq64\\
+                x+y\leq10\\
+                15x+8y\leq120\\
+                0\leq x,y \leq7
+                \end{cases}
+              \end{equation*}
+          $MATLAB$代码如下：
+           \begin{lstlisting}[language=matlab, linewidth=0.8\linewidth]
+c = [-90000;-120000];
+A = [4 8;1 1;15 8];
+b = [64;10;120];
+LB = [0;0];
+UB = [7;7];
+linprog(c,A,b,[],[],LB,UB)
+        \end{lstlisting}
+        输出结果为:$x = 4,y = 6,z = -1080000$\\
+        即酿造山谷花露4批，山谷红6批，得最大利润$1.08*10^{6}$ 元
+\\7.
+(1)模型构建：
+
+\begin{center}
+$min z=0.1x_{1}+0.06x_{2}$
+\end{center}
+\begin{equation*}
+\begin{cases}
+x_{1}+x_{2}=120 \\
+x_{1}<100\\
+x_{2}<50\\
+x_{1},x_{2} \in N
+\end{cases}
+\end{equation*}
+
+(2)matlab代码如下：
+\small
+\begin{lstlisting}[language=Matlab][b]
+clear all;clc;
+c=[0.1 0.06];
+Aeq=[1 1];
+beq=120;
+UB=[100;50];
+LB=zeros(2,1);
+[x,fval]=linprog(c,[],[],Aeq,beq,LB,UB)
+\end{lstlisting}
+\large
+求得应小德审批70份，丽莎审批50份
+
+9.\\
+构建模型：
+\begin{equation*}
+  \begin{cases}
+    Wmax=(3000-1050)x_1+(5200-2100)x_2\\
+    x_1+x_2<=4100\\
+    1050x_1+2100x_2<=525000\\
+    x_2<=1000\\
+    x_1,x_2>=0\\
+     \end{cases}
+\end{equation*}
+求解模型：
+\small
+\begin{lstlisting}[language=Matlab][b]
+f=[-1950 -3100]
+a=[1 1;1050 2100;0 1;-1 0;0 -1]
+b=[4100 525000 1000 0 0]
+x=linprog(f,a,b)
+\end{lstlisting}
+解得：x$_1$ = 500,x$_2$ = 0,\\
+有3600亩地没种，未用指标\\
+这个成本一定有问题，没法做了。
+
+16.\\
+去除杂质后的价格及其含量：
+\begin{equation}
+\left[
+\begin{array}{ccccc}
+ A&B&C&D&P\\
+ 31.67 & 25 & 20 & 23.33 & 45 \\
+ 50.59 & 11.76 & 29.41 &  8.23 & 29.41 \\
+ 24.29 & 0 & 0 & 75.71 & 45.71\\
+ 40 & 24&0&36&22\\
+0&36.92&15.38&47.69&30.77\\
+19.67&29.51&26.67&40.98&39.34\\
+\end{array}
+\right]
+\end{equation}
+构建模型：
+\begin{equation*}
+  \begin{cases}
+    Wmin=45x_1+29.41x_2+45.71x_3+22x_4+30.77x_5+39.44x_6\\
+    x_1+x_2+x_3+x_4+x_5+x_6=1\\
+    31.67x_1+50.59x_2+24.29x_3+40x_4+19.67x_6>=21\\
+    25x_1+11.76x_2+24x_4+36.92x_5+29.51x_6<=12\\
+    20x_1+29.41x_2+15.38x_5+26.67x_6<=7\\
+    30<=23.33x_1+8.23x_2+75.71x_3+36x_4+47.69x_5+40.98x_6<=65\\
+    x_1,x_2,x_3,x_4,x_5,x_6>=0\\
+     \end{cases}
+\end{equation*}
+求解模型：
+\small
+\begin{lstlisting}[language=Matlab][b]
+f=[45 29.41 45.71 22 30.77 39.44]
+a=[-31.67 -50.59 -24.29 -40 0 -19.67;25 11.76 0 24 36.92 29.51;20 29.41 0 0 15.38 26.67;23.33 8.23 75.71 36 47.69 40.98;-23.33 -8.23 -75.71 -36 -47.69 -40.98;-1 0 0 0 0 0;0 -1 0 0 0 0;0 0 -1 0 0 0;0 0 0 -1 0 0;0 0 0 0 -1 0;0 0 0 0 0 -1]
+b=[-21 12 7 65 -30 0 0 0 0 0 0]
+aeq=[1 1 1 1 1 1]
+beq=[1]
+x=linprog(f,a,b,aeq,beq)
+\end{lstlisting}
+解得：x$_1$ = 0,x$_2$ = 0.2380,x$_3$ = 0.3786\\
+    x$_4$ = 0.3834,x$_5$ = 0,x$_6$ = 0\\
+    即每吨成本32.74元。
+
+28.
+ 假设地区需求必须满足。且工厂生产全部售出。运输量如下表。\\
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|c|c|c|}
+     \hline
+     % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+     农场 & 4、南京 & 5合肥 \\
+     \hline
+     1、新疆本地 & $x_{1}$ & $x_{2}$ \\
+     2、陕西 & $x_{3}$ & $x_{4}$ \\
+     3、山东 & $x_{5}$ & $x_{6}$ \\
+     \hline
+   \end{tabular}
+\end{table}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|c|c|c|c|}
+     \hline
+     % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+     工厂 & 6、湖南 & 7湖北 &  8江西 \\
+     \hline
+     4、南京 & $x_{7}$ & $x_{8}$ & $x_{9}$ \\
+     5、合肥 & $x_{10}$ & $x_{11}$ & $x_{12}$ \\
+     \hline
+   \end{tabular}
+\end{table}
+$z=min(0.41x_{1}+0.57x_{2}+0.37x_{3}+0.48x_{4}+0.51x_{5}+0.60x_{6}+0.22x_{7}+0.10x_{8}+0.20x_{9}+0.15x_{10}+0.16x_{11}+0.18x_{12})$\\
+~\\
+\begin{equation*}
+s.t.~
+ \begin{cases}
+ x_{1}+x_{2}\leq24000\\
+ x_{3}+x_{4}\leq18000\\
+ x_{5}+x_{6}\leq32000\\
+ x_{1}+x_{3}+x_{5}\leq48000\\
+ x_{2}+x_{4}+x_{6}\leq35000\\
+ x_{7}+x_{10}\geq9000\\
+ x_{8}+x_{11}\geq12000\\
+ x_{9}+x_{12}\geq15000\\
+ x_{1}+x_{3}+x_{5}-x_{7}-x_{8}-x_{9}=0\\
+ x_{2}+x_{4}+x_{6}-x_{10}-x_{11}-x_{12}=0\\
+ \forall x\geq 0
+ \end{cases}
+\end{equation*}
+解得
+\begin{equation*}
+ \begin{cases}
+ x_{1}=18000\\
+ x_{2}=0\\
+ x_{3}=18000\\
+ x_{4}=0\\
+ x_{5}=0\\
+ x_{6}=0\\
+ x_{7}=9000\\
+ x_{8}=12000\\
+ x_{9}=15000\\
+ x_{10}=0\\
+ x_{11}=0\\
+ x_{12}=0
+ \end{cases}
+\end{equation*}
+运费最小为20220元
+\section{二、整数规划部分}
+1.设制作外套$x=\begin{pmatrix}
+x_{1} \\
+x_{2}
+\end{pmatrix}$，获利$Z=\begin{pmatrix}
+50 & 40 \end{pmatrix}\begin{pmatrix}
+x_{1} \\
+x_{2}
+\end{pmatrix}$\\
+可列出整数规划条件利用MATLAB进行求解：
+(1).
+\begin{equation*}
+\begin{cases}
+\begin{pmatrix}
+3 &5 \\
+10 &4
+\end{pmatrix}\begin{pmatrix}
+x_{1}\\
+x_{2}
+\end{pmatrix}\leq \begin{pmatrix}
+150\\
+200
+\end{pmatrix}\\
+\begin{pmatrix}
+x_{1}\\
+x_{2}
+\end{pmatrix}\geq \begin{pmatrix}
+0\\
+0
+\end{pmatrix}\\
+\mbox{$x_{1}$与$x_{2}$为整数}
+\end{cases}
+\end{equation*}
+(2).
+\small
+\begin{lstlisting}[language=Matlab][b]
+%q1_2_1.m
+clear all;
+clc;
+c=-[50 40];
+A=[3 5
+    10 4];
+b=[150;200];
+lb=zeros(2,1);
+intcon=[1 2];
+[x,fval]=intlinprog(c,intcon,A,b,[],[],lb,[]);
+x
+-fval
+\end{lstlisting}
+\large
+解出$Z_{max}=1460,
+x=\begin{pmatrix}
+10 \\
+24
+\end{pmatrix}$\\
+(3).若应用未受整数限制的模型求解：\\
+\small
+\begin{lstlisting}[language=Matlab][b]
+%q1_2_1_2.m
+clear all;
+clc;
+c=-[50 40];
+A=[3 5
+    10 4];
+b=[150;200];
+lb=zeros(2,1);
+[x,fval]=linprog(c,A,b,[],[],lb,[])
+\end{lstlisting}
+\large
+解出$x=\begin{pmatrix}
+10.5263 \\
+23.6842
+\end{pmatrix}\approx \begin{pmatrix}
+10 \\
+23
+\end{pmatrix},Z_{max}=1420$\\
+因此舍去小数的解不为最优
+\\2.\begin{equation*}
+  \begin{cases}
+    Wmax=400x_1+1000x_2\\
+    9x_1+2x_2<=80\\
+    10x_1+6x_2<=36\\
+    x_1<=6
+    x_1,x_2>=0\\
+     \end{cases}
+\end{equation*}
+求解模型：
+\small
+\begin{lstlisting}[language=Matlab][b]
+f=[-400 -1000]
+a=[9 2;10 6;1 0;-1 0;0 -1]
+b=[80 36 6 0 0]
+x=linprog(f,a,b)
+\end{lstlisting}
+解得：x$_1$ = 0,x$_2$ = 6,\\
+收益Wmax=6000.
+\\3.(1)我们先将所给信息进行整理，如下表：
+\begin{center}
+\begin{tabular}{ccc}%一个c表示有一列，格式为居中显示(center)
+\hline
+~&工时&收益\\%第一行第一列和第二列  中间用&连接
+水瓶$x_1$&4&500\\%第二行第一列和第二列  中间用&连接
+托盘$x_2$&1&100\\
+\hline
+\end{tabular}
+\end{center}
+该问题为典型的整数规划问题，我们列出目标函数$max~z=500x_1+100x_2$\\
+约束条件为
+$$s.t.\left\{
+\begin{aligned}
+4x_1+x_2\leq25\\
+x_1+x_2\leq15\\
+x_1,x_2\geq0
+\end{aligned}
+\right.
+$$
+\\
+(2)由matlab，$f=[-500;-100];A=[4~2;1~1];b=[25;15];lb=[0;0]intcon=[1;2];$
+\\运行如下代码：
+\begin{lstlisting}
+f=[-500;-100];A=[4 2;1 1];b=[25;15];lb=[0;0];intcon=[1;2];
+[x,fval] =intlinprog(f,intcon,A,b,[],[],lb)
+%输出结果：x =[6;0] ; fval =-3.0000e+03
+\end{lstlisting}
+所以当制作6个水瓶、0个托盘时，利润最大为$3\times10^3$元。
+\\4.设南部x人，东部y人，中西部z人。\\
+目标函数\\
+\begin{equation*}
+z=max(5200x+4700y+3250z)\\
+\end{equation*}
+\begin{equation*}
+s.t.~
+ \begin{cases}
+ 800x+700y+500z\leq7500\\
+ x\leq5\\
+ x+y+z=12\\
+ x\geq0,y\geq0,z\geq0\\
+ x,y,z \mbox{均为整数}
+ \end{cases}
+\end{equation*}
+\small
+\begin{lstlisting}[language=Matlab][b]
+f=[45 36]
+A=[1 1;9.3 7.5;-1 2]
+b=[500;900;0]
+lb=zeros(2,1)
+[x,z]=linprog(-f,A,b,[],[],lb,[])
+\end{lstlisting}
+解得x=1,y=6,z=5，z最大为49650。
+\\5.解：假设分别生产陶瓷碗和陶瓷瓶$x_{1},x_{2}$ 件，由题目条件构建线性规划模型为：
+      \begin{center}
+        $Z=500x_{1}+400x_{2}$\\
+        $\begin{cases}
+        3x_{1}+2x_{2}\leqslant 20  \\
+        2x_{1}+5x_{2}\leqslant 35   \\
+         x_{1}\geqslant 0,x_{2}\geqslant 0  \\
+        \end{cases}$
+      \end{center}
+      将模型代入MATLAB中求解，MATLAB代码如下：
+      \begin{lstlisting}[language=matlab, linewidth=0.9\linewidth]
+        f = [-500 -400];
+        A = [3 2;2 5];
+        b = [20;35];
+        lb = [0;0];
+        ub = [];
+        intcon = [1,2];
+        [x,fval] = intlinprog(f,intcon,A,b,[],[],lb,ub)
+      \end{lstlisting}
+      解得整数线性规划最优解为:
+      \begin{center}
+        $x_{1}=4,x_{2}=4,Z=3600$
+      \end{center}
+      若未限制整数条件，解得线性规划最优解为:
+      \begin{center}
+        $x_{1}=2.7273,x_{2}=5.9091,Z=3727.3$
+      \end{center}
+      令:
+      \begin{center}
+        $x_{1}=2,x_{2}=6,Z=3400<3600$
+      \end{center}
+      因此说明舍去非整数解的小数得到的解不是最优解。
+\\6.\begin{description}
+          \item[(1)] 假设投资$x$间公寓，$y$亩土地，$x,y\in Z$,为计算方便，将题中的花费的单位看做“万元”,则由题干条件可得以下线性规划数学模型：
+              \begin{center}%居中命令
+              目标函数：$Max  z = 7x+4y$
+              \end{center}
+              \begin{equation*} %方程组的输入
+                \begin{cases}
+                70x+30y\leq500\\
+                x+2y\leq14\\
+                x,y\geq0\\
+                x,y\in Z
+                \end{cases}
+              \end{equation*}
+          \item[(2)] $MATLAB$代码如下：
+           \begin{lstlisting}[language=matlab, linewidth=0.8\linewidth]
+f = [-7,-4];
+A = [70,30;1,2];
+b = [500;14];
+intcon = [1,2];
+lb = [0,0,0];
+[x,fval] = intlinprog(f,intcon,A,b,[],[],lb,[])
+        \end{lstlisting}
+        输出结果为:$x = 5,y = 4,z = 51$\\
+        即投资5间公寓，4亩土地，得每年最大利润51万元.
+        \end{description}
+7.模型构建：
+\begin{center}
+$max
+z=0.36x_{1}+0.82x_{2}+0.29x_{3}+0.16x_{4}+0.56x_{5}+0.61x_{6}+0.48x_{7}+0.41x_{8}$
+\end{center}
+\begin{equation*}
+\begin{cases}
+60x_{1}+110x_{2}+53x_{3}+47x_{4}+92x_{5}+85x_{6}+73x_{7}+65x_{8}\leq 300 \\
+7x_{1}+9x_{2}+8x_{3}+4x_{4}+7x_{5}+6x_{6}+8x_{7}+5x_{8}\leq40\\
+x_{2}-x_{5}\leq0
+\end{cases}
+\end{equation*}
+利用matlab求解，代码如下：
+\small
+\begin{lstlisting}[language=Matlab][b]
+clear all;clc;
+c=[0.36 0.82 0.29 0.16 0.56 0.61 0.48 0.41];
+ic=1:8;
+A=[60 110 53 47 92 85 73 65;7 9 8 4 7 6 8 5;0 1 0 0 -1 0 0 0];
+b=[300;40;0];
+LB=zeros(8,1);
+UB=ones(8,1);
+[x,z]=intlinprog(-c,ic,A,b,[],[],LB,UB)
+\end{lstlisting}
+\large
+解得：当选择项目2，5，6时，预期收益最高，为1.99千万元。
+\\8.设电视商业广告数量为x,报纸广告数量为y,电台广告数量为z。\\
+(1)
+\begin{equation*}
+z=min(250000x+70000y+90000z)\\
+\end{equation*}
+\begin{equation*}
+s.t.~
+ \begin{cases}
+ 53000x+30000y+41000z\geq200000\\
+ 500x+5000y-16500z\geq0\\
+ 2200x-6000y-600z\geq0\\
+ x\geq0,y\geq0,z\geq0\\
+ x,y,z \mbox{均为整数}
+ \end{cases}
+\end{equation*}
+解得$x=4,y=0,z=0$时，成本最小为$10^{6}$元\\
+~\\
+(2)若无正数的约束\\
+
+解得$x=4,y=1,z=-1$时，成本最小为980000元
+\section{三、运输、转运与指派问题}
+1.设$x_{i},i=1,2,3,4$分别为塔里木到厦门，塔里木到福州，伊利到厦门，伊利到福州的运输量，运输量矩阵$x=\begin{pmatrix}
+x_{1} & x_{2} \\
+x_{3} & x_{4} \\
+\end{pmatrix}$，运输成本$Z=\begin{pmatrix}
+40 & 65 & 70 & 30
+\end{pmatrix}\begin{pmatrix}
+x_{1}\\
+x_{2}\\
+x_{3}\\
+x_{4}
+\end{pmatrix}$\\
+可列出规划条件利用MATLAB进行求解：
+\begin{equation*}
+\begin{cases}
+\begin{pmatrix}
+1 & 1 & 0 &0 \\
+0 & 0 & 1 &1
+\end{pmatrix}\begin{pmatrix}
+x_{1}\\
+x_{2}\\
+x_{3}\\
+x_{4}
+\end{pmatrix}\leq \begin{pmatrix}
+250\\
+400
+\end{pmatrix}\\
+\begin{pmatrix}
+1 & 0 & 1 &0 \\
+0 & 1 & 0 &1
+\end{pmatrix}\begin{pmatrix}
+x_{1}\\
+x_{2}\\
+x_{3}\\
+x_{4}
+\end{pmatrix}=\begin{pmatrix}
+300\\
+350
+\end{pmatrix}\\
+\begin{pmatrix}
+x_{1}\\
+x_{2}\\
+x_{3}\\
+x_{4}
+\end{pmatrix}\geq \begin{pmatrix}
+0\\
+0\\
+0\\
+0
+\end{pmatrix}
+\end{cases}
+\end{equation*}
+\small
+\begin{lstlisting}[language=Matlab][b]
+%q1_3_1.m
+clear all;
+clc;
+c=[40 65 70 30];
+A=[1 1 0 0
+    0 0 1 1];
+b=[250;400];
+Aeq=[1 0 1 0
+    0 1 0 1];
+beq=[300 350];
+lb=zeros(4,1);
+[x,fval]=linprog(c,A,b,Aeq,beq,lb)
+\end{lstlisting}
+\large
+解出$Z_{min}=2400,x=\begin{pmatrix}
+250\\
+0\\
+50\\
+350
+\end{pmatrix}$
+\\2.求解模型：
+\small
+\begin{lstlisting}[language=Matlab][b]
+f=[500 750 300 450 650 800 400 600 400 700 500 550]
+a=-eye(12)
+b=zeros(12,1)
+aeq=[1 1 1 1 0 0 0 0 0 0 0 0;0 0 0 0 1 1 1 1 0 0 0 0;0 0 0 0 0 0 0 0 1 1 1 1;1 0 0 0 1 0 0 0 1 0 0 0;0 1 0 0 0 1 0 0 0 1 0 0;0 0 1 0 0 0 1 0 0 0 1 0;0 0 0 1 0 0 0 1 0 0 0 1]
+beq=[12 17 11 10 10 10 10]
+x=linprog(f,a,b,aeq,beq)
+\end{lstlisting}
+解得
+    x$_1$=0,x$_2$=0,x$_3$=2,x$_4$=10\\
+    x$_5$=0,x$_6$=9,x$_7$=8,x$_8$=0,\\
+    x$_9$= 10,x$_{10}$=1,x$_{11}$=-0,x$_{12}$=0.\\
+    Wmin=20200
+\\3.假设A运往目的地1、2、3的量为$x_1,x_2,x_3$,同理可得$x_4\thicksim x_9$.\\
+目标函数$min~z=6x_1+9x_2+100x_3+12x_4+3x_5+5x_6+4x_7+8x_8+11x_9$\\
+约束条件为
+$$s.t.\left\{
+\begin{aligned}
+6x_1+9x_2+100x_3=130\\
+12x_4+3x_5+5x_6=70\\
+4x_7+8x_8+11x_9=100\\
+6x_1+12x_4+4x_7=80\\
+9x_2+3x_5+8x_8=110\\
+100x_3+5x_6+11x_9=60\\
+x_1,...,x_9\geq0\\
+\end{aligned}
+\right.
+$$
+由matlab,运行如下代码：
+\begin{lstlisting}
+f=[6 9 100 12 3 5 4 8 11]';Aeq=[6 9 100 0 0 0 0 0 0 ;
+0 0 0 12 3 5 0 0 0; 0 0 0 0 0 0 4 8 11;
+6 0 0 12 0 0 4 0 0;0 9 0 0 3 0 0 8 0;0 0 100 0 0 5 0 0 11];beq=[130 70 100 80 110 60]';lb=[0 0 0 0 0 0 0 0 0]';
+[x,fval] =linprog(f,[],[],Aeq,beq,lb)
+%输出结果：x =[7.2750;4.1483;0.0175;0.1955;9.5343;7.0647;8.0457;4.4693;3.2779] ; fval =252.9995
+\end{lstlisting}
+若考虑整数规划，则：
+\begin{lstlisting}
+f=[6 9 100 12 3 5 4 8 11]';Aeq=[6 9 100 0 0 0 0 0 0 ;
+0 0 0 12 3 5 0 0 0; 0 0 0 0 0 0 4 8 11;
+6 0 0 12 0 0 4 0 0;0 9 0 0 3 0 0 8 0;0 0 100 0 0 5 0 0 11];beq=[130 70 100 80 110 60]';lb=[0 0 0 0 0 0 0 0 0]';intcon=[1 2 3 4 5 6 7 8 9]';
+[x,fval] =intlinprog(f,intcon,[],[],Aeq,beq,lb)
+%输出结果：x =[] ; fval =[]
+\end{lstlisting}
+即，若$x_1,...,x_9$均为整数的情况不存在。
+\\4.(1)
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|c|c|c|c|c|c|c|}
+     \hline
+     % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+     起始地 & 目的地1 & 目的地2 & 目的地3 & 目的地4 & 目的地5 & 目的地6 \\
+     A & $x_{1}$ & $x_{2}$ & $x_{3}$ & $x_{4}$ & $x_{5}$ & $x_{6}$ \\
+     B & $x_{7}$ & $x_{8}$ & $x_{9}$ & $x_{10}$ & $x_{11}$ & $x_{12}$ \\
+     \hline
+   \end{tabular}
+\end{table}
+~\\
+$z=min(0.5x_{1}+0.35x_{2}+0.6x_{3}+0.45x_{4}+0.8x_{5}+0.75x_{6}+0.25x_{7}+0.65x_{8}+0.4x_{9}+0.55x_{10}+0.2x_{11}+0.65x_{12})$\\
+\begin{equation*}
+s.t.~
+ \begin{cases}
+ x_{1}+x_{2}+x_{3}+x_{4}+x_{5}+x_{6}=3500\\
+ x_{7}+x_{8}+x_{9}+x_{10}+x_{11}+x_{12}=5000\\
+ x_{1}+x_{7}=1600\\
+ x_{2}+x_{8}=1800\\
+ x_{3}+x_{9}=1500\\
+ x_{4}+x_{10}=950\\
+ x_{5}+x_{11}=1250\\
+ x_{6}+x_{12}=1400\\
+ \forall x\geq0\\
+ x,y,z \mbox{均为整数}
+ \end{cases}
+\end{equation*}
+解得
+\begin{equation*}
+ \begin{cases}
+ x_{1}=0\\
+ x_{2}=1800\\
+ x_{3}=0\\
+ x_{4}=950\\
+ x_{5}=0\\
+ x_{6}=750\\
+ x_{7}=1600\\
+ x_{8}=0\\
+ x_{9}=1500\\
+ x_{10}=0\\
+ x_{11}=1250\\
+ x_{12}=650
+ z=3292.5
+ \end{cases}
+\end{equation*}
+~\\
+(2)当运输成本由0.8元/桶下降为0.65元/桶时，目标函数改变\\
+$z=min(0.5x_{1}+0.35x_{2}+0.6x_{3}+0.45x_{4}+0.65x_{5}+0.75x_{6}+0.25x_{7}+0.65x_{8}+0.4x_{9}+0.55x_{10}+0.2x_{11}+0.65x_{12})$\\
+解得
+\begin{equation*}
+ \begin{cases}
+ x_{1}=0\\
+ x_{2}=1800\\
+ x_{3}=0\\
+ x_{4}=950\\
+ x_{5}=0\\
+ x_{6}=750\\
+ x_{7}=1600\\
+ x_{8}=0\\
+ x_{9}=1500\\
+ x_{10}=0\\
+ x_{11}=1250\\
+ x_{12}=650
+ z=3292.5
+ \end{cases}
+\end{equation*}
+最优运输方案不发生改变。
+\\5.解：本题分为两步解，从产地分销中心和从分销中心到工厂。将四个农场（黑龙江、吉林、辽宁、内蒙古）分别编号为1-4，将三个分销中心（江苏、浙江、安徽）分别编号为1-3，将四个工厂（湖南、湖北、广东、广西）分别编号为1-4.\\
+      \begin{enumerate}
+        \item 从产地到分销中心
+        假设$p_{ij}$表示从编号为i的产地到编号为j 的分销中心的运输量。根据题意可以列出条件不等式：
+        \begin{center}
+          $\begin{cases}
+            p_{12}+p_{13}=1600\\
+            p_{21}+p_{22}+p_{23}=1100\\
+            p_{31}+p_{32}+p_{33}=1400\\
+            p_{41}+p_{42}+p_{43}=1900\\
+            p_{21}+p_{31}+p_{41}\leq 1800\\
+            p_{12}+p_{22}+p_{32}+p_{42}\leq 2200\\
+            p_{13}+p_{23}+p_{33}+p_{43}\leq 1600\\
+          \end{cases}$
+        \end{center}
+         从产地到运输中心的成本为:
+         \begin{center}
+           $Z=1.09p_{12}+1.26p_{13}+0.89p_{21}+1.32p_{22}+1.17p_{23}+0.78p_{31}+1.22p_{32}+1.36p_{33}+1.19p_{41}+1.25p_{42}+1.42p_{43}$
+         \end{center}
+         将模型代入MATLAB中求解，MATLAB代码如下：
+        \begin{lstlisting}[language=matlab, linewidth=0.9\linewidth]
+        f = [1.09 1.26 0.89 1.32 1.17 0.78 1.22 1.36 1.19 1.25 1.42];
+        A = [0 0 1 0 0 1 0 0 1 0 0;
+            1 0 0 1 0 0 1 0 0 1 0;
+            0 1 0 0 1 0 0 1 0 0 1];
+        b = [1800;2200;1600];
+        Aeq = [1 1 0 0 0 0 0 0 0 0 0;
+            0 0 1 1 1 0 0 0 0 0 0;
+            0 0 0 0 0 1 1 1 0 0 0;
+            0 0 0 0 0 0 0 0 1 1 1];
+        beq = [1600;1100;1400;1900];
+        lb = [0 0 0 0 0 0 0 0 0 0 0];
+        [x,fval] = linprog(f,A,b,Aeq,beq,lb,[])
+        \end{lstlisting}
+        解得线性规划最优解为:
+        \begin{table}[htp]
+        \centering
+        \begin{tabular}{|c|c|c|c|}
+        \hline
+        农场\textbackslash{}分销中心 & 江苏省 & 浙江省 & 安徽省 \\ \hline
+        黑龙江省 & - & 900.6130 & 699.3870 \\ \hline
+        吉林省 & 493.1097 & 309.6727 & 298.3731 \\ \hline
+        辽宁省 & 715.3110 & 396.8368 & 287.8745 \\ \hline
+        内蒙古 & 684.5439 & 725.6702 & 489.8403 \\ \hline
+        最少运输费用 & \multicolumn{3}{c|}{6910.5} \\ \hline
+        \end{tabular}
+        \end{table}
+        (如下图所示)从农场到各分销中心的最少运输费用为6910.5元.\\
+        \item 从分销中心到工厂
+      \end{enumerate}
+6.\begin{description}
+          \item[(1)] 建立模型：\\
+              引入变量$x_{ij}$,其取值只能是1(指派操作工i到机器j上工作) 或0(不指派操作工i 到机器j上工作)：
+              则由题干条件可得以下线性规划数学模型:
+              \begin{center}%居中命令
+              目标函数：$min z = \sum\limits_{i}\sum\limits_{j}c_{ijx_{ij}}$
+              \end{center}
+              \begin{equation*} %方程组的输入
+                \begin{cases}
+                \sum\limits_{i}x_{ij} = 1~~j = 1,2,3,4\\
+                \sum\limits_{j}x_{ij} = 1~~j = 1,2,3,4\\
+                x_{ij} = 0~or~1
+                \end{cases}
+              \end{equation*}
+              其中$c_{ij}$表示操作工i在机器j上生产一件产品所需要的时间：
+              \begin{center}
+              $c_{ij} = \left(
+                  \begin{array}{cccc}
+                    10 & 12 & 9 & 11 \\
+                    5 & 10 & 7 & 8 \\
+                    12 & 14 & 13 & 11 \\
+                    8 & 15 & 11 & 9 \\
+                  \end{array}
+                \right)$
+              \end{center}
+          \item[(2)] $MATLAB$代码如下：
+           \begin{lstlisting}[language=matlab, linewidth=0.8\linewidth]
+clear all；
+C=[10 12 9 11;5 10 7 8;12 14 13 11;8 15 11 9];
+n=size(C,1);%计算行列数n
+C=C(:);%将矩阵按列排成一个列向量。
+Ae=zeros(2*n,n^2);%计算等约束的系数矩阵a
+for i=1:n
+    for j=(i-1)*n+1:n*i
+        Ae(i,j)=1;
+    end
+    for k=i:n:n^2
+        Ae(n+i,k)=1;
+    end
+end
+Be=ones(2*n,1);%等式约束右端项b
+Xm=zeros(n^2,1);%下界Xm
+XM=ones(n^2,1);%上界XM
+[x,z]=linprog(C,[],[],Ae,Be,Xm,XM);
+disp('最优解矩阵为:');
+x=reshape(x,n,n)%将列向量x按列排成一个n阶方阵
+disp('最优解为:');
+z
+        \end{lstlisting}
+        输出结果为:
+        \begin{center}
+              x = $\left(
+                  \begin{array}{cccc}
+                    0 & 0 & 1 & 0 \\
+                    1 & 0 & 0 & 0 \\
+                    0 & 1 & 0 & 0 \\
+                    0 & 0 & 0 & 1 \\
+                  \end{array}
+                \right),z = 37$
+        \end{center}
+        即指派方式为：1 —— C,2 —— A,3 —— B,4 —— D,最短时间为37.
+        \end{description}
+7.设销售员i将前往第j个地区时$c_{ij}=1$,不前往时$c_{ij}=0$，设所花费的总时间为z。
+
+构建模型：$minz=\sum\limits_{i}\sum\limits_{j}c_{ij}x_{ij}$
+\begin{equation*}
+\begin{cases}
+\sum\limits_{i}x_{ij}=1,&j=1,2,\cdots,n\\
+\sum\limits_{j}x_{ij}=1,&i=1,2,\cdots,n\\
+x_{ij}=0\;or\;1
+\end{cases}
+\end{equation*}
+利用matlab求解，代码如下：
+\small
+\begin{lstlisting}[language=Matlab][b]
+clear all;clc;
+c=[17 10 15 16 20 12 9 16 9 14 11 16 14 15 12 14 10 10 18 17 13 12 9 15 11];
+ic=1:25;
+Aeq=[1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+     0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+     0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0
+     0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 0 0 0 0 0
+     0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1
+     1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0
+     0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0
+     0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0
+     0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0
+     0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1];
+beq=ones(10,1);
+LB=zeros(25,1);
+UB=ones(25,1);
+[x,z]=intlinprog(c,ic,[],[],Aeq,beq,LB,UB)
+\end{lstlisting}
+\large
+解得当1去B，2去D，3去A，4去C，5去E时总用时最短，此时总用时为51。
+\section{四、综合问题}
+1.假设$A_{i}$生产线加工$B_{j}$的数量为$x_{ij}),(i=1,2,3;j=1,2,3,4)$\\
+$C=(14,7,21,14,24,16,32,32,9,18,9,18)$\\
+总生产成本$Z=C*X$\\
+\small
+\begin{lstlisting}[language=Matlab][b]
+%q_1_4_1.m
+clear all;
+clc;
+c=[14 7 21 14 24 16 32 32 9 18 9 18];
+A=[2 1 3 2 0 0 0 0 0 0 0 0
+    0 0 0 0 3 2 4 4 0 0 0 0
+    0 0 0 0 0 0 0 0 1 2 1 2];
+b=[1500;1800;2000];
+Aeq=[1 0 0 0 1 0 0 0 1 0 0 0
+    0 1 0 0 0 1 0 0 0 1 0 0
+    0 0 1 0 0 0 1 0 0 0 1 0
+    0 0 0 1 0 0 0 1 0 0 0 1];
+beq=[200;150;250;300];
+lb=zeros(12,1);
+intcon=[1 12];
+[x,fval]=intlinprog(c,intcon,A,b,Aeq,beq,lb)
+\end{lstlisting}
+\large
+解出$x_{12}=150,x_{14}=300,x_{31}=200,x_{33}=250,Z_{min}=9300$
+\\2.A产品有6种加工方式，每件利润1元\\
+B产品有2种加工方式，每件利润1.65元\\
+C产品有1种加工方式，每件利润2.3元\\
+开机满负荷成本1854元。\\
+即搭建6+2+1=9种物品模型，依此求解。
+\begin{equation*}
+  \begin{cases}
+    Wmax=(x_{11}+x_{12}+x_{13}+x_{14}+x_{15}+x_{16})+1.65(x_{21}+x_{22})+2.3x_3\\
+    A_1: 5x_{11}+5x_{12}+5x_{13}+10x_{21}<=6000\\
+    A_2: 7x_{14}+7x_{15}+7x_{16}+9x_{22}+12x_3<=10000\\
+    B_1: 6x_{11}+6x_{14}+8x_{2}<=4000\\
+    B_2: 4x_{12}+4x_{15}+11x_3<=7000\\
+    B_3: 7x_{13}+7x_{16}<=4000\\
+     \end{cases}
+\end{equation*}
+    x为非负整数\\
+求解模型：
+\small
+\begin{lstlisting}[language=Matlab][b]
+f=[-1 -1 -1 -1 -1 -1 -1.65 -1.65 -2.3]
+aa=-eye(9)
+ba=zeros(1,9)
+ab=[5 5 5 0 0 0 10 0 0;0 0 0 7 7 7 0 9 12;6 0 0 6 0 0 8 8 0;0 4 0 0 4 0 0 0 11;0 0 7 0 0 7 0 0 0]
+bb=[6000 10000 4000 7000 4000]
+a=[aa;ab]
+b=[ba bb]
+int=1:9
+x=intlinprog(f,int,a,b)
+\end{lstlisting}
+解得：x$_1$ = 859+341+230,x$_2$ = 500,x$_3$ = 324\\
+Wmax=3000.2
+\\3.分析表格：假设该五种宣传方式自上而下依次为$x_1,...,x_5$.\\
+则目标函数为$max~z=50x_1+80x_2+30x_3+40x_4+15x_5$;\\
+约束条件为
+$$s.t.\left\{
+\begin{aligned}
+&x_1+x_2\geq8\\
+&x_3+x_4\geq15\\
+&x_5\geq15\\
+&x_1\leq16\\
+&x_2\leq10\\
+&x_3\leq24\\
+&x_4\leq4\\
+&x_5\leq25\\
+&500x_1+1000x_2+100x_3+300x_4+80x_5\leq20000\\
+&500x_1+1000x_2\leq12000\\
+\end{aligned}
+\right.
+$$
+考虑整数规划，则：
+\begin{lstlisting}
+f=[-50 -80 -30 -40 -15]';A=[-1 -1 0 0 0 ;0 0 -1 -1 0;
+0 0 0 0 -1;1 0 0 0 0;0 1 0 0 0;0 0 1 0 0;0 0 0 1 0;
+0 0 0 0 1;500 1000 100 300 80;500 1000 0 0 0];
+b=[-8 -15 -15 16 10 24 4 25 20000 12000]';lb=[0 0 0 0 0]';
+intcon=[1 2 3 4 5]';
+[x,fval] =intlinprog(f,intcon,A,b,[],[],lb)
+%输出结果：x =[16.0000;4.0000;24.0000;4.0000;25.0000] ; fval =-2375
+\end{lstlisting}
+所以五种宣传方式分别投放16、4、24、4、25次，能达到最好的宣传效果。
+\\4.设每月的正常产量为$x_{ij}$，加班产量为$x'_{ij}$，销售量为$y_{ij}$\\
+则j月末的存储量$w_{ij}=w_{i,j-1}+x_{ij}+x'_{ij}-y_{ij}$\\
+目标函数为\\$z=\sum\limits_{i=1}\limits^{5}\sum\limits_{j=1}\limits^{6}S_{i}y_{ij}-C_{i}x_{ij}-C'_{i}x_{ij}-\sum\limits_{i=1}\limits^{5}\sum\limits_{j=1}\limits^{5}H_{i}w_{ij}$\\
+~\\
+约束条件为\\
+\begin{equation*}
+ \begin{cases}
+ \sum\limits_{i=1}\limits^{5}a_{ij}x_{ij}\leq r_{j}\\
+ \sum\limits_{i=1}\limits^{5}a_{ij}x'_{ij}\leq r'_{j}\\
+ w_{i,6}=k_{i},w_{i,0}=0\\
+ y_{ij}<d_{ij}\\
+ x_{ij}\geq0,x'_{ij}\geq0,y_{ij}\geq0,w_{ij}\geq0\\
+ x_{ij},x'_{ij},y_{ij},w_{ij}\mbox{均为整数}\\
+ \end{cases}
+\end{equation*}
+\\5.解：假设分别生产A,B,C,D四种产品$x_{1},x_{2},x_{3},x_{4}$万件，由题目条件构建最大利润线性规划模型为：
+      \begin{center}
+        $Z=25x_{1}+12x_{2}+14x_{3}+15x_{4}$\\
+        $\begin{cases}
+        3x_{1}+2x_{2}+x_{3}+4x_{4}\leqslant 0.24  \\
+        2x_{1}+2x_{3}+3x_{4}\leqslant 0.32   \\
+        x_{1}+3x_{2}+2x_{4}\leqslant 0.18  \\
+         x_{1}\geqslant 0,x_{2}\geqslant 0  \\
+      \end{cases}$
+      \end{center}
+      将模型代入MATLAB中求解，MATLAB代码如下：
+      \begin{lstlisting}[language=matlab, linewidth=0.9\linewidth]
+        f = [-25 -12 -14 -15];
+        A = [3 2 1 4;2 0 2 3;1 3 0 2];
+        b = [0.24;0.32;0.18];
+        lb = [0 0 0 0];
+        [x,fval] = linprog(f,A,b,[],[],lb,[])
+      \end{lstlisting}
+      解得线性规划最优解为:
+      \begin{center}
+        $x_{1}=0,x_{2}=0.04,x_{3}=0.16,x_{4}=0,Z=2.72$
+      \end{center}
+      构建最优生产计划线性规划模型为：
+      \begin{center}
+        $Z=6x_{1}+5x_{2}+3x_{3}+9x_{4}$\\
+        $\begin{cases}
+        3x_{1}+2x_{2}+x_{3}+4x_{4}\leqslant 0.24  \\
+        2x_{1}+2x_{3}+3x_{4}\leqslant 0.32   \\
+        x_{1}+3x_{2}+2x_{4}\leqslant 0.18  \\
+         x_{1}\geqslant 0,x_{2}\geqslant 0  \\
+      \end{cases}$
+      \end{center}
+      将模型代入MATLAB中求解，MATLAB代码如下：
+      \begin{lstlisting}[language=matlab, linewidth=0.9\linewidth]
+        f = [-25 -12 -14 -15];
+        A = [3 2 1 4;2 0 2 3;1 3 0 2];
+        b = [0.24;0.32;0.18];
+        lb = [0 0 0 0];
+        [x,fval] = linprog(f,A,b,[],[],lb,[])
+      \end{lstlisting}
+      解得线性规划最优解为:
+      \begin{center}
+        $x_{1}=0,x_{2}=0.04,x_{3}=0.16,x_{4}=0,Z=0.68$
+      \end{center}
+      根据结果可知，在当前利润条件下，最大利润和最优生产计划的结果相同，结果都为：
+      \begin{itemize}
+        \item 原料甲消耗2400吨，剩余0吨；
+        \item 原料乙消耗3200吨，剩余0吨；
+        \item 原料丙消耗1200吨，剩余600吨
+      \end{itemize}
+      下列分别计算利润在那个范围内变变化，最优生产计划不会变化：
+      \begin{enumerate}
+        \item 对于产品A：
+        当产品A的利润小于26万元/万件时不产生变化
+        \item 对于产品B：
+        当产品B的利润小于28万元/万件时不产生变化
+        \item 对于产品C：
+        当产品C的利润大于10万元/万件时不产生变化
+        \item 对于产品D：
+        当产品D的利润小于40万元/万件时不产生变化
+      \end{enumerate}
+      下列分别计算三种原料的影子价格：
+      \begin{enumerate}
+        \item 原料甲的影子价格为：7元/吨；
+        \item 原料乙的影子价格为：3元/吨；
+        \item 原料丙的影子价格为：0元/吨
+      \end{enumerate}
+      下列计算四种产品的机会成本：
+      \begin{enumerate}
+        \item 产品A的机会成本为：4元/吨
+        \item 产品B的机会成本为：13元/吨
+        \item 产品C的机会成本为：24元/吨
+        \item 产品D的机会成本为：25元/吨
+      \end{enumerate}
+      在最优生产计划下，原料甲更为紧缺。如果原料甲增加120吨，原料甲的影子价格仍然为7元/吨，故原料甲的紧缺程度没有变化。
+
+6.  \begin{description}
+          \item[(1)] 本题研究的是如何在设备有效台台时内合适生产三种产品的数量以获得最大盈利.
+              假设生产$x_{1}$ 份一类产品，$x_{2}$ 份二类产品，$x_{3}$ 份三类产品;则由题干条件可得以下线性规划数学模型：
+              \begin{center}%居中命令
+              目标函数：$Max  z = 3x_{1}+2x_{2}+2.9x_{3}$
+              \end{center}
+              \begin{equation*} %方程组的输入
+                \begin{cases}
+                   8x_{1}+2x_{2}+10x_{3}\leq300\\
+                   10x_{1}+5x_{2}+8x_{3}\leq400\\
+                   2x_{1}+13x_{2}+10x_{3}\leq420\\
+                   x_{1},x_{2},x_{3}\geq0
+                \end{cases}
+              \end{equation*}
+              $MATLAB$代码如下：
+              \begin{lstlisting}[language=matlab, linewidth=0.8\linewidth]
+c = [3,2,2.9];
+A = [8 2 10;10 5 8;2 13 10];
+ic = [1,2,3];
+b = [300;400;420];
+LB = [0;0;0];
+[x,fval] = linprog(-c,ic,A,b,[],[],LB,[])
+             \end{lstlisting}
+             输出结果为:$x = [24;24;5],z = 134.5$\\
+             即生产24份一类产品，24份二类产品，5份三类产品,每月最大获利13.45万元.
+        \item[(2)]当B设备台时增加为460/月时，相关约束条件变为：
+            \begin{equation*} %方程组的输入
+                \begin{cases}
+                   8x_{1}+2x_{2}+10x_{3}\leq300\\
+                   10x_{1}+5x_{2}+8x_{3}\leq460\\
+                   2x_{1}+13x_{2}+10x_{3}\leq420\\
+                   x_{1},x_{2},x_{3}\geq0
+                \end{cases}
+            \end{equation*}
+            通过MATLAB计算后得输出结果为:$x = [31;26;0],z = 145$\\
+            可知，租用设备后盈利增加到14.5万元，增加了1.05万元，低于租金，所以租用设备B 是不合算的.
+        \item[(3)] 设生产$x_{4}$ 份四类产品，$x_{5}$ 份五类产品，得新的约束条件为：
+            \begin{center}%居中命令
+              目标函数：$Max  z = 3x_{1}+2x_{2}+2.9x_{3}+2.1x_{4}+1.87x_{5}$
+            \end{center}
+            \begin{equation*} %方程组的输入
+                \begin{cases}
+                   8x_{1}+2x_{2}+10x_{3}+12x_{4}+4x_{5}\leq300\\
+                   10x_{1}+5x_{2}+8x_{3}+15x_{4}+4x_{5}\leq400\\
+                   2x_{1}+13x_{2}+10x_{3}+10x_{4}+12x_{5}\leq420\\
+                   x_{1},x_{2},x_{3},x_{4},x_{5}\geq0
+                \end{cases}
+            \end{equation*}
+            代码如下：
+            \begin{lstlisting}[language=matlab, linewidth=0.8\linewidth]
+c = [3,2,2.9,2.1,1.87];
+A = [8 2 10 12 4;10 5 8 15 4;2 13 10 10 12];
+ic = [1,2,3,4,5]
+b = [300;400;420];
+%b = [300;460;420];(2)
+LB = [0;0;0;0;0];
+[x,fval] = intlinprog(-c,ic,A,b,[],[],LB,[])
+             \end{lstlisting}
+             输出结果为:$x = [26;20;1;0;8],z = 135.86>134.5$\\
+             所以五类产品依次投产26,20,1,0,8获利最大，合算.
+        \item[(4)]约束条件为：
+             \begin{center}%居中命令
+              目标函数：$Max  z = 4.5x_{1}+2x_{2}+2.9x_{3}+2.1x_{4}+1.87x_{5}$
+             \end{center}
+             \begin{equation*} %方程组的输入
+                \begin{cases}
+                   9x_{1}+2x_{2}+10x_{3}\leq300\\
+                   12x_{1}+5x_{2}+8x_{3}\leq400\\
+                   14x_{1}+13x_{2}+10x_{3}\leq420\\
+                   x_{1},x_{2},x_{3}\geq0
+                \end{cases}
+            \end{equation*}
+            代码如下：
+            \begin{lstlisting}[language=matlab, linewidth=0.8\linewidth]
+c = [4.5,2,2.9];
+A = [8 2 10;12 5 8;14 13 10];
+ic = [1,2,3]
+b = [300;400;420];
+%b = [300;460;420];(2)
+LB = [0;0;0];
+[x,fval] = intlinprog(-c,ic,A,b,[],[],LB,[])
+             \end{lstlisting}
+             输出结果为:$x = [30;0;0],z = 135$\\
+             所以获利最大的投产方式是只生产30单位的一类产品，获利135千元
+\end{description}
+7.设产地i销往j地的单位运费为$c_{ij}$,销售数量为$x_{ij}$，设所花费的总运费为z。
+
+构建模型：$min\;z=\sum\limits_{i,j}c_{ij}x_{ij}$
+
+解得$c_{22}$在3与10之间变化时，最优调运方案不变。$c_{24}$等于17时，有无穷多给最优调运方案。
+
+\section{五、多目标规划}
+1.$Z_{max}=\begin{pmatrix}
+3 & 5 & 2
+\end{pmatrix}\begin{pmatrix}
+x_{1}\\
+x_{2}\\
+x_{3}
+\end{pmatrix}$
+\begin{equation*}
+\begin{cases}
+\begin{pmatrix}
+5 & 2 &4 \\
+4 & 6 &3
+\end{pmatrix}\begin{pmatrix}
+x_{1}\\
+x_{2}\\
+x_{3}
+\end{pmatrix}\leq \begin{pmatrix}
+240\\
+400
+\end{pmatrix}\\
+\begin{pmatrix}
+x_{1}\\
+x_{2}\\
+x_{3}
+\end{pmatrix}\geq \begin{pmatrix}
+0\\
+0\\
+0
+\end{pmatrix}
+\end{cases}
+\end{equation*}
+令$Z=500,T=5x_{1}+2x_{2}+4x_{3},M=4x_{1}+6x_{2}+3x_{3}$\\
+目标优化为：
+$min\begin{Bmatrix}
+T\\
+M
+\end{Bmatrix}$\\
+引入偏好参数$<0.5\rho<1$,构造$L=\rho T+(1-\rho)M$，取$\rho =0.8$，求$L_{min}$
+\small
+\begin{lstlisting}[language=Matlab][b]
+%q1_5_1.m
+clear all;
+clc;
+p=0.8;
+c=[4+p 6-4*p 3+p];
+A=-[5 2 4
+    4 6 3];
+Aeq=[3 5 2];
+beq=500;
+b=[-240
+    -400];
+lb=zeros(3,1);
+intcon=[1 2 3];
+[x,fval]=intlinprog(c,intcon,A,b,Aeq,beq,lb)
+\end{lstlisting}
+\large
+当$\rho=0.8$，此时最优解为:$X=\begin{pmatrix}
+8\\
+94\\
+3
+\end{pmatrix},L_{min}=313$
+\\2.若满足所有城市委员会代表的条件，需要：\\
+资金107.6万美元（拥有600万人民币，即87.85万美元），不足\\
+土地192英亩（规划500亩，即82.37英亩），不足\\
+期望人口56.5k（期望20k），满足\\
+显然不能满足所有要求，因此进行建模，按资金、人口、土地优先级排列如下：\\
+\begin{equation*}
+  \begin{cases}
+8x_1+0.24x_2+0.15x_3+4x_4 \leq 87.85\\
+1.5x_1+3x_2+0.5x_3+x_4 \ge 20\\
+4x_1+8x_2+3x_3+5x_4 \leq 82.37+8.24=90.61\\
+     \end{cases}
+\end{equation*}
+显然的，转为整数背包问题处理方法。\\
+题目转义为在限定土地、要求人数的情况下能够花费最多资金的方案（不超过要求）。\\
+多约束项的完全背包问题网上模板很多，在此不进行赘述，仅附上结果：\\
+需要85.2万美元资金，建造健身房7所，网球场8个，游泳馆7个，可容纳2.15万人。
+\\3.\begin{center}
+\begin{tabular}{cccc}%一个c表示有一列，格式为居中显示(center)
+\hline
+~&准备成本&工作时间&利润\\%第一行第一列和第二列  中间用&连接
+玉米$x_1$&1000&7&300\\%第二行第一列和第二列  中间用&连接
+小麦$x_2$&1200&10&400\\
+大豆$x_3$&700&8&200\\
+\hline
+\end{tabular}
+\end{center}
+由理想点法：\\
+我们先对单目标进行线性规划求解。\\
+(1)针对目标函数$max~z_1=300x_1+400x_2+200x_3$\\
+$$s.t.\left\{
+\begin{aligned}
+1000x_1+1200x_2+700x_3\leq800000\\
+7x_1+10x_2+8x_3=6000\\
+300x_1+400x_2+200x_3\geq1050000\\
+x_1+x_2+x_3\leq10000\\
+x_1\geq200\\
+x_2\geq5000\\
+x_3\geq3000\\
+\end{aligned}
+\right.
+$$
+由matlab,运行如下代码：
+\begin{lstlisting}
+f=[-300 -400 -200]';A=[1000 1200 700;-300 -400 -200;
+    1 1 1;-1 0 0; 0 -1 0; 0 0 -1];Aeq=[7 10 8];beq=[6000]
+b=[800000 -1050000 10000 -200 -5000 -3000]';lb=[0 0 0]';
+[x,fval] =linprog(f,A,b,Aeq,beq,lb)
+%输出结果：x =  1.0e+04 *[0.0105;1.7599;0.1578] ; fval =-7.3870e+06
+\end{lstlisting}
+(2)针对目标函数$max~z_2=x_1+x_2+x_3$\\
+$$s.t.\left\{
+\begin{aligned}
+1000x_1+1200x_2+700x_3\leq800000\\
+7x_1+10x_2+8x_3=6000\\
+300x_1+400x_2+200x_3\geq1050000\\
+x_1+x_2+x_3\leq10000\\
+x_1\geq200\\
+x_2\geq5000\\
+x_3\geq3000\\
+\end{aligned}
+\right.
+$$
+由matlab,运行如下代码：
+\begin{lstlisting}
+f=[-1 -1 -1]';A=[1000 1200 700;-300 -400 -200;
+    1 1 1;-1 0 0; 0 -1 0; 0 0 -1];Aeq=[7 10 8];beq=[6000]
+b=[800000 -1050000 10000 -200 -5000 -3000]';lb=[0 0 0]';
+[x,fval] =linprog(f,A,b,Aeq,beq,lb)
+%输出结果：x =  1.0e+04 *[0.0102; 1.7736; 0.2639] ; fval =-2.0477e+04
+\end{lstlisting}
+我们得到理想点$(z_1,z_2)=(7387000,20477)$;\\
+建立新目标函数$\varphi(x)=\sqrt{(z_1-7387000)^2+(z_2-20477)^2}$\\
+$min~\varphi(x)$
+$$s.t.\left\{
+\begin{aligned}
+1000x_1+1200x_2+700x_3\leq800000\\
+7x_1+10x_2+8x_3=6000\\
+300x_1+400x_2+200x_3\geq1050000\\
+x_1+x_2+x_3\leq10000\\
+x_1\geq200\\
+x_2\geq5000\\
+x_3\geq3000\\
+\end{aligned}
+\right.
+$$
+\begin{lstlisting}
+A=[1000 1200 700;-300 -400 -200;
+    1 1 1;-1 0 0; 0 -1 0; 0 0 -1];Aeq=[7 10 8];beq=[6000]'
+b=[800000 -1050000 10000 -200 -5000 -3000]';lb=[0 0 0]';
+x=fmincon('((300*x(1)+400*x(2)+200*x(3)-7387000)^2+(x(1)+x(2)+x(3)-20477)^2)^(1/2)',x,A,b,Aeq,beq,lb)
+%输出结果：x = 1.0e+03 *[ 0.0000; 4.7989; 2.7571]
+z1=300*x(1)+400*x(2)+200*x(3)
+z2=x(1)+x(2)+x(3)
+%输出结果：z1 = 2.4710e+06 ； z2 = 7.5560e+03
+\end{lstlisting}
+所以综合考虑多用土地与理论，玉米、小麦、大豆应分别种植0,4798.9,2757.1亩。
+\\4.
+依题意，即使全部生产1号产品，也无法满足其需求。
+因此，目标函数为\\
+\begin{center}
+$z=max(x_{1})$\\
+\end{center}
+约束条件为\\
+\begin{equation*}
+s.t.~
+ \begin{cases}
+ x_{1}+x_{2}+x_{3}\leq2000\\
+ 8000x_{1}+15000x_{2}+5000x_{3}\leq200000\\
+ 10x_{1}+12x_{2}+18x_{3}\leq900\\
+ x_{1}\geq0,x_{2}\geq0,x_{3}\geq0\\
+ \end{cases}
+\end{equation*}
+~\\
+\small
+\begin{lstlisting}[language=Matlab][b]
+f=[-1 0 0]
+A=[8000 150000 50000;10 12 18;1 1 1]
+b=[200000;900;2000]
+lb=zeros(3,1)
+[x,z]=linprog(f,A,b,[],[],lb,[])
+\end{lstlisting}
+\large
+解得
+\begin{equation*}
+ \begin{cases}
+ x_{1}=25\\
+ x_{2}=0\\
+ x_{23}=0
+ \end{cases}
+\end{equation*}
+6.假设生产$x_{1}$块粗毛地毯，$x_{2}$ 块有花纹地毯，$x_{1},x_{2}\in Z $ ,则由题干条件可得以下线性规划数学模型：
+              \begin{center}%居中命令
+              目标函数：
+              \end{center}
+              \begin{equation*} %方程组的输入
+                \begin{cases}
+                   Min  z_{1} = -8x_{1}-6x_{2}\\
+                   Min  z_{2} = -2x_{1}-5x_{2}\\
+                   Min  z_{3} = 8x_{1}+6x_{2}-480
+                \end{cases}
+             \end{equation*}
+             采用线性加权法，根据三个目标的优先级依次赋予权重,因为要求最小值,所以权重如下：0.2,0.3,0.5 并相加得到新的目标函数：
+              $Min Z = 1.8x_{1}+0.3x_{2}-240$
+              \begin{equation*} %方程组的输入
+                \begin{cases}
+                   -8x_{1}-6x_{2}\leq-480\\
+                   8x_{1}+6x_{2}\leq500\\
+                   x_{1}\leq40\\
+                   x_{2}\leq50\\
+                   x_{1},x_{2}\geq0
+                \end{cases}
+            \end{equation*}
+              $MATLAB$代码如下：
+           \begin{lstlisting}[language=matlab, linewidth=0.8\linewidth]
+c = [1.8,0.3];
+A = [-8 -6;8 6];
+ic = [1,2]
+b = [-480;500];
+lb = [0;0];
+ub = [40;50];
+[x,fval] = intlinprog(-c,ic,A,b,[],[],lb,ub)
+        \end{lstlisting}
+        输出结果为:$x = [40,30]$\\
+        即生产40块粗毛地毯，30块有花纹地毯.即可最大程度满足公司的要求.
+\end{document}
