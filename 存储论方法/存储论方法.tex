@@ -1,0 +1,180 @@
+\documentclass[a4paper,12pt]{article} %文档类型
+\usepackage{CJK}
+\usepackage{ctex}
+\usepackage{color}
+\usepackage{amsmath,amssymb,amstext} %多种公式环境和数学命令
+\usepackage{float}
+\usepackage{array}           %数组和表格制作
+\usepackage{fancyhdr}        %页眉页脚设置
+\usepackage{graphicx}        %插图
+\usepackage{tabularx}        %自动设置表格列宽
+\usepackage{multirow}        %跨行表格
+\usepackage{multicol}        %跨列表格
+\usepackage{titlesec}        %标题设置
+\usepackage{titletoc}        %目录格式设置
+\usepackage{epstopdf}        %编译生成pdf 时，能够插入eps格式图片
+\usepackage[top=2.5cm,bottom=2.0cm,left=2.0cm,right=2.0cm]{geometry} % 页边距
+\newcommand{\hei}{\CJKfamily{hei}}  % 定义的新命令
+\newcommand{\li}{\CJKfamily{li}}
+\renewcommand{\figurename}{{图}}
+\linespread{1.7}   %1.5倍行距
+\usepackage{listings}
+\usepackage{xcolor}
+ %\lstset{
+%   %行号
+%   numbers=left,
+%   %背景框
+%   framexleftmargin=10mm,
+%   frame=none,
+%   %背景色
+%   %backgroundcolor=\color[rgb]{1,1,0.76},
+%   backgroundcolor=\color[RGB]{245,245,244},
+%   %样式
+%   keywordstyle=\bf\color{blue},
+%   identifierstyle=\bf,
+%   numberstyle=\color[RGB]{0,192,192},
+%   commentstyle=\it\color[RGB]{0,96,96},
+%   stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+%   %显示空格
+%   showstringspaces=false
+%}
+%\lstset{numbers=left, numberstyle=\tiny, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, frame=shadowbox, rulesepcolor=\color{red!20!green!20!blue!20},escapeinside=``, xleftmargin=2em,xrightmargin=2em, aboveskip=1em, escapeinside=``}
+
+\lstset{numbers=left, %设置行号位置
+        numberstyle=\tiny, %设置行号大小
+        keywordstyle=\color{blue!70}, %设置关键字颜色
+        commentstyle=\color[cmyk]{1,0,1,0}, %设置注释颜色
+        frame=shadowbox, %设置边框格式
+        rulesepcolor=\color{red!20!green!20!blue!20},
+        escapeinside=``, %逃逸字符(1 左面的键)，用于显示中文
+        breaklines, %自动折行
+        extendedchars=false, %解决代码跨页时，章节标题，页眉等汉字不显示的问题
+        xleftmargin=2em,xrightmargin=2em, aboveskip=1em, % 设置边距
+        %tabsize=4, %设置tab空格数
+        %showspaces=false %不显示空格
+       }
+\begin{document}
+
+\begin{center}
+\large
+\heiti{530~~陈斯杰~~电子信息工程~~第十次作业}
+\end{center}
+\textbf{一、基础知识巩固}\\
+1.根据winQSB计算得到结果：
+\begin{center}
+	\includegraphics[width=0.8\textwidth]{q2_1.jpg}\\
+\end{center}
+~\\
+2、
+需求期望为46.\\
+本题模型为多周期的存储模型。\\
+C$_1$=40,C$_2$=1015,C$_3$=60\\
+R与概率相关，Q无上限,I=10,K=800.\\
+$\frac{C_2-K}{C_1+C_2}$=0.2038，查需求概率表可知最佳存储量为30，初次订购量为20，之后最佳订购量为10.\\
+~\\
+3、该题为报童问题，设订货量为$Q$百本，实际需求量为$r$，写出损失期望函数：\\
+$$C(Q)=h\sum\limits_{r=0}^Q(Q-r)P(r)+k\sum\limits_{r=Q+1}^5(r-Q)P(r)$$
+
+其中h为由于供过于求而未销售的损失40元/百本，k为由于供不应求而造成的损失70元/百本。\\
+根据式子
+$$
+\begin{aligned}
+C(Q)\leq C(Q+1)\\
+C(Q)\leq C(Q-1)
+\end{aligned}
+$$
+则Q满足：
+$$
+\sum\limits_{r=0}^{Q-1}P(r)\leq\frac{k}{k+h}\leq \sum\limits_{r=0}^{Q}P(r)
+$$
+这里，$\frac{k}{k+h}=\frac{7}{11}\approx0.636$\\
+$$
+\sum\limits_{r=0}^{2}P(r)\leq0.636\leq \sum\limits_{r=0}^{3}P(r)
+$$
+所以$Q=3$,即应该订货3百本。\\
+~\\
+4、$0.9\times0+0.05\times1+0.02\times2+0.01\times3+0.01\times4+0.01\times5=0.21$
+
+则订购x台发电机时应订购0.21x个备用线棒为好\\
+~\\
+5、解：
+    若采用允许缺货的策略,假设$T_{1}$表示T中不缺货的时间，根据允许缺货的存储模型可得：\\
+    在$[0,T_{1}]$时间内存储费为：$\frac{1}{2}C_{1}RT_{1}^{2}$
+    在$[T_{1},T]$时间内缺货费为：$\frac{1}{2}C_{2}R(T-T_{1})^2$
+    一个时间周期T内的总平均费用为：
+    \begin{center}
+      $C(T,T_{1})=\frac{1}{T}(\frac{1}{2}C_{1}RT_{1}^2+\frac{1}{2}C_{2}R(T-T_{1})^2)+C_{3}$
+    \end{center}
+    利用多元函数求极值的方法，令$\frac{\partial C(T,T_{1})}{\partial T}=0,\frac{\partial C(T,T_{1})}{\partial T_{1}}=0$,解得
+    \begin{center}
+      $T_{0}=\sqrt{\frac{2C_{3}(C_{1}+C_{2})}{RC_{1}R_{2}}}$
+    \end{center}
+    最小费用为:
+    \begin{center}
+      $C_{0}=\sqrt{\frac{2C_{1}C_{2}C_{3}R}{C_{1}+C_{2}}}$
+    \end{center}
+    若采用不允许缺货的模型，根据不允许缺货的存储模型可得：\\
+    在一个时间周期T内的总平均费用为：
+    \begin{center}
+      $\frac{\frac{1}{2}C_{1}RT^{2}+C_{3}}{T}$
+    \end{center}
+    利用函数求极值的方法，令$\frac{\partial C(T)}{\partial T}=0$,解得
+    \begin{center}
+      $T=\sqrt{\frac{2C_{3}}{RC_{1}}}$
+    \end{center}
+    最小费用为：
+    \begin{center}
+      $C_{0}=2C_{3}$
+    \end{center}
+    因此，带来的费用节约为：
+    \begin{center}
+      $\frac{\frac{1}{2}C_{1}RT^{2}+C_{3}}{T}-2C_{3}$
+    \end{center}
+    因此，缺货的策略可以被采用.\\
+~\\
+6、
+(a)依题意，设订货量为Q，要使期望收益最大，即\\
+$\int_{0}^{Q}\phi(r)dr=\frac{P-K}{P}$\
+解得Q=1996。\\
+~\\
+(b)E(W)=$\int_{0}^{2000} 25\times r\phi(r)dr+\int_{2000}^{+\infty}25\times2000\phi(r)dr-15\times 2000=19827$\\
+~\\
+(c)设未能售出的圣诞树数量为q。\\
+$E(q)=\int_{0}^{1996}q\phi(1996-q)dq=5$\\
+~\\
+\textbf{一、案例分析题}\\
+1. 一个叫刘里民的大学生最近正在学习管理科学课程. 现在他很喜欢运用他所学到的知识来使他的个人决策最优化. 目前他正在分析这样一个决策，那就是，这个暑假去欧洲做一次短期旅行，为在出发前买 100 欧元一张的旅行支票，他应该从他的存款帐户取出多少钱（假设无论如何多少都能保证）？刘同学已经用他的支票帐户里的钱买了价值 1200 欧元的旅行支票，但是也许不够. 事实上，他已将他所需要的旅行支票的款额的概率分布做出了如下表的估计：
+
+\begin{tabular}{l l l l l l l l l}
+\hline
+\text{需求总数}&	1000&	1100&	1200&	1300&	1400&	1500&	1600&	1700\\
+\hline
+\text{概率}&	0.05&	0.10&	0.15&	0.25&	0.20&	0.10&	0.10&	0.05\\
+\hline
+\end{tabular}
+
+旅行支票的款额的概率分布 如果他的旅行支票不能满足需求，那么每缺 100欧元，他就要提早一天离开欧洲，因为他给在欧洲的每一天效用赋值为 150 欧元，所以对他而言每少一天就意味着 50 欧元的净损失. 然而，每张 100 欧元的旅行支票需要 1 欧元的额外费用. 而且，旅行结束后没用完的每一张支票（要重新存回存款帐户）意味着损失了旅行期间的 2 欧元的利息收入，所以他也不愿意购买太多.
+试回答如下问题：
+
+(1)如何来解释这个问题. 并且指出其定货不足和过剩订货的单位成本.
+
+(2)利用库存决策方法确定刘同学还应该购买多少旅行支票才能使订货不足和过剩的期望成本最小.\\
+~\\
+2、存储成本1800元/台\\
+年均销售3000台，每台利润30000元\\
+每次订购费3000，每台成本25000元\\
+模型为允许缺货，且备货时间很短。\\
+$\frac{30000-25000}{1800+30000}$=0.157\\
+最佳存储量为3000*0.157=471\\
+少于最佳存储量时进行订货，补足至最佳订货量。\\
+~\\
+3.(1)根据EOQ方法，$C_3=60,R=2000,C_1=1$,所以单次订货量
+$$
+Q_0=\sqrt{\frac{2C_3R}{C_1}}=\sqrt{240000}\approx490
+$$
+所以Low应该订购490桶钉子。\\
+~\\
+5.
+解：军用材料应该采用需求连续的随机变量的存储模型。设货物的单位成本是K，单位存储费为$C_{1}$，需求r是连续的随机变量，密度函数为$\phi(r)$,分布函数为$F(a)=\oint_{0}^{a}\phi(r)dr,a>0$。当$r\leq Q$时，只购买了r分产品。
+
+\end{document}
