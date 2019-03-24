@@ -1,0 +1,437 @@
+\documentclass[a4paper,12pt]{article} %文档类型
+\usepackage{CJK}
+\usepackage{ctex}
+\usepackage{color}
+\usepackage{amsmath,amssymb,amstext} %多种公式环境和数学命令
+\usepackage{float}
+\usepackage{array}           %数组和表格制作
+\usepackage{fancyhdr}        %页眉页脚设置
+\usepackage{graphicx}        %插图
+\usepackage{tabularx}        %自动设置表格列宽
+\usepackage{multirow}        %跨行表格
+\usepackage{multicol}        %跨列表格
+\usepackage{titlesec}        %标题设置
+\usepackage{titletoc}        %目录格式设置
+\usepackage{epstopdf}        %编译生成pdf时，能够插入eps格式图片
+\usepackage[top=2.5cm,bottom=2.0cm,left=2.0cm,right=2.0cm]{geometry} % 页边距
+\newcommand{\hei}{\CJKfamily{hei}}  % 定义的新命令
+\newcommand{\li}{\CJKfamily{li}}
+\renewcommand{\figurename}{{图}}
+\linespread{1.7}   %1.5倍行距
+\usepackage{listings}
+\usepackage{xcolor}
+ %\lstset{
+%   %行号
+%   numbers=left,
+%   %背景框
+%   framexleftmargin=10mm,
+%   frame=none,
+%   %背景色
+%   %backgroundcolor=\color[rgb]{1,1,0.76},
+%   backgroundcolor=\color[RGB]{245,245,244},
+%   %样式
+%   keywordstyle=\bf\color{blue},
+%   identifierstyle=\bf,
+%   numberstyle=\color[RGB]{0,192,192},
+%   commentstyle=\it\color[RGB]{0,96,96},
+%   stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+%   %显示空格
+%   showstringspaces=false
+%}
+%\lstset{numbers=left, numberstyle=\tiny, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, frame=shadowbox, rulesepcolor=\color{red!20!green!20!blue!20},escapeinside=``, xleftmargin=2em,xrightmargin=2em, aboveskip=1em, escapeinside=``}
+
+\lstset{numbers=left, %设置行号位置
+        numberstyle=\tiny, %设置行号大小
+        keywordstyle=\color{blue!70}, %设置关键字颜色
+        commentstyle=\color[cmyk]{1,0,1,0}, %设置注释颜色
+        frame=shadowbox, %设置边框格式
+        rulesepcolor=\color{red!20!green!20!blue!20},
+        escapeinside=``, %逃逸字符(1 左面的键)，用于显示中文
+        breaklines, %自动折行
+        extendedchars=false, %解决代码跨页时，章节标题，页眉等汉字不显示的问题
+        xleftmargin=2em,xrightmargin=2em, aboveskip=1em, %设置边距
+        %tabsize=4, %设置tab空格数
+        %showspaces=false %不显示空格
+       }
+\begin{document}
+
+\begin{center}
+\large
+\heiti{编号~~姓名~~专业~~第*次作业}
+\end{center}
+\textbf{一、对应分析和典型相关分析}\\
+1.\begin{center}
+  \includegraphics[width=0.7\textwidth]{1_1.jpg}\\
+\end{center}
+由以上可知，有70\%可用第一维度表示。\\
+相应的坐标和散布图如下\\
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{1_2.jpg}\\
+\end{center}
+\begin{center}
+  \includegraphics[width=0.7\textwidth]{1_3.jpeg}\\
+\end{center}
+由散布图可知，取样点和污染物可分为三类。\\
+污染物X1,X2,X3,X4主要分布在取样点1，2，3，5，7附近。\\
+污染物X5主要分布在取样点4,8附近。\\
+污染物X6主要分布在取样点6附近。\\
+\begin{lstlisting}[language=R][b]
+data=data.frame(X1=c(0.056,0.049,0.038,0.034,0.084,0.064,0.048,0.069),
+X2=c(0.084,0.055,0.130,0.095,0.066,0.072,0.089,0.087),
+X3=c(0.031,0.100,0.079,0.058,0.029,0.100,0.062,0.027),
+X4=c(0.038,0.110,0.170,0.160,0.320,0.210,0.260,0.050),
+X5=c(0.0081,0.0220,0.0580,0.2000,0.0120,0.0280,0.0380,0.0890),
+X6=c(0.0220,0.0073,0.0430,0.0290,0.0410,1.3800,0.0360,0.0210))
+rownames(data)=c("1","2","3","4","5","6","7","8")
+library(ca)
+library(MASS)
+data.ca=ca(data)
+data.ca
+plot(data.ca)
+\end{lstlisting}
+~\\
+2.\\
+(1).对应分析：\\
+求出协方差，特征值及特征向量，得到前两个方差的累计贡献率为87\%，可以继续进行，\\
+计算载荷矩阵并化为图片可得：\\
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{2.jpg}\\
+\end{center}
+(2).R型因子分析法；\\
+使用pcacov函数（标准化后）得到R因子结果：\\
+F$_1$主要是生活用品及其他、食品、文化生活服务支出，占贡献率59\%\\
+F$_2$主要是食品和生活用品及其他，占贡献率22\%\\
+F$_3$主要是衣着，占贡献率10\%\\
+总贡献率91\%,主要因素为生活用品及其他和食品.\\
+总分排行为：上海，北京，浙江，天津，辽宁，江苏，吉林，山东，内蒙古，安徽，福建，黑龙江，山西，河南，江西，河北.\\
+(3).聚类分析：\\
+使用clusterdata函数（标准化后）得到聚类结果：\\
+第一类：北京\\
+第二类：上海\\
+第三类:河北、山西、内蒙、山东、河南\\
+第四类：天津、辽宁、吉林、黑龙江、江苏、浙江、安徽、福建、江西\\
+结果相差不大。\\
+3.先进行卡方检验
+\begin{lstlisting}[language=R][b]
+setwd('F:\\XMU files\\数学竞赛\\数学建模\\CH17')
+B <- data.frame(jinhuang=c(326,688,343,98),hong=c(38,116,84,48),he=c(241,584,909,403),
+                shenhong=c(110,188,412,681),hei=c(3,4,26,85))
+row.names(B)=c('lan','danlan','qianlan','shenlan')
+B
+chisq.test(B)
+\end{lstlisting}
+输出结果为：
+\begin{center}
+  \includegraphics[scale=0.9]{fig3_1.jpg}
+\end{center}
+p值远小于0.05，可见其因素之间存在着较强的相关性。\\
+(2)画散点图。
+\begin{lstlisting}[language=R][b]
+B.ca <- corresp(B,nf=2)
+B.ca
+biplot(B.ca,cex=0.8)
+abline(v=0,h=0,lty=3)
+\end{lstlisting}
+输出结果为：
+\begin{center}
+  \includegraphics[scale=0.9]{fig3_2.jpg}
+\end{center}
+\begin{center}
+  \includegraphics[scale=0.9]{fig3_3.jpg}
+\end{center}
+所以可以分为三类，眼睛蓝色、淡蓝色的和头发金黄色为一类，眼睛浅蓝色和头发为红色、褐色一类，眼睛
+深蓝与头发深红和黑色一类。\\
+4.利用R语言进行对应分析:\\
+\small
+\begin{lstlisting}[language=R][b]
+> fly <- read.csv("data.csv",header=FALSE)
+> library(MASS)
+> ca <- corresp(fly,2)
+> ca
+First canonical correlation(s): 0.4962368 0.1641114
+
+ Row scores:
+            [,1]        [,2]
+ [1,] -0.7842683  0.47552200
+ [2,]  0.5970759 -0.57565401
+ [3,] -0.4193079 -2.03182344
+ [4,]  1.2136436 -0.53073893
+ [5,] -1.0079221 -0.94915578
+ [6,] -0.9903145  1.22215357
+ [7,]  1.3023041  0.01323004
+ [8,]  1.0485474  1.21727682
+ [9,] -1.0750760  0.64503980
+
+ Column scores:
+         [,1]        [,2]
+V1  1.0327867  0.28897091
+V2  0.8302158 -0.69834341
+V3 -0.5834084  0.50588567
+V4  0.3678161  1.85037509
+V5 -1.1831337  0.48894732
+V6  0.9958246  0.74368787
+V7  1.1575836 -1.58884144
+V8 -1.2682184 -0.05064382
+V9 -1.0208052 -1.22517528
+> summary(ca)
+       Length Class  Mode
+cor     2     -none- numeric
+rscore 18     -none- numeric
+cscore 18     -none- numeric
+Freq   81     -none- numeric
+> biplot(ca)
+\end{lstlisting}
+\large
+得到图像:\\
+\begin{center}
+\includegraphics[scale=0.6]{r4.jpg}
+\end{center}
+
+5、利用R语言进行对应分析:\\
+\small
+\begin{lstlisting}[language=R][b]
+data <- read.csv("F:\\R_project\\5.csv",header=FALSE)
+library(MASS)
+ca <- corresp(data,2)
+ca
+summary(ca)
+biplot(ca)
+\end{lstlisting}
+\large
+得到图像:\\
+\begin{center}
+\includegraphics[scale=0.6]{5.jpg}
+\end{center}
+
+6.
+\begin{center}
+  \includegraphics[width=0.7\textwidth]{6_1.jpg}\\
+\end{center}
+由以上可知，有42.46\%可用第一维度表示,33.24\%可用第一维度表示\\
+相应的坐标和散布图如下\\
+\begin{center}
+  \includegraphics[width=0.7\textwidth]{6_2.jpg}\\
+\end{center}
+\begin{center}
+  \includegraphics[width=0.7\textwidth]{6_3.jpeg}\\
+\end{center}
+由上图可知，地区11受各种癌症死亡的人数较多，3，9，12，7，6，4，2，8各种癌症死亡人数一般，地区10和5主要受食道癌症的影响。膀胱癌和宫颈癌致死的病例较少，地区一主要死亡因素是胃癌。
+\begin{lstlisting}[language=R][b]
+数据输入省略
+library(ca)
+library(MASS)
+data.ca=ca(data)
+data.ca
+plot(data.ca)
+data.ca1=corresp(data,nf=2)
+data.ca1
+\end{lstlisting}
+~\\
+7.\\
+代码如下：\\
+\begin{lstlisting}[language=Matlab][b]
+xx=[...]
+[n p]=size(xx);
+T=sum(sum(xx));
+xcols=zeros(1,p);
+xrows=zeros(1,n);
+for k=1:p
+	xcols(k)=sum(xx(:,k));
+end
+for l=1:n
+	xrows(l)=sum(xx(l,:));
+end
+z=zeros(p,p);
+for i=1:n
+	for j=1:p
+	z(i,j)=(xx(i,j)-xrows(i)*xcols(j)/T)/((xrows(i)*xcols(j))^(1/2));
+	end
+end
+a=z'*z
+[X b]=eig(a)
+\end{lstlisting}
+第一个方差的贡献率已达96.1\%,接下来计算载荷矩阵：\\
+\begin{lstlisting}[language=Matlab][b]
+f=zeros(p)
+for t=1:p
+	f(t)=(0.0417^0.5)*(X(t,5))
+end
+f
+g=z*f
+\end{lstlisting}
+结果如下:\\
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{7.jpg}\\
+\end{center}
+8.
+\begin{lstlisting}[language=R][b]
+R <- data.frame(c(1,0.63,0.24,0.59),c(0.63,1,-0.06,0.07),c(0.24,-0.06,1,0.42),c(0.59,0.07,0.42,1))
+colnames(R) <- c("X1",'X2','Y1',"Y2")
+row.names(R) <- c("X1",'X2','Y1',"Y2")
+rho11 <- matrix(c(1,0.63,0.63,1),nrow = 2)
+rho12 <- matrix(c(0.24,-0.06,0.59,0.07),2,2)
+rho21 <- matrix(c(0.24,0.59,-0.06,0.07),2,2)
+rho22 <- matrix(c(1,0.42,0.42,1),nrow = 2)
+A <- solve(rho11)%*%rho12%*%solve(rho22)%*%rho21
+A
+B <- solve(rho22)%*%rho21%*%solve(rho11)%*%rho12
+B
+a <- eigen(A)$value
+a <- sqrt(a)
+a
+eigen(A)
+eigen(B)
+\end{lstlisting}
+
+\begin{center}
+  \includegraphics[scale=0.9]{fig3_4.jpg}
+\end{center}
+\begin{center}
+  \includegraphics[scale=0.9]{fig3_5.jpg}
+\end{center}
+$U_1=0.8715828x_1-0.4902484x_2$\\
+$V_1=-0.09706182y_1-0.99527835y_2$\\
+第一典型相关系数为0.7089100，即阅读能力和运算能力之间的相关程度较高。\\
+9.\\
+利用R语言进行典型相关分析:\\
+\small
+\begin{lstlisting}[language=R][b]
+> data = read.table("9.txt",header=T,row.names=1)
+> data <- scale(data)
+> ca <- cancor(data[,1:2],data[,3:5])
+> ca
+$`cor`
+[1] 1.000000 0.419282
+
+$xcoef
+        [,1]       [,2]
+x1 0.3341978  0.9825477
+x2 0.1805112 -1.0220097
+
+$ycoef
+         [,1]      [,2]       [,3]
+y1 -0.6790076 0.2956356 -0.3848459
+y2 -0.1867460 0.6685178 -0.3023967
+y3 -0.6302582 0.5688273  0.1119758
+
+$xcenter
+          x1           x2
+1.332268e-16 9.436896e-17
+
+$ycenter
+          y1           y2           y3
+7.771561e-17 6.453171e-17 4.440892e-17
+\end{lstlisting}
+\large
+\begin{center}
+\includegraphics[scale=0.6]{r9_1.jpg}
+\includegraphics[scale=0.6]{r9_2.jpg}
+\end{center}
+
+10、利用R语言进行对应分析:\\
+\small
+\begin{lstlisting}[language=R][b]
+data <- read.csv("F:\\R_project\\10.csv",header=FALSE)
+library(MASS)
+ca <- corresp(data,2)
+ca
+summary(ca)
+biplot(ca)
+\end{lstlisting}
+\large
+得到图像:\\
+\begin{center}
+\includegraphics[scale=0.6]{10.jpg}
+\end{center}
+
+11.
+\begin{lstlisting}[language=Matlab][b]
+data=load('1.txt');
+rho11=data(1:5,1:5);
+rho12=data(1:5,6:12);
+rho21=data(6:12,1:5);
+rho22=data(6:12,6:12)
+A=(rho11^(-1))*rho12*(rho22^(-1))*rho21;
+B=(rho22^(-1))*rho21*(rho11^(-1))*rho12;
+[X1,B1]=eig(A)
+[X2,B2]=eig(B)
+C=sqrt(B1)
+\end{lstlisting}
+
+$U_1=-0.6246x_1-0.2890x_2-0.2483x_3+0.0339x_4-0.6808x_5$\\
+$V_1=0.5542y_1-0.2723y_2-0.0468y_3+0.0307y_4+0.3784y_5+0.6722y_6-0.1436$\\
+第一典型相关系数仅为30.66\%，即职业特性与职业满意度之间的关系不是很强烈。
+
+12.\\
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{12.jpg}\\
+\end{center}
+使用spss软件的cancorr函数可得：\\
+两对典型变量中：第一对的典型相关系数达到0.788，属于强相关，而第二对只有0.054，比较弱,\\
+长子的头型变量被自身的第一典型变量解释了86.7\%，次子的头型变量被自身的第一典型变量解释了91.8\%
+
+13.
+\begin{lstlisting}[language=R][b]
+C <- read.table("13.txt",header = T)
+C
+cancor(C[,1:7],C[,8:12])
+\end{lstlisting}
+\begin{center}
+  \includegraphics[scale=0.75]{fig3_6.jpg}
+\end{center}
+所以第一典型相关系数为0.8446422，第二典型相关系数为0.6772783，
+$$
+\begin{aligned}
+U_1=&-0.0176900504x_1-0.0097306145x_2-0.0057862464x_3-0.0025517033x_4-0.0024885265x_5\\
+&-0.0006364595x_6-0.0005583015x_7\\
+U_2=&-0.0013416603x_1-0.0048184242x_2+0.0008912145x_3+0.0050088988x_4+0.0112180557x_5\\
+&-0.0043165567x_6-0.0026184356x_7\\
+V_1=&0.1621331150x_8-0.0011889660x_9-0.0253937298x_10-0.0043748296x_11+
+0.0008931099x_12\\
+V_2=&-0.389885929x_8-0.003330845x_9-0.011295209x_10+0.003612972x_11-0.001221382x_12
+\end{aligned}$$
+第一组第一典型变量$U_1$主要代表$X_1$反复横荡次数，$X_2$纵跳高度和$X_3$背力，
+第二典型变量$U_2$主要代表$X_5$塔台升降指数，$X_4$握力和$X_2$纵跳高度。\\
+第二组第一典型变量$V_1$主要代表$X_8$50米跑，
+第二典型变量$V_2$主要代表$X_8$50米跑，但呈现负相关。
+
+14.
+\small
+\begin{lstlisting}[language=R][b]
+> data = read.table("14.txt",header=T,row.names=1)
+> data <- scale(data)
+> ca <- cancor(data[,1:3],data[,4:6])
+> ca
+$`cor`
+[1] 0.79356211 0.19006613 0.02265696
+
+$xcoef
+           [,1]         [,2]        [,3]
+Dec -0.01218793  0.211437907  0.04950157
+Jan  0.19559525 -0.066110758  0.04986370
+Feb  0.03490273  0.001131413 -0.20512044
+
+$ycoef
+             [,1]        [,2]        [,3]
+high7  0.09130213 -0.02440774  0.17813093
+high4 -0.04885330 -0.21147220  0.01508689
+high8  0.14233784 -0.12547180 -0.10604916
+
+$xcenter
+          Dec           Jan           Feb
+-8.807058e-18 -2.775558e-16 -5.898060e-17
+
+$ycenter
+        high7         high4         high8
+-9.607699e-18  2.435285e-17  3.963176e-17
+
+> U <- as.matrix(data[,1:3])%*%ca$xcoef
+> V <- as.matrix(data[,4:6])%*%ca$ycoef
+> plot(U[,1], V[,1], xlab="U1", ylab="V1")
+\end{lstlisting}
+\large
+\begin{center}
+\includegraphics[scale=0.4]{r14_1.jpg}
+\includegraphics[scale=0.4]{r14_2.jpg}
+\end{center}
+\end{document}

@@ -1,0 +1,238 @@
+\documentclass[a4paper,12pt]{article} %文档类型
+\usepackage{CJK}
+\usepackage{ctex}
+\usepackage{color}
+\usepackage{amsmath,amssymb,amstext} %多种公式环境和数学命令
+\usepackage{float}
+\usepackage{array}           % 数组和表格制作
+\usepackage{fancyhdr}        % 页眉页脚设置
+\usepackage{graphicx}        % 插图
+\usepackage{tabularx}        % 自动设置表格列宽
+\usepackage{multirow}        % 跨行表格
+\usepackage{multicol}        % 跨列表格
+\usepackage{titlesec}        % 标题设置
+\usepackage{titletoc}        % 目录格式设置
+\usepackage{epstopdf}        % 编译生成pdf时，能够插入eps格式图片
+\usepackage[top=2.5cm,bottom=2.0cm,left=2.0cm,right=2.0cm]{geometry} % 页边距
+\newcommand{\hei}{\CJKfamily{hei}}  % 定义的新命令
+\newcommand{\li}{\CJKfamily{li}}
+\renewcommand{\figurename}{{图}}
+\linespread{1.7}   %1.5倍行距
+\usepackage{listings}
+\usepackage{xcolor}
+ %\lstset{
+%   %行号
+%   numbers=left,
+%   %背景框
+%   framexleftmargin=10mm,
+%   frame=none,
+%   %背景色
+%   %backgroundcolor=\color[rgb]{1,1,0.76},
+%   backgroundcolor=\color[RGB]{245,245,244},
+%   %样式
+%   keywordstyle=\bf\color{blue},
+%   identifierstyle=\bf,
+%   numberstyle=\color[RGB]{0,192,192},
+%   commentstyle=\it\color[RGB]{0,96,96},
+%   stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+%   %显示空格
+%   showstringspaces=false
+%}
+%\lstset{numbers=left, numberstyle=\tiny, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, frame=shadowbox, rulesepcolor=\color{red!20!green!20!blue!20},escapeinside=``, xleftmargin=2em,xrightmargin=2em, aboveskip=1em, escapeinside=``}
+
+\lstset{numbers=left, %设置行号位置
+        numberstyle=\tiny, %设置行号大小
+        keywordstyle=\color{blue!70}, %设置关键字颜色
+        commentstyle=\color[cmyk]{1,0,1,0}, %设置注释颜色
+        frame=shadowbox, %设置边框格式
+        rulesepcolor=\color{red!20!green!20!blue!20},
+        escapeinside=``, %逃逸字符(1 左面的键)，用于显示中文
+        breaklines, %自动折行
+        extendedchars=false, % 解决代码跨页时，章节标题，页眉等汉字不显示的问题
+        xleftmargin=2em,xrightmargin=2em, aboveskip=1em, %设置边距
+        %tabsize=4, %设置tab空格数
+        %showspaces=false %不显示空格
+       }
+\begin{document}
+
+\begin{center}
+\large
+\heiti{530~~陈斯杰~~电子信息工程~~第7次作业}
+\end{center}
+1.\\
+(1).规划阶段:$A->B->C->D->E$\\
+(2).设置$x_{i},i=1,2,3,4,5$为当前节点状态变量，$u_{i},i=1,2,3,4$为决策变量，其中$x_{1}=A,x_{5}=E$\\
+(3).有$x_{i+1}=u(x_{i})$\\
+(4).得到最优值函数:$f_{k}(x_{k})=min(v(x_{k},u_{k})+f_{k+1}),v=d(x_{k},u_{k})$\\
+可以解出:\\
+$f_{4}(D_{1})=30,f_{4}(D_{2})=40$\\
+$f_{3}(C_{1})=40(C_{1},D_{1}),f_{3}(C_{2})=70(C_{2},D_{2}),f_{3}(C_{3})=60(C_{3},D_{1})
+$\\
+$f_{2}(B_{1})=90(B_{1},C_{3}),f_{2}(B_{2})=70(B_{2},C_{1}),f_{2}(B_{3})=80(B_{3},C_{1}/B_{3},C_{2})$\\
+$f_{1}(A)=110(A,B_{1}/A,B_{2}/A,B_{3})$\\
+(5).因此得到$4$条运费最低路线，均为$110$:\\
+\begin{itemize}
+  \item $A-B_{1}-C_{3}-D_{1}-E$
+  \item $A-B_{2}-C_{1}-D_{1}-E$
+  \item $A-B_{3}-C_{1}-D_{1}-E$
+  \item $A-B_{3}-C_{2}-D_{2}-E$
+\end{itemize}
+2.\\
+状态表示：\\
+f[i][j]表示在第i个时期结束后剩余j个商品，需要花费的最少金钱.\\
+from[i][j]表示f[i][j]是经过f[i-1][from[i][j]]转移而来,用于记录生产过程.\\
+a[i]表示在第i阶段需要的产品数.\\
+状态转移：f[i][j]可以优化f[i+1][j-a[i]+k]的状态为f[i][j]+3*(bool)k+k+0.5(j-a[i]+k), 0 $\leq$ k $\geq$ 6\\
+最终的答案即为f[4][0],并能够还原出过程.\\
+以下为c语言核心代码:
+\lstset{language=C++}
+\begin{lstlisting}
+for(i=0;i<=4;i++) f[1][i]=3+(i+2)+0.5*i,from[1][i]=0;
+  for(i=1;i<=4;i++)
+    for(j=0;j<=i*6;j++)
+    {
+      if(j>=a[i+1])//能够不生产
+        if (f[i+1][j-a[i+1]]>f[i][j]) f[i+1][j-a[i+1]]=f[i][j],from[i+1][j-a[i+1]]=j;
+      for(int k=1;k<=6;k++)//生产
+      if(j+k>=a[i+1])
+      {
+        int price=3+k+0.5*(j+k-a[i+1]);
+        if (f[i+1][j-a[i+1]+k]>f[i][j]+price) f[i+1][j-a[i+1]+k]=f[i][j]+price,from[i+1][j-a[i+1]+k]=j;
+      }
+    }
+\end{lstlisting}
+得到结果：第一天生产5个，第三天生产6个成本最低，为20500元.\\
+3.\\
+从动态规划的角度分析，该问题可分为三个阶段$k=1,2,3$，分别表示对甲、乙、丙三个工程进行设备的分配。\\
+四个状态$s_1,s_2,s_3,s_4$，其中$s_4$表示对丙分配完之后设备剩余数量，显然$s_4=0$,我们用
+$x_1,x_2,x_3$表示三个阶段所作的决策，则$x_k\leq s_k$;最优指标函数$f_k(s_k)$表示在第k阶段所做决策能使盈利最大的函数。\\
+则：
+$$
+\left\{
+\begin{aligned}
+&f_k(s_k)=\max \limits_{0\leq x_k \leq s_k}\{g_k(x_k)+f_{k+1}(s_{k+1})\},k=1,2,3\\
+&f_4(s_4)=0
+\end{aligned}
+\right.
+$$
+(1)当k=3时：$f_3(s_3)=\max \limits_{0\leq x_3 \leq s_3}\{g_3(x_3)\}=\left\{
+\begin{aligned}
+0,~~s_3=0\\
+4,~~s_3=1\\
+16,~~s_3\geq2
+\end{aligned}
+\right.$\\
+因为$g_3(x_3)=g_3(s_3)$是一个离散的函数，我们要对$s_3$可能的取值进行分类讨论；\\
+\textbf{1)$s_3=0$}\\
+则$s_2+x_1=5,f_2(s_2)=\max \limits_{0\leq x_2 \leq s_2}\{g_2(x_2)+f_3(s_3)\}$
+$=\max \limits_{0\leq x_2 \leq s_2}\{g_2(x_2)\}=\left\{
+\begin{aligned}
+0,~~s_2=0\\
+5,~~s_2=1\\
+10,~~s_2=2\\
+11,~~s_2\geq3
+\end{aligned}
+\right.$\\
+$f_1(s_1)_1=\max \limits_{0\leq x_1 \leq s_1}\{g_1(x_1)+f_2(s_2)\}=\max \{13+0,12+5,9+10,7+11\}=19$,\\
+此时$x_1=3,x_2=2,x_3=0$.\\
+
+\textbf{2)$s_3=1$}\\
+则$s_2+x_1=4,f_2(s_2)=\max \limits_{0\leq x_2 \leq s_2}\{g_2(x_2)+f_3(s_3)\}$\\
+$=\left\{
+\begin{aligned}
+4,~~s_2=1\\
+9,~~s_2=2\\
+14,~~s_2=3\\
+15,~~s_2\geq4
+\end{aligned}
+\right.$\\
+$f_1(s_1)_1=\max \limits_{0\leq x_1 \leq s_1}\{g_1(x_1)+f_2(s_2)\}=\max \{12+4,9+9,14+7,15+3\}=21$,\\
+此时$x_1=2,x_2=2,x_3=1$.\\
+
+\textbf{3)$s_3=2$}\\
+则$s_2+x_1=3,f_2(s_2)=\max \limits_{0\leq x_2 \leq s_2}\{g_2(x_2)+f_3(s_3)\}$\\
+$=\left\{
+\begin{aligned}
+16,~~s_2=2\\
+21,~~s_2=3\\
+26,~~s_2=4\\
+27,~~s_2=5
+\end{aligned}
+\right.$\\
+$f_1(s_1)_3=\max \limits_{0\leq x_1 \leq s_1}\{g_1(x_1)+f_2(s_2)\}=\max \{16+9,21+7,26+3,27+0\}=29$,\\
+此时$x_1=1,x_2=2,x_3=2$.\\
+
+所以$f_1(s_1)=\max \{f_1(s_1)_1,f_1(s_1)_2,f_1(s_1)_3\}=29$,此时$x_1=1,x_2=2,x_3=2$.所以给甲工厂分配1台设备，乙工厂2台，丙工厂2台。\\\\
+4.\\
+模型建立：\\
+设在A、B、C区增设分店分别为第1、2、3个阶段
+
+状态变量$s_{k}$为在第k个阶段下仍可新增的门店数量。
+
+决策变量$x_{k}$为第k个阶段的新增的门店数。$(1\leq x_{k}\leq min({s_{k},4})$
+
+状态转移方程:$s_{k}=s_{k-1}-x_{k-1}$
+
+基本方程
+
+\begin{equation*}
+ \begin{cases}
+ f_{k}(s_{k})=\max\limits_{0\leq x_{k}\leq s_{k}}{v_{k}(x_{k})+f_{k+1}(s_{k+1})}\\
+ f_{4}(s_{4})=0\\
+ \end{cases}
+\end{equation*}
+~\\
+模型求解：\\
+(1)当k=3时：$f_{3}(s_{3})=\max\limits_{0\leq x_{3}\leq s_{3}}(v_{3}(x_{3}))$\\
+即$x_{3}^{*}=s_{3}$，$f_{3}(s_{3})=v_{3}(s_{2}-x_{2})$\\
+~\\
+(2)当k=2时：$f_{2}(s_{2})=\max\limits_{0\leq x_{2}\leq s_{2}}(v_{2}(x_{2}))$\\
+即$x_{2}^{*}=s_{2}$，$f_{2}(s_{2})=v_{2}(s_{1}-x_{1})+f_{3}(s_{3})\\
+~\\$
+(3)当k=1时：$f_{2}(s_{2})=\max\limits_{0\leq x_{1}\leq s_{1}}(v_{1}(x_{1}))$\\
+即$x_{1}^{*}=s_{1}$，$f_{1}(s_{1})=v_{1}(s_{0})+f_{2}(s_{2})\\
+~\\$
+由表格可解得当A3家门店，B1家门店，C2家门店或A3家门店，B2家门店，C1家门店或者A4家门店，B1家门店，C1家门店时，总利润最大为710。\\
+5.\\
+构建模型：
+
+$F=min\sum\limits_{k=1}\limits^{n}(f_{1k}+f_{2k}+f_{3k}+f_{4k})$
+
+式子中~n~为规划年限；$f_{1k}$为第k年的变电站的投资金额；$f_{2k}$为第k年线路的投资金额；
+$f_{3k}$为系统第k年的运行费用里；$f_{4k}$为系统第k年的维护费用。
+
+在电力企业中，维护费用一半按照投资总额的百分比来计算，和投资金额成正比关系。所以可以将目标函数进一步化简为
+
+$F=min\sum\limits_{k=1}\limits^{n}(f_{1k}+f_{2k}+f_{3k})$
+
+动态规划计划描述：
+
+1、阶段。每年为一个阶段，认为概念的投资是在每年的年初完成。
+
+2、状态。由电网的结构构成状态变量，取值用0-1描述:
+
+$X_{k}=\begin{bmatrix}
+X_{k1}\\
+X_{k2}\\
+\vdots \\
+X_{kn}
+\end{bmatrix}$
+
+式子中$X_{ki}$为第k阶段中电网各个构成的函数，n为构成元素的个数，其中分别包括已存在的变电站集合、线路集合和候选的变电站集合以及线路集合。
+
+如果在第k阶段中存在则为1，否则为0.
+
+3、决策。决策为第k阶段中增加变电站和线路的决策用$U_{k}$表示，其他为0。
+
+目标函数中$f_{1}$指新增变电站投资费用，即：
+
+$f_{1k}(U_{ki}=\sum C_{kl}U_{kl})$
+
+式子中U是0-1变量，$C_{1l}$是第l个新变电站投资的费用。
+
+目标函数中$f_{2}$指新增线路投资费用，即：
+
+$f_{2k}(U_{ki}=\sum C_{kl}U_{kl})$
+
+式子中U是0-1变量，$C_{2l}$是第l个新线路投资的费用。
+\end{document}

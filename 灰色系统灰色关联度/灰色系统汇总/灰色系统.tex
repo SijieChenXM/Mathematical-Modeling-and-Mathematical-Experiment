@@ -1,0 +1,615 @@
+\documentclass[a4paper,12pt]{article} %文档类型
+\usepackage{CJK}
+\usepackage{ctex}
+\usepackage{color}
+\usepackage{amsmath,amssymb,amstext} %多种公式环境和数学命令
+\usepackage{float}
+\usepackage{array}           %数组和表格制作
+\usepackage{fancyhdr}        %页眉页脚设置
+\usepackage{graphicx}        %插图
+\usepackage{tabularx}        %自动设置表格列宽
+\usepackage{multirow}        %跨行表格
+\usepackage{multicol}        %跨列表格
+\usepackage{titlesec}        %标题设置
+\usepackage{titletoc}        %目录格式设置
+\usepackage{epstopdf}        %编译生成pdf时，能够插入eps格式图片
+\usepackage[top=2.5cm,bottom=2.0cm,left=2.0cm,right=2.0cm]{geometry} % 页边距
+\newcommand{\hei}{\CJKfamily{hei}}  % 定义的新命令
+\newcommand{\li}{\CJKfamily{li}}
+\renewcommand{\figurename}{{图}}
+\linespread{1.7}   %1.5倍行距
+\usepackage{listings}
+\usepackage{xcolor}
+ %\lstset{
+%   %行号
+%   numbers=left,
+%   %背景框
+%   framexleftmargin=10mm,
+%   frame=none,
+%   %背景色
+%   %backgroundcolor=\color[rgb]{1,1,0.76},
+%   backgroundcolor=\color[RGB]{245,245,244},
+%   %样式
+%   keywordstyle=\bf\color{blue},
+%   identifierstyle=\bf,
+%   numberstyle=\color[RGB]{0,192,192},
+%   commentstyle=\it\color[RGB]{0,96,96},
+%   stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+%   %显示空格
+%   showstringspaces=false
+%}
+%\lstset{numbers=left, numberstyle=\tiny, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, frame=shadowbox, rulesepcolor=\color{red!20!green!20!blue!20},escapeinside=``, xleftmargin=2em,xrightmargin=2em, aboveskip=1em, escapeinside=``}
+
+\lstset{numbers=left, %设置行号位置
+        numberstyle=\tiny, %设置行号大小
+        keywordstyle=\color{blue!70}, %设置关键字颜色
+        commentstyle=\color[cmyk]{1,0,1,0}, %设置注释颜色
+        frame=shadowbox, %设置边框格式
+        rulesepcolor=\color{red!20!green!20!blue!20},
+        escapeinside=``, %逃逸字符(1 左面的键)，用于显示中文
+        breaklines, %自动折行
+        extendedchars=false, %解决代码跨页时，章节标题，页眉等汉字不显示的问题
+        xleftmargin=2em,xrightmargin=2em, aboveskip=1em, %设置边距
+        %tabsize=4, %设置tab空格数
+        %showspaces=false %不显示空格
+       }
+\begin{document}
+
+\begin{center}
+\large
+\heiti{530~~陈斯杰~~电子信息工程~~第16次作业}
+\end{center}
+1.依题意，以$X_{1},X_{2}$为参考数列，$X_{3},X_{4}$为比较数列。
+\small
+\begin{lstlisting}[language=Matlab][b]
+1
+A=[45.8,43.3,42.3,41.9]
+B=[39.1,41.6,43.9,44.9]
+C=[3.4,3.3,3.5,3.5]
+D=[6.7,6.8,5.4,4.7]
+%标准化
+A=A./45.8
+B=B./39.1
+C=C./3.4
+D=D./6.7
+%求两级极值
+E=abs(C-A)
+F=abs(D-A)
+G=abs(C-B)
+H=abs(D-B)
+max1=max([E,F])
+max2=max([G,H])
+min1=min([E,F])
+min2=min([G,H])
+%求灰色关联系数和加权关联度
+M13=(min1+0.5*max1)./(E+0.5*max1);
+R13=mean(M13)
+M14=(min1+0.5*max1)./(F+0.5*max1);
+R14=mean(M14)
+M23=(min2+0.5*max2)./(G+0.5*max2);
+R23=mean(M23)
+M24=(min2+0.5*max2)./(H+0.5*max2);
+R24=mean(M24)
+\end{lstlisting}
+\large
+
+可得，关联度$r_{13}=0.6983,r_{14}=0.6036,r_{23}=0.7658,r_{23}=00.6418$\\
+~\\
+2、
+
+利用matlab计算关联矩阵R
+
+\footnotesize
+\begin{lstlisting}[language=matlab, linewidth=0.9\linewidth]
+x=[308.58 310 295 346 367
+   195.4 189.9 189.2 205 222.7
+   24.6 21 12.2 15.1 14.57
+   20 25.6 23.3 29.2 30
+   18.98 19 22.3 23.5 27.66
+   170 174 197 216.4 235.8
+   57.55 70.74 76.8 80.7 89.85
+   68.56 70 85.38 99.83 103.4]';
+[m,n]=size(x);
+for i=1:n
+    x(:,i)=x(:,i)/x(1,i);
+end
+s1=3;
+s2=5;
+mu=x(:,s2+1:end);
+zi=x(:,1:s2);
+for i=1:s1
+    for j=1:s2
+        t(:,j)=zi(:,j)-mu(:,i);
+    end
+    min2=min(min(abs(t)));
+    max2=max(max(abs(t)));
+    rho=0.5;
+    eta=(min2+rho*max2)./(abs(t)+rho*max2);
+    R(i,:)=mean(eta);
+end
+R
+\end{lstlisting}
+\normalsize
+
+得出结果如下图：
+
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{Q2.jpg}\\
+\end{center}
+
+根据关联矩阵分析得：
+
+$R_{15}=0.9354$同行内最大，表明$x_{5}$对$y_{1}$的影响最大
+
+$R_{24}=0.8854$同行内最大，表明$x_{4}$对$y_{2}$的影响最大
+
+$R_{34}=0.8927$同行内最大，表明$x_{4}$对$y_{3}$的影响最大
+
+第一行元素较大，表明$y_{1}$受行为影响最大。反之，第二行元素较小，表明，$y_{2}$受行为影响最小。
+
+~\\
+3.\\
+原始数列为：x=[11 5.4 11.2 2.3 11.3 5 9 22 3 6 7 5 22 7 2 13 3 8 40 12 12 10 6 15 12]\\
+欠年阈值为6，对应日期集为[2 4 6 9 12 15 17]
+使用日期集进行GM(1,1)灰色预测，代码如下：
+\begin{lstlisting}[language=Matlab][b]
+%建立符号变量a(发展系数)和b(灰作用量)
+syms a b;
+c = [a b];
+%原始数列 A
+A = [2 4 6 9 12 15 17];
+n = length(A);
+%对原始数列 A 做累加得到数列 B
+B = cumsum(A);
+%对数列 B 做紧邻均值生成
+for i = 2:n
+    C(i) = (B(i) + B(i - 1))/2;
+end
+C(1) = [];
+%构造数据矩阵
+B = [-C;ones(1,n-1)];
+Y = A; Y(1) = []; Y = Y';
+%使用最小二乘法计算参数 a(发展系数)和b(灰作用量)
+c = inv(B*B')*B*Y;
+c = c';
+a = c(1); b = c(2);
+%预测后续数据
+F = []; F(1) = A(1);
+for i = 2:(n+10)
+    F(i) = (A(1)-b/a)/exp(a*(i-1))+ b/a;
+end
+%对数列 F 累减还原,得到预测出的数据
+G = []; G(1) = A(1);
+for i = 2:(n+4)
+    G(i) = F(i) - F(i-1); %得到预测出来的数据
+end
+disp('预测数据为：');
+G
+\end{lstlisting}
+得到的预测结果为：23.4069,30.0224,38.5076,49.3911，\\
+即预测1994，2001，2010,2020年为欠年.\\
+
+4.\\
+设原始序列为x(0) = (x(0)(1); x(0)(2);   ; x(0)(5)) (2:874; 3:278; 3:337; 3:39; 3:679)试建立 GM (2; 1) 模型.
+
+解：建立矩阵：
+
+\includegraphics[scale = 0.6]{4_1.jpg}
+
+计算$(B^TB)^{-1}$
+
+\includegraphics[scale = 0.6]{4_2.jpg}
+
+由$U = (B^TB)^{-1}B^Ty$,得：
+
+\includegraphics[scale = 0.6]{4_3.jpg}
+
+计算拟合值：
+
+\includegraphics[scale = 0.6]{4_4.jpg}
+
+精度检测与预测;
+
+\includegraphics[scale = 0.6]{4_5.jpg}
+
+\includegraphics[scale = 0.6]{4_6.jpg}
+
+\includegraphics[scale = 0.6]{4_7.jpg}
+
+解：
+  根据灰色系统GM(1,2)的定义，写出一个适宜所有GM(2,1)的matlab程序：
+  \begin{lstlisting}[language=Matlab][b]
+  function [ result,err ] = gm21( x0,pre_num )
+    %如 x0=[41,49,61,78,96,104]; %注意这里为行向量
+    %num 为预测个数
+    %myans为预测数组
+    %err为相对误差
+
+    n = length(x0);
+    x1 = cumsum(x0);%计算1次累加序列
+    a_x0 = diff(x0)';
+    z=0.5*(x1(2:end)+x1(1:end-1))'; %计算矩阵序列
+    B=[-x0(2:end)',-z,ones(n-1,1)];
+    u=B\a_x0;
+    x=dsolve('D2x+a1*Dx+a2*x=b','x(0)=c1,x(5)=c2');
+    x=subs(x,{'a1','a2','b','c1','c2'},{u(1),u(2),u(3),x1(1),x1(n)});
+    yuce=subs(x,'t',0:n-1);
+    x=vpa(x,6);
+    pre = zeros(1,n+pre_num);
+    for i = 1:n+pre_num
+        if(i == 1)
+            pre(i) = double(vpa(subs(x,'t',i-1),6));
+        else
+            pre(i) = double(vpa(subs(x,'t',i-1),6)) - double(vpa(subs(x,'t',i-2),6));
+        end
+    end
+    result = pre;
+    err = zeros(1,n);
+    step = zeros(1,-1);
+    for i = 1:n
+        err(i) = (x0(i) - pre(i))/x0(i);
+    end
+    end
+  x0 = [7.04 7.645 8.075 8.53 8.744];
+  [ result1,err1 ] = gm21( x0,1)
+  x1 = [7.04 7.645 8.075 8.53 8.744];
+  [ result2,err2 ] = gm21( x1,1)
+  \end{lstlisting}
+  结果为：
+  result1 = 7.0400,6.9408,7.0901,7.0017,6.5262,5.4353\\
+  err1 = -0.0000   , 0.0921,    0.1220  ,  0.1792  ,  0.2536\\
+  result2 = 121.0000 , 155.3004 , 183.8785 , 210.0632 , 217.6622 , 158.0958\\
+  err2 = -0.0000    ,0.0811  ,  0.0061  ,  0.0320  ,  0.3851\\
+  此为GM(2,1)的通用matlab代码。
+
+  6.(1)级比检验
+\begin{lstlisting}[language=R][b]
+#级比检验
+x <- c(2.874,3.278,3.337,3.390,3.679)
+lambda <- numeric(4)
+for (i in 1:4) {
+  lambda[i]=x[i]/x[i+1]
+}
+lambda
+\end{lstlisting}
+输出结果为：
+\begin{center}
+  \includegraphics[scale=0.9]{fig6_1.jpg}
+\end{center}
+可见，所有的级比$\lambda(k)$都落在可容覆盖$\Theta=(e^{-\frac{2}{n+1}},e^{\frac{2}{n+1}})=(0.7165,1.3956)$,
+所以数列$x^{(0)}=(2.874,3.278,3.337,3.390,3.679)$可以作为模型$GM(1,1)$进行数据灰色预测。\\
+(2)建立模型$GM(1,1)$
+\begin{lstlisting}[language=R][b]
+##建立灰色模型GM（1，1）对应的函数
+##x表示原始数据数列，k表示数据个数
+gm11<-function(x,k)
+{
+  n<-length(x)
+  x1<-numeric(n);
+  for(i in 1:n)   ##一次累加
+  {
+    x1[i]<-sum(x[1:i]);
+  }
+  b<-numeric(n)
+  m<-n-1
+  for(j in 1:m)
+  {
+    b[j+1]<-(0.5*x1[j+1]+0.5*x1[j])   ##紧邻均值生成
+  }
+  Yn=t(t(x[2:n]))                   ##构造Yn矩阵
+  B<-matrix(1,nrow=n-1,ncol=2)
+  B[,1]<-t(t(-b[2:n]))              ##构造B矩阵
+  A<-solve(t(B)%*%B)%*%t(B)%*%Yn;   ##使用最小二乘法求得灰参数a,u
+  a<-A[1];
+  u<-A[2];
+  x2<-numeric(k);
+  x2[1]<-x[1];
+  for(i in 1:k-1)
+  {
+    x2[1+i]=(x[1]-u/a)*exp(-a*i)+u/a;
+  }
+  x2=c(0,x2);
+  y=diff(x2);                     ##累减生成，获得预测数据数列
+  y
+}
+
+yc <- gm11(x,6)
+\end{lstlisting}
+输出结果为：
+\begin{center}
+  \includegraphics[scale=0.9]{fig6_2.jpg}
+\end{center}
+所以，我们预测2004年的销售额为3.750656\\
+
+(3)精度检验
+\begin{lstlisting}[language=R][b]
+##计算残差、相对误差
+NO <- 1:5
+year <- 1999:2003
+ori <- x
+simu <- yc[1:5]
+delta <- ori-simu
+err <- abs(delta)/ori
+tabl <- data.frame(NO,year,ori,simu,delta,err)
+\end{lstlisting}
+输出结果为：
+\begin{center}
+  \includegraphics[scale=0.9]{fig6_3.jpg}
+\end{center}
+
+(4)计算灰色关联度.
+\begin{lstlisting}[language=R][b]
+##x1原始数据数列，x2是预测数据数列
+x1 <- x
+x2 <- gm11(x,length(x))
+##检验模型精度
+acc <- function(x1,x2)
+{
+  n <- length(x1);
+  sum1 = 0;
+  for(k in 2:n-1)
+  {
+    sum1 <- sum1+(x1[k]-x1[1]);
+  }
+  s1 <- sum1+0.5*(x1[n]-x1[1]);
+  sum2 = 0;
+  for(k in 2:n-1)
+  {
+    sum2 <- sum2+(x2[k]-x2[1]);
+  }
+  s2 <- sum2+0.5*(x2[n]-x2[1]);
+  abs1 <- abs(s1)
+  abs2 <- abs(s2)
+  abs12 <- abs(s1-s2)
+  ee <- (1+abs1+abs2)/(1+abs1+abs2+abs12)
+  ee
+}
+acc(x1,x2)
+\end{lstlisting}
+输出结果为：
+\begin{center}
+  \includegraphics[scale=0.9]{fig6_4.jpg}
+\end{center}
+灰色关联度为0.9933871，模型精度较高，可以用于预测。
+
+7、
+\begin{description}
+          \item[(1)] 本问题主要分析影响渔获量即总产量$X_1$ 的主要因素，将序列$X_1 = (38453.9,35541.81,57236.4,46120.8,61158.05,43989.54)$ 作为参考序列.
+              \begin{itemize}
+                \item 将参考序列即剩余四个因素序列用均值法进行无量纲化得：
+                      $$X_1 = (0.8167,0.7549,1.2156,0.9796,1.2989,0.9343)$$
+                      $$X_2 = (0.7795,0.5983,0.9222,0.8872,1.5271,1.2857)$$
+                      $$X_3 = (0.9753,0.8907,0.8035,1.0546,1.1789,1.0969)$$
+                      $$X_4 = (0.9964,1.2000,1.2536,1.0500,0.8089,0.6911)$$
+                      $$X_5 = (0.8263,0.8363,1.4929,0.9166,1.0873,0.8405)$$
+                \item 计算灰色关联系数\\
+                      根据关联系数$\xi_i(k)$的公式，其中$\rho$取0.5得系数矩阵为：
+                      $$\xi_i(k) = \left(
+                        \begin{array}{cccccc}
+                          0.9022 & 0.6340 & 0.4729 & 0.7548 & 0.5381 & 0.4269 \\
+                          0.6309 & 0.6685 & 0.3875 & 0.7955 & 0.6975 & 0.6246 \\
+                          0.5995 & 0.3689 & 0.8999 & 0.8072 & 0.3464 & 0.5215 \\
+                          1.0000 & 0.7801 & 0.4875 & 0.8268 & 0.5577 & 0.7516 \\
+                        \end{array}
+                      \right)$$
+                \item 计算灰色加权关联度\\
+                      把各年份的权重相等取值即$W = (1/6,1/6,1/6,1/6,1/6,1/6)$ 得
+                      $$R(1,2) = 0.6215,R(1,3) = 0.6341,R(1,4) = 0.5906,R(1,5) = 0.7339$$
+                      从以上结果可以看出平均单船产量是影响渔获量得最大因素，其他依次为作业船数、作业次数、CPUE。
+              \end{itemize}
+          \item[(2)]  选择关联度在0.60以上的因素作为建立模型的因子，运行以下代码：
+                    \footnotesize
+              \begin{lstlisting}[language=matlab, linewidth=0.9\linewidth][b]
+A =[38453.9,35541.81,57236.4,46120.8,61158.05,43989.54];
+x0=[20674,15867,24460,23531,40502,34100;
+    369,337,304,399,446,415;
+    104.2111,105.4653,188.2776,115.591,137.1257,105.9989];
+[n,m]=size(x0);
+AGO=cumsum(A);
+T=1;
+x1=zeros(n,m+T);
+for k=1:(m-1)
+    Z(k)=(AGO(k)+AGO(k+1))/2; %Z(i)为xi(1)的紧邻均值生成序列
+end
+for i=1:n
+    for j=1:m
+        for k=1:j
+            x1(i,j)=x1(i,j)+x0(i,k);%原始数据一次累加,得到xi(1)
+        end
+    end
+end
+x11=x1(:,1:m);
+X=x1(:,2:m)';%截取矩阵
+Yn =A;%Yn为常数项向量
+Yn(1)=[]; %从第二个数开始，即x(2),x(3)...
+Yn=Yn';
+%Yn=A(:,2:m)';
+B=[-Z',X];
+C=((B'*B)\(B'*Yn))';%由公式建立GM(1,n)模型
+a=C(1);
+b=C(:,2:n+1);
+                \end{lstlisting}
+                \normalsize
+                得灰类参数
+                $$a = 1.7144,b = [0.9021,20.3951,401.7470]$$
+                根据模型GM(1,4)得
+                $$\widehat{x_1}^{(1)}(k+1) = [x_1^{(0)}-\frac{1}{a}\sum\limits_{i=2}\limits^Nb_ix_i^{(1)}(k+1)]e^{-ak}+\frac{1}{a}\sum\limits_{i=2}\limits^Nb_ix_i^{(1)}(k+1)$$
+                $$\widehat{x_1}^{(0)}(k+1) = \widehat{x_1}^{(1)}(k+1)-\widehat{x_1}^{(1)}(k)$$
+                代码如下：
+                \footnotesize
+              \begin{lstlisting}[language=matlab, linewidth=0.9\linewidth][b]
+F=[];
+F(1)=A(1);
+u=zeros(1,m);
+for i=1:m
+    for j=1:n
+        u(i)=u(i)+(b(j)*x11(j,i));
+    end
+end
+for k=2:m
+    F(k)=(A(1)-u(k)/a)/exp(a*(k-1))+u(k)/a;
+end
+G=[];
+G(1)=A(1);
+for k=2:m
+    G(k)=F(k)-F(k-1);%两者做差还原原序列，得到预测数据
+end
+t1=1:m;
+t2=1:m;
+plot(t1,A,'bo--');
+hold on;
+plot(t2,G,'r*-');
+title('预测结果');
+legend('真实值','预测值');
+                \end{lstlisting}
+                \normalsize
+                得比较图如下：
+                \begin{figure}[h]
+            	    \centering
+                     \includegraphics[width=0.6\linewidth]{7_2.png}
+                \end{figure}
+
+                对上述模型进行检测，如下表：
+                \begin{center}
+                    \begin{tabular}{|c|c|c|c|c|}
+                      \hline
+                      % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+                      年份 & $\widehat{x_0}$拟合值 & 观察值 & 误差 & 相对误差(\%) \\
+                      \hline
+                      1996 & 38453.9 & 38453.9 & 0 & 0 \\
+                      \hline
+                      1997 & 31408.4 & 35541.8 & 4133.3 & 11.63 \\
+                      \hline
+                      1998 & 64296.8 & 57236.4 & -7060.3 & -12.34 \\
+                      \hline
+                      1999 & 46586.3 & 46120.8 & -465.5 & -1.01 \\
+                      \hline
+                      2000 & 59373.7 & 61158.1 & 1784.3 & 2.92 \\
+                      \hline
+                      2001 & 47883.9 & 43989.5 & -3894.3 & -8.85 \\
+                      \hline
+                    \end{tabular}
+                \end{center}
+
+                总体相对误差绝对值在2——13\%之间，平均误差为6.125\%。因此该模型具有一定的可信度\\
+                我们假定2002年平均单船产量达到往年平均水平，为126.11吨/艘，北太平洋实际参加生产的渔船数量为380艘，作业次数采用历年单船平均值为依据合计26000次，则2002年总产量将达53200吨
+        \end{description}
+8.可采用主成分分析，因子分析和灰色系统分析，此处，我们采用灰色系统分析来进行因素分析。\\
+以$X_{0}$为参考数列,$X_{i},i=1...16$为比较数列。将秒换算为毫秒。\\
+\small
+\begin{lstlisting}[language=Matlab][b]
+data=table2array(readtable('8.txt'))
+for i=1:17
+  eval(['X',num2str(i-1),'=','data(i,:)',';'])
+end
+%均值化
+for i=1:17
+  eval(['X',num2str(i-1),'=','X',num2str(i-1),'./(sum(','X',num2str(i-1),')/5)'';'])
+end
+%求两级极值
+for i=1:16
+  eval(['Y',num2str(i),'=','abs(','X',num2str(i),'-','X',num2str(0),');'])
+end
+Z=Y1
+for i=2:16
+  eval(['Z=','[Z,Y',num2str(i),'];'])
+end
+max=max(Z);
+min=min(Z);
+%求灰色关联系数和加权关联度
+for i=1:16
+  eval(['M',num2str(i),'=','(min+0.5*max)./','(X',num2str(i),'+0.5*max)',';'])
+end
+for i=1:16
+  eval(['R',num2str(i),'=','sum','(M',num2str(i),')/5',';'])
+end
+r=R1
+for i=2:16
+  eval(['r=','[r,R',num2str(i),'];'])
+end
+r=r'
+\end{lstlisting}
+\large
+得到最后得灰色关联矩阵\\
+\begin{center}
+$\left(\begin{array}{c}
+    0.0712\\
+    0.0708\\
+    0.0706\\
+    0.0705\\
+    0.0709\\
+    0.0717\\
+    0.0713\\
+    0.0711\\
+    0.0708\\
+    0.0708\\
+    0.0707\\
+    0.0705\\
+    0.0707\\
+    0.0707\\
+    0.0705\\
+    0.0705\\
+\end{array}\right)$\\
+\end{center}
+由以上矩阵可知，抓举对铅球影响相对最大，而田径类运动对铅球影响相对较小。
+
+9、
+
+利用matlab计算关联矩阵，代码如下：
+
+\footnotesize
+\begin{lstlisting}
+[language=matlab, linewidth=0.9\linewidth]
+clear;clc;
+x=[960800 257119 173758 688860 2080537
+   971668 276880 216354 702719 2167621
+   1023730 296592 204911 715030 2240263
+   1046095 355943 211100 716341 2329479
+   1052384 365933 239101 729051 2386469
+   1099454 398715 244888 771625 2514682
+   1167362 319486 232816 806689 2526353
+   1193838 459177 269779 758769 2681563
+   1185079 488706 268956 768619 2711360];
+[m,n]=size(x);
+for i=1:n
+    x(:,i)=x(:,i)/x(1,i);
+end
+s1=1;
+s2=4;
+mu=x(:,s2+1:end);
+zi=x(:,1:s2);
+for i=1:s1
+    for j=1:s2
+        t(:,j)=zi(:,j)-mu(:,i);
+    end
+    min2=min(min(abs(t)));
+    max2=max(max(abs(t)));
+    rho=0.5;
+    eta=(min2+rho*max2)./(abs(t)+rho*max2);
+    R(i,:)=mean(eta);
+end
+R
+\end{lstlisting}
+\normalsize
+
+得到关联矩阵如下图：
+
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{Q9.jpg}\\
+\end{center}
+
+10.\\
+原始矩阵X$^{(0)}$=[2.38 2.80 4.25 6.85 11.30],\\
+累加矩阵X$^{(1)}$=[2.38 5.18 9.43 16.28 27.58],\\
+构造矩阵B=$\left(\begin{array}{cc}%左括号
+-3.78&1\\
+-7.3&1\\
+-12.8&1\\
+-21.9&1
+\end{array}\right)$,\\
+使用最小二乘法算得$\hat{u}$=$\left(\begin{array}{c}%左括号
+-0.5\\0.97
+\end{array}\right)$,检验误差为0.04，精度理想。\\
+对32kg/mm$^2$下的时间做预测，得23.82，即估计能够承受2382h后断裂。
+
+\end{document}
