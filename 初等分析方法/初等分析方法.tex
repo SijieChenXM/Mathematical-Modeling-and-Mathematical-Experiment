@@ -1,0 +1,234 @@
+ \documentclass[a4paper,12pt]{article} %文档类型
+\usepackage{CJK}
+\usepackage{ctex}
+\usepackage{color}
+\usepackage{amsmath,amssymb,amstext} %多种公式环境和数学命令
+\usepackage{float}
+\usepackage{array}           %数组和表格制作
+\usepackage{fancyhdr}        %页眉页脚设置
+\usepackage{graphicx}        %插图
+\usepackage{tabularx}        %自动设置表格列宽
+\usepackage{multirow}        %跨行表格
+\usepackage{multicol}        %跨列表格
+\usepackage{titlesec}        %标题设置
+\usepackage{titletoc}        %目录格式设置
+\usepackage{epstopdf}        %编译生成pdf时，能够插入eps格式图片
+\usepackage[top=2.5cm,bottom=2.0cm,left=2.0cm,right=2.0cm]{geometry} % 页边距
+\newcommand{\hei}{\CJKfamily{hei}}  % 定义的新命令
+\newcommand{\li}{\CJKfamily{li}}
+\renewcommand{\figurename}{{图}}
+\linespread{1.7}   %1.5倍行距
+\usepackage{listings}
+\usepackage{xcolor}
+ %\lstset{
+%   %行号
+%   numbers=left,
+%   %背景框
+%   framexleftmargin=10mm,
+%   frame=none,
+%   %背景色
+%   %backgroundcolor=\color[rgb]{1,1,0.76},
+%   backgroundcolor=\color[RGB]{245,245,244},
+%   %样式
+%   keywordstyle=\bf\color{blue},
+%   identifierstyle=\bf,
+%   numberstyle=\color[RGB]{0,192,192},
+%   commentstyle=\it\color[RGB]{0,96,96},
+%   stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+%   %显示空格
+%   showstringspaces=false
+%}
+%\lstset{numbers=left, numberstyle=\tiny, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, frame=shadowbox, rulesepcolor=\color{red!20!green!20!blue!20},escapeinside=``, xleftmargin=2em,xrightmargin=2em, aboveskip=1em, escapeinside=``}
+
+\lstset{numbers=left, %设置行号位置
+        numberstyle=\tiny, %设置行号大小
+        keywordstyle=\color{blue!70}, %设置关键字颜色
+        commentstyle=\color[cmyk]{1,0,1,0}, %设置注释颜色
+        frame=shadowbox, %设置边框格式
+        rulesepcolor=\color{red!20!green!20!blue!20},
+        escapeinside=``, %逃逸字符(1 左面的键)，用于显示中文
+        breaklines, %自动折行
+        extendedchars=false, %解决代码跨页时，章节标题，页眉等汉字不显示的问题
+        xleftmargin=2em,xrightmargin=2em, aboveskip=1em, %设置边距
+        %tabsize=4, %设置tab空格数
+        %showspaces=false %不显示空格
+       }
+\begin{document}
+
+\begin{center}
+\large
+\heiti{编号:530~~姓名:陈斯杰~~专业:电子信息工程~~第3次作业}
+\end{center}
+\begin{itemize}
+\item 应用积分思想建模
+    \begin{enumerate}
+    \item 1.1
+    \item 1.2
+    \item 1.3
+    \item 1.4
+    按期望的增长率，10年后的利润为：
+      \begin{eqnarray*}
+        \int_{0}^{10}[1+t^{\frac{2}{3}}]dt &=& [t+\frac{3}{5}t^{\frac{5}{3}}]_{0}^{10} = 10+6\sqrt[3]{100}\\
+        &\approx& 37.85(*10^{5})
+      \end{eqnarray*}
+      按实际的增长率，10年后的利润为：
+      \begin{eqnarray*}
+        \int_{0}^{10}[t-2\sqrt{t}+4]dt &=& [\frac{1}{2}t^{2}-\frac{4}{3}t\sqrt{t}+4t]_{0}^{10}\\ &=& 50-\frac{40}{3}\sqrt{10}+40\\
+        &\approx & 47.84(*10^{5})
+      \end{eqnarray*}
+      所以十年得到的利润比期望增加：
+      \begin{center}
+        $(47.84 - 37.85)*10^{5} = 99.9$(万美元)
+      \end{center}
+    \item 1.5(指数增长问题)解\\
+(1)假设需要n年。k=2.6\%;则\\
+\begin{equation*}
+y=y_0e^{kn}=2y_0;
+n=\frac{ln 2}{k}=26.659
+\end{equation*}\\
+所以n取27，即需要27年世界人口将翻番。\\
+(2)$k=0.8\%$,运用matlab,可算出1991-2000年间各年的人口数量。代码如下：
+\begin{lstlisting}
+for i=1:10
+Q(i)=6766.9*exp(0.008*i)
+end
+ave=(sum(Q)+6766.9)/11
+%输出结果：ave = 7.0453e+03
+\end{lstlisting}
+所以江苏省1990-2000年的平均人口数为7045.3万人。
+\\\\
+    \item 1.6
+解：\begin{center}
+  \includegraphics[width=0.7\textwidth]{1_2_6.jpg}\\
+\end{center}
+生产x件产品所需时间为:
+\begin{equation*}
+\begin{cases}
+$$int_{0}^{x}Cx^{k}dx=\frac{C}{k+1}x^{k+1}(x\leq A)$$\\
+$$int_{0}^{A}Cx^{k}dx+(x-A)CA^{k}=\frac{C}{k+1}A^{k+1}+(x-A)CA^{k}$$\\
+\end{cases}
+\end{equation*}
+    \item 1.8
+    解：设$F_{i}$为第$i$周的客流量，则
+\begin{equation*}
+\begin{cases}
+$$F_{1}=A=Af(0)$$\\
+$$F_{2}=Af(1)+A=A(f(1)+f(0))$$\\
+$$F_{3}=Af(2)+Af(1)+A=A(f(2)+f(1)+f(0))$$\\
+$$...$$\\
+$$F_{21}=A(f(20)+f(19)+...+f(2)+f(1)+f(0))$$\\
+$$f(t)=e^{-\frac{t}{10}},A=2000$$\\
+\end{cases}
+\end{equation*}
+即求解$F_{21}=2000(e^{-\frac{0}{10}}+e^{-\frac{1}{10}}+...+e^{-\frac{20}{10}})=2000 \frac{1-e^{-\frac{21}{10}}}{1-e^{-\frac{1}{10}}}$\\
+解得$F_{21}=18443$人
+    \item 1.9
+    \begin{description}
+    \item[(1)] 不平等面积$A$大小为：
+     \begin{eqnarray*}
+        \int_{0}^{1}[p-p^{5/3}]dp &=&[\frac{1}{2}p^{2}-\frac{3}{8}p^{8/3}]_{0}^{1}\\ &=& 0.125
+      \end{eqnarray*}
+      下三角面积为1/2,所以，基尼系数为：
+      \begin{eqnarray*}
+        G &=& \frac{A}{1/2}\\
+        &=& 0.25
+      \end{eqnarray*}
+    \item[(2)] 基尼系数为0.25,属社会收入分配比较平均的范围.
+    \item[(3)] $$L^{'}(p_{0}) = \frac{5}{3}p_{0}^{2/3} = 1$$
+        $$p_{0} \approx 0.465 = 46.5\%$$
+        所以，有$46.5\%$的人的收入在社会平均之下.
+  \end{description}
+    \end{enumerate}
+
+\item 应用导数思想建模
+\begin{enumerate}
+  \item 2.1
+  解：需求的价格弹性=$\frac{P}{Q^{D}}\times\frac{dQ^{D}}{dP}$
+
+ 需求的收入弹性=$\frac{Y}{Q}\times\frac{dQ}{dY}$
+
+ 收益的价格弹性=$\frac{P}{R}\times\frac{dR}{dP}$
+
+ 供给的价格弹性=$\frac{P}{Q^{S}}\times\frac{dQ^{S}}{dP}$\\
+ ~\\
+  \item 2.2
+解：(1)由需求价格弹性可知：\\
+$\frac{\triangle Q}{Q}=E_{d}\times\frac{\triangle P}{P}=-1.2\times3\%=-3.6\%$
+即在其他条件不变的情况下，如果价格提高3\%，则需求将下降3.6\%.\\
+(2)由需求收入弹性可知：
+$\frac{\triangle Q}{Q}=E_{y}\times\frac{\triangle M}{M}=3.0\times2\%=6\%$
+即在其他条件不变的情况下，如果收入上升2\%，则需求上升6\%。\\
+(3)预计销售量：$800\times[1+(3.0\times10\%-1.2\times8\%)]=963.2$
+即汽车预计销售量为963.2万辆。
+  \item 2.3
+  解：设价格为p，需求为Q(p)，依题意有：
+$$\frac{dQ}{dp}\frac{p}{Q}=-0.15$$\\
+微分方程通解为：$Q=Cp^{-0.15}$($C$为常数)
+设斜率$k_{p}=(\frac{dQ}{dp})_{p}$，有：
+\begin{equation*}
+\begin{cases}
+$$k_{p}\frac{500}{Q}=-0.15$$\\
+$$k_{p+\Delta p}\frac{500+\Delta p}{Q-0.1Q}=-0.15$$
+\end{cases}
+\end{equation*}
+可以解出：$\frac{p+\Delta p}{p}=2.019$，即上涨509.5
+  \item 2.4
+  解：弧弹性公式为：
+  $$E_{d} = \frac{\Delta Q}{(Q_{0}+Q_{1})/2}\div\frac{\Delta P}{(P_{0}+P_{1})/2}\eqno(2.4.1)$$
+  由题干提取出,$\Delta Q = 2000,Q_{0} = 8000,Q_{1} = 10000,P_{0} = 600,P_{1} = P_{0}+\Delta P$,代入(2. 4.1)得：
+     \begin{eqnarray*}
+        -2.0 &=& \frac{2000}{9000}\div\frac{\Delta P}{600+\frac{1}{2}\Delta P}\\
+        \Delta P &\approx& -63
+      \end{eqnarray*}
+      所以每双要降价到537元
+  \item 2.5
+  解：价格弹性：\\
+背景回顾，价格弹性公式：
+\begin{equation*}
+\varepsilon=\frac{dQ}{dP}\times\frac{P}{Q}
+\end{equation*}\\
+在$P=385,Q=18500$该点，价格弹性$\varepsilon=\frac{dQ}{dP}\times\frac{385}{18500}=-3.8$，
+得该点斜率$\frac{dQ}{dP}=-b=-\frac{3.8\times18500}{385}=-\frac{14060}{77}$,解得$a=88800$;
+所以需求函数：
+\begin{equation*}
+Q=88800-\frac{14060}{77}P
+\end{equation*}
+由于该公司预计量产销售产品25000件，所以令$Q=25000$,解得$P=349.4$;
+所以价格应定为349或350元较为合理。
+  \item 2.6
+  解:\\
+  (1)生产100吨时总成本为$1000+7\times100+20\times100^{2}=501700$ 元。\\
+
+ (2)产量100吨时平均成本为$\frac{501700}{100}=5017$元。\\
+
+ (3)产量为225吨时总成本=2533825元
+
+ 平均变化率为$\frac{2533825-501700}{225-100}=16257$\\
+
+ (4)$\frac{dc}{dq}=7+100q$
+
+ 100吨时的变化率为7+100times100=10007
+~\\
+  \item 2.7
+解：\\(1)设收入为I，商品销售数量为Q，在对Q进行的关于I和其他解释变量的回归中，I的估计系数是10，即$\frac{\triangle Q}{\triangle I}=10$.
+因此，对于100000院的收入和80000单位的销售量，商品的收入弹性为$E_{I}=10\times\frac{100000}{80000}=12.5$.
+(2)销售量从80000增加到90000单位，消费者的收入从100000增加到110000元时，$E_{I}=10\times\frac{100000}{80000}=12.4$，所以该商品为奢侈品。
+\end{enumerate}
+\item 初等优化方法
+\begin{enumerate}
+  \item 3.1
+  \item 3.2
+解：\\ 损失费通常正比于森林烧毁面积，而烧毁面积与失火、灭火时间有关，灭火时间又取决于消防队员数目，队员越多，灭火时间越短。而救援费既与消防队员人数有关，又与灭火时间长短有关。
+记失火时刻为t=0，开始救火时刻为$t=t_{1}$，设在时刻t森林被烧毁面积为S(t)。\\
+【模型假设】：
+森林树木分布均匀，且无风，火势可以看作以失火点为中心，以均匀速度向四周呈圆形蔓延，且不会蔓延至森林边界，因而蔓延半径r与时间t成正比，又因烧毁面积S与$t^{2}$成正比，从而$\frac{dB}{dt}$成正比，火势蔓延速度设为$v_{1}$
+损失费与烧毁面积成正比且比例系数为$c_{1}$；
+派出消防队员x名，每个消防队员灭火速度为$v_{2}$,每个消防队员单位时间的费用（薪资与材料耗损）为$c_{2}$，灭火时刻为$t_{2}$，每个队友一次性支出费用（运费与器材费用）为$c_{3}$\\
+【约束条件】：
+总灭火速度应大约火势蔓延速度，即$xv_{2}>v_{1}$\\
+【模型求解】：
+求得费用最少时x的解为：
+$x=\frac{v_{1}}{v_{2}}+v_{1}\sqrt{\frac{c_{1}v_{2}b^{2}+2c_{2}v_{1}b}{2c_{3}v_{2}^{2}}}$
+\end{enumerate}
+\end{itemize}
+\end{document}

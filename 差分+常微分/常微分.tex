@@ -1,0 +1,195 @@
+\documentclass[a4paper,12pt]{article} %文档类型
+\usepackage{CJK}
+\usepackage{ctex}
+\usepackage{color}
+\usepackage{amsmath,amssymb,amstext} %多种公式环境和数学命令
+\usepackage{float}
+\usepackage{array}           %数组和表格制作
+\usepackage{fancyhdr}        %页眉页脚设置
+\usepackage{graphicx}        %插图
+\usepackage{tabularx}        %自动设置表格列宽
+\usepackage{multirow}        %跨行表格
+\usepackage{multicol}        %跨列表格
+\usepackage{titlesec}        %标题设置
+\usepackage{titletoc}        %目录格式设置
+\usepackage{epstopdf}        %编译生成pdf时，能够插入eps格式图片
+\usepackage[top=2.5cm,bottom=2.0cm,left=2.0cm,right=2.0cm]{geometry} % 页边距
+\newcommand{\hei}{\CJKfamily{hei}}  % 定义的新命令
+\newcommand{\li}{\CJKfamily{li}}
+\renewcommand{\figurename}{{图}}
+\linespread{1.7}   %1.5倍行距
+\usepackage{listings}
+\usepackage{xcolor}
+ %\lstset{
+%   %行号
+%   numbers=left,
+%   %背景框
+%   framexleftmargin=10mm,
+%   frame=none,
+%   %背景色
+%   %backgroundcolor=\color[rgb]{1,1,0.76},
+%   backgroundcolor=\color[RGB]{245,245,244},
+%   %样式
+%   keywordstyle=\bf\color{blue},
+%   identifierstyle=\bf,
+%   numberstyle=\color[RGB]{0,192,192},
+%   commentstyle=\it\color[RGB]{0,96,96},
+%   stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+%   %显示空格
+%   showstringspaces=false
+%}
+%\lstset{numbers=left, numberstyle=\tiny, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, frame=shadowbox, rulesepcolor=\color{red!20!green!20!blue!20},escapeinside=``, xleftmargin=2em,xrightmargin=2em, aboveskip=1em, escapeinside=``}
+
+\lstset{numbers=left, %设置行号位置
+        numberstyle=\tiny, %设置行号大小
+        keywordstyle=\color{blue!70}, %设置关键字颜色
+        commentstyle=\color[cmyk]{1,0,1,0}, %设置注释颜色
+        frame=shadowbox, %设置边框格式
+        rulesepcolor=\color{red!20!green!20!blue!20},
+        escapeinside=``, %逃逸字符(1 左面的键)，用于显示中文
+        breaklines, %自动折行
+        extendedchars=false, %解决代码跨页时，章节标题，页眉等汉字不显示的问题
+        xleftmargin=2em,xrightmargin=2em, aboveskip=1em, %设置边距
+        %tabsize=4, %设置tab空格数
+        %showspaces=false %不显示空格
+       }
+\begin{document}
+
+\begin{center}
+\large
+\heiti{530~~陈斯杰~~电子信息工程~~第21次作业}
+\end{center}
+1、$t=\frac{v}{a}$\\
+$S=\frac{1}{2}v\frac{v}{a}=\frac{v^{2}}{2a}$\\
+带进方程可得\\
+$10=\frac{45^{2}}{2a}$\\
+解得a=101.25\\
+将s=21带入上式解得，v=65.21\\
+~\\
+2.\\解：
+  假设总人口为R，青年人口和老年人口的比例为K，青年人对出生率贡献为常数$c_{1}$,老年人的死亡率为$c_{2}$,自然因素对人口增长率的影响为常数$r_{1}$,社会经济因素对人口的影响为常数$r_{2}$, 根据情况列出人口增长率和社会、自然等因素的关系式为：
+  \begin{center}
+    $\frac{dR}{dt}=\frac{c_{1}K}{1+K}R-\frac{c_{2}}{1+K}R+r_{1}+r_{2}$
+  \end{center}
+  由此可以解得总人口和$c_{1},c_{2},r_{1},r_{2}$的关系。\\
+3.\\
+物质与人力资源$w$,技术水平$s$,政府购买$b$,总产出$P$\\
+$\frac{dP}{dt}=C_{1}*ws+C_{2}*b$\\
+4.
+\begin{description}
+          \item[(1)] 假设A：设t时刻产品销量的增长率$\frac{dx}{dt}$与$x(t)$ 成正比，预测t 时产品销量\\
+              模型建立：
+
+              ~~~~t时刻时，新产品销量为$x(t)$，把$x(t)$当做连续可微函数处理。每件新产品都是宣传品，且单位时间内每件新产品能够使a件新产品被销售，由假设可知：
+              $$x(t+\Delta t)-x(t) = ax(t)$$
+              即：
+              $$\frac{dx}{dt} = ax$$
+              开始时有$x_0$件新产品被销售，即$x(0) = x_0$, 整理得：
+              \begin{equation*}
+                \begin{cases}
+                    \frac{dx}{dt} = ax\\
+                    x(0) = x_0
+                \end{cases}
+              \end{equation*}
+              求解得：
+              $$x(t) = x_0e^{at}$$
+          \item[(2)] 假设B:设考虑到产品销售存在一定市场容量Mx,预测t 时产品销量\\
+              模型建立：
+
+              ~~~~事实上，x(t)往往是有上界的，统计表明$\frac{dx}{dt}$ 与该产品的潜在容量$N-x(t)$成正比，且设b为产品销售量的增长率与潜在容量的比例系数，则：
+              $$\frac{dx}{dt} = b(Mx-x(t))$$
+              调用matlab的dsolve函数得：
+              $$x(t) = \frac{Mx(e^{bt}-1)-x_0}{e^{bt}}$$
+        \end{description}
+5、
+
+假设A中经营者前期产量应该设置少量，后期设置多量。
+
+假设B中，当购买量为最大需求量$M_{x}$一半时购买速度最快，此时产量应该最大，当刚开始销售和市场接近饱和时产量设置少量。\\
+7.假设t时刻销售量为Q(t)，t时刻的广告费用投入为M(t),潜在的市场容量为N，则可得到\\
+$\frac{dQ(t)}{dt}=a(N-Q(t))$\\
+其中$a=F(M(t))=bM(t)$\\
+而广告投入随销售速率的增加而减少，可得\\
+$M(t)=\frac{1}{\frac{dQ(t)}{dt}}$\\
+即$\frac{dQ(t)}{dt}=\sqrt{b(N-Q(t))}$\\
+~\\
+8.\\解：
+  根据题意可以列出一下关系式：\\
+  $\left\{\begin{matrix}
+    \frac{dS_{i}(t)}{dt}=C_{i}N_{i}(t)&i=1,2\\
+    M(t)=C\\
+    N_{1}+N_{2}=M(T)
+  \end{matrix}\right.$
+11、
+
+模型假设：
+
+假设：问题一在理想状态下技术的推广只与新技术的有直接关系，忽略人数限制等其他因素的影响。
+
+假设：问题二分析在总人数一定的情况下，当采用新技术的人数达到一定数量后，推广速度会减小。
+
+假设：模型三中广告等媒介在早期的作它用比较大，它对传播速度的影响与尚未采用新技术的人数成正比，在模型（2）的基础上进行利用。
+
+建立模型：
+
+模型1：
+
+设推广的速度为r，x(t)为t时刻采用新技术的人员数。
+
+可得：t到t+dt时间段内人口增量为$\frac{x(t+dt)-x(t)}{dt}=rx(t)$
+
+即$\frac{dx}{dt}=rx$，此模型为指数增长模型，实际意义为随着采用新技术人数的增长，增长的速度也在不断提高。
+当t趋于无穷时，x也趋于无穷，可见未考虑最大人数限制。
+
+模型2：
+
+设最大人数为$x_{m}$。根据假设，当$x=x_{m}$时，增长率应为0，
+即$r(x_{m})=0$
+
+列出方程组为：
+$\begin{cases}
+\frac{dx}{dt}=r(1-\frac{x}{x_{m}})x\\
+x(0)=x^{0}
+\end{cases}$
+
+解得：$x(t)=\frac{x_{m}}{1+(\frac{x_{m}}{x_{0}}-1)e^{-n}}$
+
+模型3：
+
+有广告等媒介的传播帮助下，指数型增长速率更大，更早到达$x_{m}$峰值。\\
+12.\\
+(1)
+\begin{equation*}
+t_1=\frac{1}{\lambda}ln\frac{R(0)}{R(t)}=\frac{5568}{ln2}ln{6.68}{3.06}=6271(years)
+\end{equation*}
+(2)
+dN(t)=-$\lambda$N(t)dt,两边同时积分得：\\
+ln(0.78)=-$\lambda$t$_2$,t$_2$=1996,
+则1975-1996=-21,,即21年前.\\
+15.\\
+(a).$P(t)=\frac{Me^{k(C+t)(M-m)}+m}{1+e^{k(C+t)(M-m)}},(C=constant)$\\
+(b).$P_{0}=P(0)=\frac{Me^{kC(M-m)}}{1+e^{kC(M-m)}},(C=constant)$\\
+
+(1).$P_{0}<m,M<m$,鲸无法生存\\
+
+(2).$m<P_{0}<M,M>m$,可以生存\\
+
+(3).$M<P_{0},m>M$,鲸无法生存\\
+(c).$${\lim_{x \to +\infty} P(t)=\lim_{x \to +\infty} \frac{M(1+e^{k(c+t)(M-m)})+m-M}{1+e^{k(c+t)(M-m)}}=M}$$
+16.
+        \begin{description}
+         \item[(1)] 由$\frac{dx}{dt} = \lambda x(N-x)$ 得\\
+                    $\frac{dx}{x(N-x)} = \lambda dt,\frac{1}{x(N-x)} = \frac{1}{N}*(\frac{1}{x}+\frac{1}{N-x})$, 因此\\
+                    $\frac{dx}{x}+\frac{dx}{N-x} = \lambda dt \rightarrow ln(x/(x-N)) = N\lambda t+C$,\\
+                    求解得到：
+                    $$x(t) = \frac{N}{1+(\frac{N}{x_0}-1)e^{-N\lambda t}}$$
+                    符合Logistic模型，是一条逻辑斯蒂曲线。
+         \item[(2)] 由逻辑斯蒂曲线性质得，当$x = N/2$ 时传播最快.
+         \item[(3)]当$t \rightarrow\infty$时，$x(t)\rightarrow N$，最终几乎全部人都会接受到此消息。
+       \end{description}
+ 18.\\
+(a)GNP模型：M(n)=1.03M(n-1)，国债模型：N(n)=N(n-1)(1+k)\\
+(b)M(n)=1.03$^n$M$_0$,N(n)=N$_0$e$^{rn}$\\
+(c)考虑两者的增长率,dM=1.03$^x$ln1.03M$_0$,dN=N$_0$re$^{rx}$,\\
+当r$>$ln(1.03)时，国债会超过GNP.\\
+\end{document}

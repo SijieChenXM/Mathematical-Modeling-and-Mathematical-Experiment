@@ -1,0 +1,157 @@
+\documentclass[a4paper,12pt]{article} %文档类型
+\usepackage{CJK}
+\usepackage{ctex}
+\usepackage{color}
+\usepackage{amsmath,amssymb,amstext} %多种公式环境和数学命令
+\usepackage{float}
+\usepackage{array}           %数组和表格制作
+\usepackage{fancyhdr}        %页眉页脚设置
+\usepackage{graphicx}        %插图
+\usepackage{tabularx}        %自动设置表格列宽
+\usepackage{multirow}        %跨行表格
+\usepackage{multicol}        %跨列表格
+\usepackage{titlesec}        %标题设置
+\usepackage{titletoc}        %目录格式设置
+\usepackage{epstopdf}        %编译生成pdf时，能够插入eps格式图片
+\usepackage[top=2.5cm,bottom=2.0cm,left=2.0cm,right=2.0cm]{geometry} % 页边距
+\newcommand{\hei}{\CJKfamily{hei}}  % 定义的新命令
+\newcommand{\li}{\CJKfamily{li}}
+\renewcommand{\figurename}{{图}}
+\linespread{1.7}   %1.5倍行距
+\usepackage{listings}
+\usepackage{xcolor}
+ %\lstset{
+%   %行号
+%   numbers=left,
+%   %背景框
+%   framexleftmargin=10mm,
+%   frame=none,
+%   %背景色
+%   %backgroundcolor=\color[rgb]{1,1,0.76},
+%   backgroundcolor=\color[RGB]{245,245,244},
+%   %样式
+%   keywordstyle=\bf\color{blue},
+%   identifierstyle=\bf,
+%   numberstyle=\color[RGB]{0,192,192},
+%   commentstyle=\it\color[RGB]{0,96,96},
+%   stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+%   %显示空格
+%   showstringspaces=false
+%}
+%\lstset{numbers=left, numberstyle=\tiny, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, frame=shadowbox, rulesepcolor=\color{red!20!green!20!blue!20},escapeinside=``, xleftmargin=2em,xrightmargin=2em, aboveskip=1em, escapeinside=``}
+
+\lstset{numbers=left, %设置行号位置
+        numberstyle=\tiny, %设置行号大小
+        keywordstyle=\color{blue!70}, %设置关键字颜色
+        commentstyle=\color[cmyk]{1,0,1,0}, %设置注释颜色
+        frame=shadowbox, %设置边框格式
+        rulesepcolor=\color{red!20!green!20!blue!20},
+        escapeinside=``, %逃逸字符(1 左面的键)，用于显示中文
+        breaklines, %自动折行
+        extendedchars=false, %解决代码跨页时，章节标题，页眉等汉字不显示的问题
+        xleftmargin=2em,xrightmargin=2em, aboveskip=1em, % 设置边距
+        %tabsize=4, %设置tab空格数
+        %showspaces=false %不显示空格
+       }
+\begin{document}
+
+\begin{center}
+\large
+\heiti{530~~陈斯杰~~电子信息工程~~第23次作业}
+\end{center}
+1.假设(p,q)为y=-x+1上一点。\\
+曲线y=y(x)。在曲线上P(x,y)的质点速度为$v=\sqrt{2gy}$\\
+又设从原点到P的弧长为s，则\\
+$v=\frac{ds}{dt}=\frac{\sqrt{1+y'^{2}dx}}{dt}$\\
+由此可推出$T=T(y)=\frac{1}{\sqrt{2g}}\int\limits_{0}\limits^{p}\sqrt{\frac{1+y'^{2}}{y}}dx$\\
+即求一个$\widehat{y}$,使得$T(\widehat{y})$最小。\\
+解得所求函数表达式为\\
+\begin{equation*}
+  \begin{cases}
+ x=R(\theta-sin\theta)\\
+ y=R(cos\theta-1)\\
+     \end{cases}
+\end{equation*}
+再由
+\begin{equation*}
+  \begin{cases}
+ q(\theta-sin\theta)=p(cos\theta-1)\\
+ q=-p+1\\
+     \end{cases}
+\end{equation*}
+可得$\theta=f(p)$\\
+又可求$T=\sqrt{\frac{R}{g}}\theta=\sqrt{\frac{R}{g}}f(p)$\\
+因此，只需寻找到$p_{0}$,使得T最小。\\
+$\theta_{0}=f(p_{0})$\\
+$R_{0}=\frac{p_{0}}{\theta_{0}-sin\theta_{0}}$\\\
+因此所求最速降线即为\\
+\begin{equation*}
+  \begin{cases}
+ x=R_{0}(\theta_{0}-sin\theta_{0})\\
+ y=R(cos\theta_{0}-1)\\
+     \end{cases}
+\end{equation*}
+~\\
+2.编写求两点之间最速降线的matlab代码，命为cycloid函数
+        \footnotesize
+        \begin{lstlisting}[language=matlab, linewidth=0.9\linewidth][b]
+function [T,gx,gy] = cycloid(b,H)
+ n = 100;
+ g = 9.8;
+ h = H/n;
+ minc = 0;maxc = 1/sqrt(2*g*h*n);
+ x = 0;y = 0;
+ while abs(b-x)>1e-4
+     x = 0;
+     c = (minc+maxc)/2;
+     for j= 1:n
+         y = j*h;
+         v = sqrt(2*g*y);
+         x = x+c*v*h/sqrt(1-c^2*v^2);
+         gx(j) = x;
+         gy(j) = y;
+     end
+     if(x<b)
+      minc = c;
+     else
+      maxc = c;
+     end
+ end
+ T =0;
+ for j = 1:n
+     v = sqrt(2*g*j*h);
+     if j==1
+         s = sqrt(gx(1)^2+h^2);
+     else
+         s = sqrt((gx(j)-gx(j-1))^2+h^2);
+     end
+     T = T+s/v;
+ end
+end
+        \end{lstlisting}
+        \normalsize
+        返回值为下降时间T和最速降曲线的坐标gx,gy,在利用matlab寻找到原点到直线$x+y-1=0$上某点下降最快的曲线，代码如下：
+        \footnotesize
+        \begin{lstlisting}[language=matlab, linewidth=0.9\linewidth][b]
+i = 2;T(1) = 100;j = 1;
+for y = -3:0.1:0
+    x = 1-y;
+    T(i) = cycloid(x,-y);
+    if(T(i)<T(j))
+        j = i;
+        i=i+1;
+    end
+end
+y0 = -3+0.1*(j-2)   %y0 = -0.4
+x0 = 1-y0           %x0 = 1.4
+[T,gx,gy] = cycloid(x0,-y0);
+T    % T = 0.7035
+plot(gx,-gy);
+grid on;
+        \end{lstlisting}
+        \normalsize
+        所以自原点到直线上点(1.4,-0.4)下降时间最快，可作为自原点到直线的最速降线，曲线形状如下：
+        \begin{center}
+          \includegraphics[width=0.5\textwidth]{t1_1.png}
+        \end{center}
+\end{document}

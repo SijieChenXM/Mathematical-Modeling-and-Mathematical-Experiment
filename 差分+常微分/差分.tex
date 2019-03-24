@@ -1,0 +1,190 @@
+\documentclass[a4paper,12pt]{article} %文档类型
+\usepackage{CJK}
+\usepackage{ctex}
+\usepackage{color}
+\usepackage{amsmath,amssymb,amstext} %多种公式环境和数学命令
+\usepackage{float}
+\usepackage{array}           %数组和表格制作
+\usepackage{fancyhdr}        %页眉页脚设置
+\usepackage{graphicx}        %插图
+\usepackage{tabularx}        %自动设置表格列宽
+\usepackage{multirow}        %跨行表格
+\usepackage{multicol}        %跨列表格
+\usepackage{titlesec}        %标题设置
+\usepackage{titletoc}        %目录格式设置
+\usepackage{epstopdf}        %编译生成pdf时，能够插入eps格式图片
+\usepackage[top=2.5cm,bottom=2.0cm,left=2.0cm,right=2.0cm]{geometry} % 页边距
+\newcommand{\hei}{\CJKfamily{hei}}  % 定义的新命令
+\newcommand{\li}{\CJKfamily{li}}
+\renewcommand{\figurename}{{图}}
+\linespread{1.7}   %1.5倍行距
+\usepackage{listings}
+\usepackage{xcolor}
+ %\lstset{
+%   %行号
+%   numbers=left,
+%   %背景框
+%   framexleftmargin=10mm,
+%   frame=none,
+%   %背景色
+%   %backgroundcolor=\color[rgb]{1,1,0.76},
+%   backgroundcolor=\color[RGB]{245,245,244},
+%   %样式
+%   keywordstyle=\bf\color{blue},
+%   identifierstyle=\bf,
+%   numberstyle=\color[RGB]{0,192,192},
+%   commentstyle=\it\color[RGB]{0,96,96},
+%   stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+%   %显示空格
+%   showstringspaces=false
+%}
+%\lstset{numbers=left, numberstyle=\tiny, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, frame=shadowbox, rulesepcolor=\color{red!20!green!20!blue!20},escapeinside=``, xleftmargin=2em,xrightmargin=2em, aboveskip=1em, escapeinside=``}
+
+\lstset{numbers=left, %设置行号位置
+        numberstyle=\tiny, %设置行号大小
+        keywordstyle=\color{blue!70}, %设置关键字颜色
+        commentstyle=\color[cmyk]{1,0,1,0}, %设置注释颜色
+        frame=shadowbox, %设置边框格式
+        rulesepcolor=\color{red!20!green!20!blue!20},
+        escapeinside=``, %逃逸字符(1 左面的键)，用于显示中文
+        breaklines, %自动折行
+        extendedchars=false, %解决代码跨页时，章节标题，页眉等汉字不显示的问题
+        xleftmargin=2em,xrightmargin=2em, aboveskip=1em, %设置边距
+        %tabsize=4, %设置tab空格数
+        %showspaces=false %不显示空格
+       }
+\begin{document}
+
+\begin{center}
+\large
+\heiti{530~~陈斯杰~~电子信息工程~~第20次作业}
+\end{center}
+1、由差分方程可推导出公式\\
+$2=(1+i)^{n}$，即\\
+$n=\frac{ln2}{ln(1+i)}$\\
+当i=1\%时,n=69.661\\
+当i=2\%,n=35.003\\
+当i=5\%,n=14.207\\
+当i=7\%,n=10.245\\
+当i=9\%,n=8.043\\
+当i=13\%,n=5.671\\
+~\\
+2. \\
+根据题意列出方程组：
+$\left\{\begin{matrix}
+(1+r)^n=2\\
+(1+2r)^m=2
+\end{matrix}\right.$
+得到：
+\begin{center}
+$\frac{2}{m}=\frac{2\ln(1+2r)}{n\ln(1+r)}$
+\end{center}
+3.\\
+(1).在Malthus模型中：$P(n+1)=kP(n)=K^{n+1}P(0)$\\
+$\therefore P(n)=2P(0)=k^{n}P(0) \rightarrow  \tau =n=\frac{\ln 2}{\ln k}$\\(2).$P(0)=50,P(60)=k^{60}P(0)$\\
+$k=1.05,P(60)=933.9593$\\
+$k=1.03,P(60)=294.5802$\\
+$k=1.01,P(60)=90.8348$\\
+
+4.\\
+令$P_n = P(n)$表示某人口群体在时间段n开始时的总数，若按年计算，设初始年为0,增量为$\Delta P_n = P_{n+1}-P_n$.
+$$\Delta P_n = (\frac{40000*365}{1*10^9}-\frac{P}{d})P_n = (0.0146-\frac{P}{d})P_n$$
+所以
+$$k = 1+(0.0146-\frac{P}{d}) = 1.0146-\frac{P}{d}$$
+5.\\
+解方程：$x(n+1)=kx(n)+n$
+
+解得：$x(n)=k^{n}x(0)+\sum\limits^{n}_{i=0}k^{n-i-1}i$
+
+~\\
+6.\\
+p(0)是借款=c,利息为r,每次还款数R,\\
+得到递推公式p(n+1)=(1+r)p(n)-R,\\
+化简后得cr(1+r)=R.\\
+r变化后改为c(r+$\delta$r)(1+r+$\delta$r)=R即可.\\
+7.若按月增长，每年的增长率为$(1+\frac{r}{1200})^{12}$\\
+即将按月增长的年增长率与按年增长的年增长率$\frac{r}{100}$相比较，取较大值。\\
+如果货币按每年$c\%$贬值，那按月增长的工资实际年增长率为$(1+\frac{r}{1200}-\frac{c}{100})^{12}$\\
+按年增长的工资的实际年增长率为$\frac{r-c}{100}$。\\
+~\\
+8.\\
+可以列出P,b,T,R的关系式为：
+\begin{center}
+$P(1+b)^T=R$
+\end{center}
+若P,b固定，T和R的关系式为：
+\begin{center}
+$T=\frac{\ln(\frac{R}{P})}{\ln(1+b)}$,T随R的变大而变大.
+\end{center}
+若P,T固定，R和b的关系式为：
+\begin{center}
+$R=P(1+b)^T$,R随b的变大而变大。
+\end{center}
+9.\\
+(1).显而易见，n+1年后：$L(n+1)=L(n)(1+\frac{r}{100})-R$\\
+(2).$\frac{L(n+1)}{L(n)}=(1+\frac{r}{100})-\frac{R}{L(n)} < 1+\frac{r}{100}-\frac{R}{100\frac{R}{r}}$\\
+$\because \frac{r}{100}-\frac{R}{100\frac{R}{r}}=\frac{100R-100R}{100\frac{R}{r}}=0,\therefore \frac{L(n+1)}{L(n)}<1 \rightarrow  L(n+1)<L(n)$,证得每次还款都会使$L(n)$减少\\
+(3).利用MATLAB与maple工具箱求解：
+\begin{lstlisting}
+rn=maple('rsolve({r(n+1)=k*r(n)-c},r(n))')
+\end{lstlisting}
+得到$\lambda(n)=k^{n}(\lambda(0)+\frac{c}{1-k})-\frac{c}{1-k}$\\
+\small
+\begin{lstlisting}
+%q1_9_3
+clear;clc;
+eq=sym('(k^n)*(L+c/(1-k))-c/(1-k)');
+sub_k=sym('1+r/100');
+sub_c=sym('R');
+eq=subs(eq,'k',sub_k);
+eq=subs(eq,'c',sub_c);
+%固定r,L,R,求n:
+n=solve(eq,'n')
+%固定r,L,n,求R:
+R=solve(eq,'R')
+\end{lstlisting}
+\large
+固定r,L,R,$n={1\ln  \left( -100\,{\frac {R}{Lr-100\,R}} \right)  \left( \ln  \left( 1+{\frac {r}{100}} \right)  \right) ^{-1}}$\\
+固定r,L,n,$R={\frac {Lr}{100} \left( 1+{\frac {r}{100}} \right) ^{n} \left(  \left( 1+{\frac {r}{100}} \right) ^{n}-1 \right) ^{-1}}$\\
+11、
+
+每年年末所产生的种子数为原一岁种子产生的种子和原一岁以上种子产生的种子，即
+\begin{equation}
+u(n+1)=21u(n)+44(1+u(1)+u(2)+\cdots+u(n-1))
+\end{equation}
+
+当n=n+1时，原式变化为：
+\begin{equation}
+u(n+2)=21u(n+2)+44(1+u(1)+u(2)+\cdots+u(n))
+\end{equation}
+
+（2）式减去（1）式得
+\begin{equation}
+u(n+2)-22u(n+1)-23u(n)=0
+\end{equation}
+
+由（3）式解得：
+\begin{equation*}
+u(n)=\frac{1}{24}[u(0)+u(1)]23^{n}+\frac{1}{24}[23u(0)-u(1)](-1)^{n}
+\end{equation*}
+12.\\
+l(n+1)=b(n),b(n+1)=l(n)-b(n),\\
+因此b(n)=b(n-1)+b(n-2),\\
+原矩形长与宽的比例是$\frac{1+\sqrt{5}}{2}$\\
+~~~16.~体积$V(t) = \frac{2}{3}\pi r^3$
+
+    ~~$\frac{dv}{dt} = -KS = -K^{'}V(t)^{2/3}$
+
+    ~~两边积分得
+    $$\int\frac{dv}{dt} = \int-K^{'}V(t)^{2/3}$$
+    $$\int V(t)^{-2/3}dv = \int K^{'}dt$$
+    $$-V(t)^{1/3} = K^{'}t+C$$
+
+    ~~t = 0时，$V(t) = V$ 得 $C = -V^{1/3}$
+
+    ~~t = 3时，$V(t) = \frac{1}{8}V$ 得 $K^{'} = \frac{1}{6}V^{1/3}$
+
+    ~~当$V(t) = 0$时，$t = -\frac{C}{K^{'}} = 6$
+
+    ~~所以还需要3小时全部融化
+\end{document}

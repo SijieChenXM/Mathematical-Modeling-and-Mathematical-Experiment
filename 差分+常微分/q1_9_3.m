@@ -1,0 +1,10 @@
+clear;clc;
+eq=sym('(k^n)*(L+c/(1-k))-c/(1-k)');
+sub_k=sym('1+r/100');
+sub_c=sym('R');
+eq=subs(eq,'k',sub_k);
+eq=subs(eq,'c',sub_c);
+%固定r,L,R,求n:
+n=solve(eq,'n')
+%固定r,L,n,求R:
+R=solve(eq,'R')
