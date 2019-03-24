@@ -1,0 +1,291 @@
+\documentclass[a4paper,12pt]{article} %文档类型
+\usepackage{CJK}
+\usepackage{ctex}
+\usepackage{color}
+\usepackage{amsmath,amssymb,amstext} %多种公式环境和数学命令
+\usepackage{float}
+\usepackage{array}           %数组和表格制作
+\usepackage{fancyhdr}        %页眉页脚设置
+\usepackage{graphicx}        %插图
+\usepackage{tabularx}        %自动设置表格列宽
+\usepackage{multirow}        %跨行表格
+\usepackage{multicol}        %跨列表格
+\usepackage{titlesec}        %标题设置
+\usepackage{titletoc}        %目录格式设置
+\usepackage{epstopdf}        %编译生成pdf 时，能够插入eps格式图片
+\usepackage[top=2.5cm,bottom=2.0cm,left=2.0cm,right=2.0cm]{geometry} % 页边距
+\newcommand{\hei}{\CJKfamily{hei}}  % 定义的新命令
+\newcommand{\li}{\CJKfamily{li}}
+\renewcommand{\figurename}{{图}}
+\linespread{1.7}   %1.5倍行距
+\usepackage{listings}
+\usepackage{xcolor}
+ %\lstset{
+%   %行号
+%   numbers=left,
+%   %背景框
+%   framexleftmargin=10mm,
+%   frame=none,
+%   %背景色
+%   %backgroundcolor=\color[rgb]{1,1,0.76},
+%   backgroundcolor=\color[RGB]{245,245,244},
+%   %样式
+%   keywordstyle=\bf\color{blue},
+%   identifierstyle=\bf,
+%   numberstyle=\color[RGB]{0,192,192},
+%   commentstyle=\it\color[RGB]{0,96,96},
+%   stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+%   %显示空格
+%   showstringspaces=false
+%}
+%\lstset{numbers=left, numberstyle=\tiny, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, frame=shadowbox, rulesepcolor=\color{red!20!green!20!blue!20},escapeinside=``, xleftmargin=2em,xrightmargin=2em, aboveskip=1em, escapeinside=``}
+
+\lstset{numbers=left, %设置行号位置
+        numberstyle=\tiny, %设置行号大小
+        keywordstyle=\color{blue!70}, %设置关键字颜色
+        commentstyle=\color[cmyk]{1,0,1,0}, %设置注释颜色
+        frame=shadowbox, %设置边框格式
+        rulesepcolor=\color{red!20!green!20!blue!20},
+        escapeinside=``, %逃逸字符(1 左面的键)，用于显示中文
+        breaklines, %自动折行
+        extendedchars=false, %解决代码跨页时，章节标题，页眉等汉字不显示的问题
+        xleftmargin=2em,xrightmargin=2em, aboveskip=1em, % 设置边距
+        %tabsize=4, %设置tab空格数
+        %showspaces=false %不显示空格
+       }
+\begin{document}
+
+\begin{center}
+\large
+\heiti{530~~陈斯杰~~电子信息工程~~第9次作业}
+\end{center}
+\textbf{一、排队论}\\
+1.\\
+{}解：$\lambda = 4$, $\mu = \frac{1}{3}$, $\rho = \frac{\lambda}{\mu} = \frac{3}{4}$
+
+$$L_s = \frac{\rho}{1-\rho} = \frac{(N+1)\rho^{N+1}}{1-\rho^{N+1}}$$
+即
+$$L_s = 3 - \frac{(N+1)\frac{3}{4}^{N+1}}{1-\frac{3}{4}^{N+1}}$$
+$$L_q = L_s - 1 + P_0 = L_s - 1 + \frac{\frac{1}{4}}{1-\frac{3}{4}^{N+1}}$$
+令：$\frac{L_q}{L_s} = 7\%$，解得：N = 1.67\\
+~\\
+2.\\
+本题模型：M/M/1\\
+$\rho$=$\frac{\lambda}{\mu}$=0.9\\
+L$_q$=$\frac{\rho\lambda}{\mu-\lambda}$=8.1\\
+8.\\
+本题模型：M/M/1/6\\
+$\rho$=$\frac{\lambda}{\mu}$=0.6\\
+L$_q$=$\frac{\rho\lambda}{\mu-\lambda}$=0.9\\
+因此合适。\\
+~\\
+3.该题为M/M/1系统，分析得$\lambda=3,\mu=6$,
+
+(1)空闲时间概率:$P_0=1-\frac{\lambda}{\mu}=0.5$;
+
+(2)四个顾客概率：$P_4=\rho^4P_0=(\frac{1}{2}^5)$
+
+(3)至少一个顾客概率：$P=1-P_0=0.5$
+
+(4)店内顾客平均数：$L_s=\frac{\lambda}{\mu-\lambda}=1$(人)
+
+(5)等待顾客平均数：$L_q=L_s-\rho=\frac{1}{2}$(人)
+
+(6)平均逗留时间：$W_s=\frac{1}{\mu-\lambda}=\frac{1}{3}$(小时)
+
+(7)平均等待时间：$W_q=\frac{\lambda}{\mu(\mu-\lambda)}=\frac{1}{6}$(小时)
+
+(8)店内消耗时间$T$服从指数分布，均值为$\frac{1}{\mu-\lambda}$;
+
+所以$P(T>0.25)=\int_{0.25}^\infty(\mu-\lambda)e^{-(\mu-\lambda)t}dt=0.4723$\\
+~\\
+4、解：由题可得，$S = 2$, $m = 5$, $\lambda = 0.5$, $\rho = 2$
+
+加油站空闲的概率：
+$$P_0 = [1+2*2+\frac{1}{2}*16+2*(-56)]^{-1} = 0.008$$
+系统损失率：
+$$P_m = \frac{2^2}{2}*2^5*0.008 = 0.512$$
+排队汽车的平均数：
+$$L_q = 2.176$$
+整个加油站的平均车辆数：
+$$L_q = 4.128$$
+汽车平均排队时间：
+$$W_{q} = \frac{L_q}{\lambda(1 - P_m)} = 2.23 min$$
+汽车在整个加油过程中所花费的时间：
+$$W_s = W_q + \mu = 4.23 min$$
+~\\
+5、解：
+  若雇佣工人A，需要花费$\frac{3}{1.2}=2.5$元/台；若雇佣工人B，需要花费$3.33$元/台。所以选择录用A工人比较合算。\\
+  ~\\
+6、
+依题意,$\lambda=3$人/h，$\mu=4$人/h，$\rho=\frac{\lambda}{\mu}=0.75<1$\\
+所以这是一个稳定系统\\
+(1)
+$P_{0}=1-\rho=0.25$\\
+(2)
+$L_{s}=\frac{\rho}{1-\rho}=3$\\
+(3)
+$W_{s}=\frac{L_{s}}{\lambda}=1$小时\\
+(4)当$W_{s}=1.25$h，$L_{s}=3.75$人。\\
+由$L_{s}=\frac{\rho}{1-\rho}$，$\rho=\frac{\lambda}{\mu}$得，\\
+$\lambda=\frac{60}{19}$,即为平均到达率。\\
+~\\
+7.\\
+解：由题可知，$\lambda = 300$, $\mu = \frac{1}{9}$, $s = 400$\\
+服务强度：$\rho = \frac{\lambda}{\mu} = 0.75$\\
+系统中的平均车辆数：$n = 3$\\
+平均排队长度：$q = \frac{\rho^3}{1 - \rho} = 2.25$\\
+系统中的平均消耗时间：$d = \frac{n}{\lambda} = 36 s$\\
+系统中的平均等待时间：$w = \frac{q}{\lambda} = 27 s$\\
+~\\
+8.\\
+本题模型：M/M/1/6\\
+$\rho$=$\frac{\lambda}{\mu}$=0.6\\
+L$_q$=$\frac{\rho\lambda}{\mu-\lambda}$=0.9\\
+因此合适。\\
+~\\
+9.该题为M/M/1/c模型，其中$\lambda=3,\mu=4,c=6$；
+
+其状态：$P_i=(\frac{\lambda}{\mu})^iP_0$
+$$
+P_i=\frac{(\frac{\lambda}{\mu})^i(1-\frac{\lambda}{\mu})}{1-(\frac{\lambda}{\mu})^{c+1}}=
+\frac{(\frac{3}{4})^i(1-\frac{3}{4})}{1-(\frac{3}{4})^{7}}
+$$
+
+店内顾客平均数：$L_s=\frac{(\lambda/\mu)}{1-\lambda/\mu}-
+\frac{(c+1)(\lambda/\mu)^{c+1}}{1-(\lambda/\mu)^{c+1}}=
+\frac{(3/4)}{1-3/4}-\frac{7(3/4)^7}{1-(3/4)^7}$\\
+~\\
+10、解：该题中$S = 5$, $\lambda = 4$, $\mu = 2$, $\rho = 0.4$
+
+所有服务台均空闲的概率：
+$$P_0 = [\sum_{n=0}^{s-1} \frac{1}{n!}\frac{\lambda}{\mu}^s]^{-1} = 0.134$$
+修理站前不出现排队的概率：
+$$P_n = n!\frac{\lambda}{\mu}^n = \frac{2}{n}P_{n-1}$$
+$$P(n<5) = 0.937$$
+出现排队的概率：
+$$P(n>5) = 0.027$$
+修理站的平均排队长度：
+$$L_q = \frac{(S\rho)^s\rho P_0}{S!(1-\rho)^2} = 0.04$$
+整个系统的车辆平均数：
+$$L_s = L_q + \frac{\lambda}{\mu} = 2.04$$
+汽车排队等候修理所需花费的时间：
+$$W_q = \frac{L_q}{\lambda} = 0.01 h$$
+汽车在整个修理过程所花费的时间：
+$$W_s = \frac{L_s}{\lambda} = 0.51 h$$
+~\\
+11.\\
+解：\\
+$m=5,\lambda=1/15,\mu=1/12,\rho=0.8$\\
+(1)$$P_0=\frac{1}{\sum_{i=0}^m\frac{m!}{(m-i)!}(\frac{\lambda}{\mu}^i)}=0.0073$$\\
+(2)$$P_5=\frac{m!}{(m-5)!}(\frac{\lambda}{\mu})^5P_0=0.287$$\\
+(3)$$L_s=m-\frac{\mu}{\lambda}(1-P_0)=3.76$$\\
+(4)$$L_q=L_s-(1-P_0)=2.77$$\\
+(5)$$W_s=\frac{m}{\mu(1-P_0)}-\frac{1}{\lambda}=46$$\\
+(6)$$W_q=W_s-\frac{1}{\mu}=34$$\\
+(7)应减少修理时间或增加修理工人\\
+~\\
+12、依题意，$\lambda=5$次/h，$\mu=4$次/h，$\rho=\frac{\lambda}{n\mu}=0.625<1$。
+$P_{0}=[1+\frac{5}{4}+\frac{1}{2}\times(\frac{5}{4})^{2}\times\frac{8}{3}]^{-1}=\frac{3}{13}$\\
+(1)等待修理的机器平均数为$L_{q}=\frac{125}{156}$\\
+(2)需要修理的机器平均数为$L_{s}=L_{q}+n\rho=\frac{80}{39}$\\
+(3)有效损坏数即为需要修理的机器平均数$\frac{80}{39}$\\
+(4)等待修理时间为$W_{q}=\frac{L_{q}}{\lambda}=0.16h$
+(5)已知$P_{0}=\frac{3}{13}$，所以平均每小时的停工时间为$\frac{3}{13}$h。\\
+~\\
+13.\\
+解：在该系统中，$\lambda = 350$, $\mu = 360$, $\rho = 0.972$\\
+交叉路口没有车辆的概率：
+$$P_0 = 1 - \rho = 0.028$$
+交叉口前排车辆超过50辆的概率：
+$$P(>50) = 1 - (1 - \rho)\sum_{n=0}^50 \rho^\mu = 0.238$$
+交叉口前的平均排队车辆数：
+$$L_s = \frac{\lambda}{\mu - \lambda} = 35$$
+车辆到达交叉口所需的平均时间：
+$$W_s = \frac{1}{\mu - \lambda} = 6 min$$
+~\\
+14.\\
+本题模型：M/G/1\\
+$\rho$=$\lambda$E=0.5\\
+L$_q$=$\frac{\rho^2+\lambda^2D}{2(1-\rho)}$=1.25\\
+L$_s$=L$_q$+$\rho$=1.75\\
+W$_q$=$\frac{L_q}{\lambda}$=0.125\\
+W$_s$=W$_q$+E=0.175\\
+~\\
+15.(1)单个M/M/4系统：\\
+$\lambda=2400,\mu_0=3600/5=720,n=4$\\
+$\frac{\lambda}{\mu_0}=\frac{10}{3}>1;~~\rho=\frac{\lambda}{n\mu_0}=\frac{\lambda}{4\mu_0}=\frac{2400}{4\times720}=\frac{5}{6}<1$;\\
+$P_0=[\sum\limits_{k=0}^{n-1}\frac{1}{k!}(\frac{\lambda}{\mu_0})^k+
+\frac{1}{n!}(\frac{\lambda}{\mu_0})^n\frac{1}{1-\rho}]^{-1}$\\
+$=[\sum\limits_{k=0}^{3}\frac{1}{k!}(\frac{\lambda}{\mu_0})^k+
+\frac{1}{4!}(\frac{\lambda}{\mu_0})^4\frac{1}{1-\rho}]^{-1}=\frac{27}{1267}\approx0.0213$\\
+$L_q=\frac{(4\times5/6)^4\times5/6P_0}{4!(1-5/6)^2}=3.289$\\
+$L_s=L_q+n\rho=6.622$\\
+$W_q=\frac{L_q}{\lambda}=\frac{3.289}{2400}h=4.934s$\\
+$W_s=W_q+\frac{1}{\mu_0}=3600\times(\frac{3.289}{2400}+\frac{1}{720})=9.934s$\\
+(2)4个M/M/1系统：\\
+可以考虑为一个流量为600辆/h的M/M/1系统：\\
+$\lambda=600,\mu=3600/5=720,\rho=\frac{\lambda}{\mu}=\frac{5}{6}$\\
+$P_0=1-\rho=\frac{1}{6}$\\
+$L_q=\frac{25}{6}\approx4.166$\\
+$L_s=5$\\
+$W_q=\frac{5/6}{720-600}h=25s$\\
+$W_s=1/120h=30s$\\
+由此可见，四个单独的M/M/1等待时间更长，效率没有单个M/M/4系统高。\\
+~\\
+16、
+
+单路排队：$S = 3$, $\lambda = 900$, $\mu = 360$, $\rho = \frac{\lambda}{S\mu} = 0.833$
+
+收费亭空闲的概率：
+$$P_0 = [1 + \frac{\lambda}{\mu} + \frac{1}{2}\frac{\lambda}{\mu}^2 + \frac{1}{3!(1-\rho)}\frac{\lambda}{\mu}^3]^{-1} = 0.045$$
+车队必须排队的概率：
+$$P(>3) = 0.586$$
+排队的平均车辆数：
+$$L_q = \frac{(S\rho)^s\rho P_0}{S!(1-\rho)^2} = 3.521$$
+整个系统中的平均车辆数：
+$$L_s = L_q + \frac{\lambda}{\mu} = 6.012$$
+汽车的平均排队时间：
+$$W_q = \frac{L_q}{\lambda} = 14.05 s$$
+汽车通过收费亭所花的总时间：
+$$W_s = \frac{L_s}{\lambda} = 24.05 s$$
+
+同理，在多路排队中，$\mu = 360$, $\lambda = 300$, $\rho = 0.833$
+
+$$P_0 = 1 - \rho = 0.167$$
+$$P(>1) = 0.694$$
+$$L_q = \frac{\rho^2}{1 - \rho} = 4.167$$
+$$L_s = 5.00$$
+$$W_q = 50 s$$
+$$W_s = 60 s$$
+
+
+依题意得：$\lambda=2,\mu=0.5,\rho=4$\\
+~\\
+
+18、
+假设用户的使用网络时间和进入网络的间隔时间服从负指数分布,单位时间内人数的到达率为$\lambda$，每个端口的平均服务率为$\mu$，且每个用户每天可多次上网。所以此模型为\mbox{{M\ M\ n}}模型\\
+(1)依题意，每天的总上网时间为T=1.5m(h)，要使得成本最小，也就是端口满负荷运作，n=$\frac{T}{16}=\frac{1.5m}{16}$,$\frac{n}{m}\approx\frac{1}{10}$\\
+~\\
+(2)m=150,n=15。由假设可知，用户进入系统服从泊松流，服务时间（即此处上网时间）为负指数分布，每个用户使用时间在[a,b]小时的概率为$e^{-\mu a}-e^{-\mu b}$。\\
+出现线路忙的概率为$1-\sum\limits_{j=1}\limits^{n}P_{j}$\\
+通信端口平均使用率为$z=\frac{\sum\limits_{j=1}\limits^{n-1}j\times P_{j}+(1-\sum\limits_{j=1}\limits^{n-1}5\times P_{j})}{n}$\\
+~\\
+(3)假设每个人上网时间与收费的函数为h=f(x),
+T=mE(h),在既定人数下，端口的平均使用率越大，成本越小，不考虑人们抱怨产生的成本。\\
+\begin{center}
+max($z=\frac{\sum\limits_{j=1}\limits^{n-1}j\times P_{j}+(1-\sum\limits_{j=1}\limits^{n-1}5\times P_{j})}{n}$)
+\end{center}
+\begin{equation*}
+s.t.
+  \begin{cases}
+ T=mE(h)\\
+ m>0,n>0,\mu>0,\lambda>0\\
+ \mbox{m、n均为整数}\\
+     \end{cases}
+\end{equation*}
+
+
+
+
+\end{document}

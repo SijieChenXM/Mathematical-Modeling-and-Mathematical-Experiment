@@ -1,0 +1,484 @@
+\documentclass[a4paper,12pt]{article} %文档类型
+\usepackage{CJK}
+\usepackage{ctex}
+\usepackage{color}
+\usepackage{amsmath,amssymb,amstext} %多种公式环境和数学命令
+\usepackage{float}
+\usepackage{array}           %数组和表格制作
+\usepackage{fancyhdr}        %页眉页脚设置
+\usepackage{graphicx}        %插图
+\usepackage{tabularx}        %自动设置表格列宽
+\usepackage{multirow}        %跨行表格
+\usepackage{multicol}        %跨列表格
+\usepackage{titlesec}        %标题设置
+\usepackage{titletoc}        %目录格式设置
+\usepackage{epstopdf}        %编译生成pdf时，能够插入eps格式图片
+\usepackage[top=2.5cm,bottom=2.0cm,left=2.0cm,right=2.0cm]{geometry} % 页边距
+\newcommand{\hei}{\CJKfamily{hei}}  % 定义的新命令
+\newcommand{\li}{\CJKfamily{li}}
+\renewcommand{\figurename}{{图}}
+\linespread{1.7}   %1.5倍行距
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{booktabs}
+ %\lstset{
+%   %行号
+%   numbers=left,
+%   %背景框
+%   framexleftmargin=10mm,
+%   frame=none,
+%   %背景色
+%   %backgroundcolor=\color[rgb]{1,1,0.76},
+%   backgroundcolor=\color[RGB]{245,245,244},
+%   %样式
+%   keywordstyle=\bf\color{blue},
+%   identifierstyle=\bf,
+%   numberstyle=\color[RGB]{0,192,192},
+%   commentstyle=\it\color[RGB]{0,96,96},
+%   stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+%   %显示空格
+%   showstringspaces=false
+%}
+%\lstset{numbers=left, numberstyle=\tiny, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, frame=shadowbox, rulesepcolor=\color{red!20!green!20!blue!20},escapeinside=``, xleftmargin=2em,xrightmargin=2em, aboveskip=1em, escapeinside=``}
+
+\lstset{numbers=left, %设置行号位置
+        numberstyle=\tiny, %设置行号大小
+        keywordstyle=\color{blue!70}, %设置关键字颜色
+        commentstyle=\color[cmyk]{1,0,1,0}, %设置注释颜色
+        frame=shadowbox, %设置边框格式
+        rulesepcolor=\color{red!20!green!20!blue!20},
+        escapeinside=``, %逃逸字符(1 左面的键)，用于显示中文
+        breaklines, %自动折行
+        extendedchars=false, %解决代码跨页时，章节标题，页眉等汉字不显示的问题
+        xleftmargin=2em,xrightmargin=2em, aboveskip=1em, %设置边距
+        %tabsize=4, %设置tab空格数
+        %showspaces=false %不显示空格
+       }
+\begin{document}
+
+\begin{center}
+\large
+\heiti{530~~陈斯杰~~电子信息工程~~第12次作业}
+\end{center}
+1.\\
+$$L=100*360*\frac{18}{90}+110*360*\frac{36}{90}+120*360*\frac{27}{90}+130*360*\frac{9}{90}=40680$$
+得到今年应该生产40680可获利最大\\
+
+2.\\%%%%%%%%%%%%%%%%%加一句\usepackage{booktabs}
+(1)损益矩阵：\\
+\begin{tabular}{ccccc}
+\toprule
+订购$\backslash$销售& E$_1$ 50& E$_2$ 100&E$_3$ 150&E$_4$ 200\\
+\midrule
+S$_1$ 50& 100 & 100 & 100 & 100\\
+S$_2$ 100& 0 & 200 & 200 & 200\\
+S$_3$ 150& -100 & 100 & 300 & 300\\
+S$_4$ 200& -200 & 0 & 200 & 400\\
+\bottomrule
+\end{tabular}\\
+(2)悲观法：S$_1$ 50；乐观法：S$_4$ 200；等可能法：S$_2$ 100或S$_3$ 150\\
+(3)后悔矩阵：\\
+\begin{tabular}{cccccc}
+\toprule
+ & E$_1$ 50& E$_2$ 100&E$_3$ 150&E$_4$ 200&最大后悔值\\
+\midrule
+S$_1$ 50& 0 & 100 & 200 & 300 & 300\\
+S$_2$ 100& 1000 & 0 & 100 & 200 &200\\
+S$_3$ 150& 200 & 100 & 0 & 100 &200\\
+S$_4$ 200& 300 & 200 & 100 & 0&300\\
+\bottomrule
+\end{tabular}\\
+所以应决策为S$_2$ 100或S$_3$ 150\\
+
+3.
+\begin{center}
+\includegraphics[scale=0.3]{fig3.png}
+\end{center}
+
+4、
+
+X(先试验，若好就并钻井，不好就不钻)=$-3000+0.6\times0.85\times40000-0.6\times10000=11400$
+
+X(直接钻井)$=-10000+0.55\times40000=11000$
+
+所以应该先试验，若好就并钻井，不好就不钻。\\
+
+5.解：
+  (1)假设选择饮品为情况1，选择面包为情况2。公司若参与投标，投标的获利期望分别为：
+  \begin{center}
+    $E_{1}=0.7*2000+0.3*(-2000)=800$>0\\
+    $E_{2}=0.7*100+0.3*100=100>0$
+  \end{center}
+  且
+  \begin{center}
+    $E_{1}>E_{2}$
+  \end{center}
+  因为公司参与投标，不管中标的是饮品还是面包，获利的期望都大于0，因此必须要参与竞标；又因为竞标饮料的获利大于竞标面包的获利，因此需要投标饮品。\\
+  (2)假设选择冷饮为情况1，选择咖啡味情况2。若公司参与投标，投标的获利期望分别为：
+  \begin{center}
+    $E_{1}=0.7*2000+0.3*(-2000)=800$>0\\
+    $E_{2}=0.3*2000+0.7*1000=1300>0$
+  \end{center}
+  且
+  \begin{center}
+    $E_{1}<E_{2}$
+  \end{center}
+  因为公司参与投标饮品，不管是供应冷饮还是咖啡，获利的期望都大于0，因此必须要参与竞标；又因为供应咖啡的获利大于供应冷饮的获利，因此需要供应咖啡。\\
+
+6.
+\begin{center}
+  \includegraphics[width=0.7\textwidth]{6.jpg}\\
+\end{center}
+
+7.\\
+\begin{center}
+\includegraphics[width=0.8\textwidth]{q2_7.jpg}
+\end{center}
+根据决策树，应该选择方案一建造大厂\\
+
+8.\\
+决策模型：
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{8.jpg}\\
+\end{center}
+准则层判断矩阵：\\
+\begin{tabular}{cccc}
+\toprule
+A& B$_1$& B$_2$&B$_3$\\
+\midrule
+B$_1$ &1& 2 & $\frac{1}{2}$\\
+B$_2$ & & 1 & $\frac{1}{3}$\\
+B$_3$ & & & 1 \\
+\bottomrule
+\end{tabular}\\
+方案层判断矩阵：\\
+\begin{tabular}{cccc}
+\toprule
+B$_1$& C$_1$& C$_2$&C$_3$\\
+\midrule
+C$_1$ &1& $\frac{1}{3}$ & $\frac{1}{5}$\\
+C$_2$ & & 1 & $\frac{1}{3}$\\
+C$_3$ & & & 1 \\
+\bottomrule
+\end{tabular}
+\begin{tabular}{cccc}
+\toprule
+B$_2$& C$_1$& C$_2$&C$_3$\\
+\midrule
+C$_1$ &1& 2 & 7\\
+C$_2$ & & 1 & 5\\
+C$_3$ & & & 1 \\
+\bottomrule
+\end{tabular}
+\begin{tabular}{cccc}
+\toprule
+B$_3$& C$_1$& C$_2$&C$_3$\\
+\midrule
+C$_1$ &1& $\frac{1}{3}$ & $\frac{1}{7}$\\
+C$_2$ & & 1 & $\frac{1}{5}$\\
+C$_3$ & & & 1 \\
+\bottomrule
+\end{tabular}\\
+所以优先顺序为：电视$>$报纸$>$街头广告牌\\
+
+9.
+\begin{center}
+\includegraphics[scale=0.3]{fig9.png}
+\end{center}
+
+10、
+
+X(建大厂)=$-600+0.7\times2000-0.3\times400=680$
+
+X(建小厂)=$-280+0.7\times800+0.3\times600=460$
+
+所以应该建大厂\\
+
+ 11.解：根据题意建立决策树如图所示：
+  \begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.64\linewidth]{11.png}
+    \caption{建厂决策树 }
+    \label{fig:my_label}
+  \end{figure}
+  根据上图，在情况1-4(选择建大厂)下的获利分别为：
+  \begin{center}
+    $E_{1}=200*0.7*3+20*0.8*7=1540$\\
+    $E_{2}=200*0.7*3+(-40)*0.2*7=392$\\
+    $E_{3}=(-40)*0.3*3+200*0.1*7=104$\\
+    $E_{4}=(-40)*0.3*3+(-40)*0.9*7=-288$\\
+    $E_{A}=E_{1}+E_{2}+E_{3}+E_{4}-600=1148$
+  \end{center}
+  在情况5-8(选择建小厂)下的获利情况分别为：
+  \begin{center}
+    $E_{5}=80*0.7*3+80*0.8*7=616$\\
+    $E_{6}=80*0.7*3+60*0.2*7=252$\\
+    $E_{7}=60*0.3*3+80*0.1*7=110$\\
+    $E_{8}=60*0.3*3+60*0.9*7=432$\\
+    $E_{B}=E_{5}+E_{6}+E_{7}+E_{8}-280=1130$
+  \end{center}
+  又因为
+  \begin{center}
+    $E_{A}>E_{B}$
+  \end{center}
+  所以应该选择建大厂收益较高.\\
+
+12.
+\begin{center}
+  \includegraphics[width=0.7\textwidth]{12.jpg}\\
+\end{center}
+由该决策树可知，先小后大的方案最好。\\
+~\\
+13.\\
+\begin{center}
+\includegraphics[width=0.8\textwidth]{q2_13.jpg}
+\end{center}
+根据决策树，应该选择开发新工序，成功后选择申请专利，专利获批自己使用，不获批则进行出售\\
+
+14.\\
+(1)损益矩阵：\\
+\begin{tabular}{cccccc}
+\toprule
+订购$\backslash$销售& E$_1$ 100& E$_2$ 150&E$_3$ 200&E$_4$ 250&E$_5$ 300\\
+\midrule
+S$_1$ 100& 24 & 24 & 24 & 24 &24\\
+S$_2$ 150& 19 & 36 & 36 & 36 &36\\
+S$_3$ 200& 14 & 31 & 48 & 48 &48\\
+S$_4$ 250& 9 & 26 & 43 & 60 &60\\
+S$_5$ 300& 4 & 21 & 38 & 55 &72\\
+\bottomrule
+\end{tabular}\\
+(2)悲观法：S$_1$ 100；乐观法：S$_5$ 300；等可能法：S$_4$ 250；后悔矩阵：S$_4$ 250\\
+
+15.考虑到公司资本较为薄弱，我们采取最小机会损失准则进行决策，
+\begin{center}
+\begin{tabular}{|c|cccc|}
+\hline
+经营方式/市场状况&畅销&一般&滞销&行选\\
+\hline
+$a_1$&9.5&7.5&2.5&7\\
+$a_2$&11.5&8.5&-1&12.5\\
+$a_3$&10&6&3&7\\
+\hline
+\end{tabular}
+\end{center}
+按此原则，选取$a_1,a_3$效果相同，我们再考虑等可能准则：
+\begin{center}
+\begin{tabular}{|c|cccc|}
+\hline
+经营方式/市场状况&畅销&一般&滞销&行选\\
+\hline
+$a_1$&9.5&7.5&2.5&6.5\\
+$a_2$&11.5&8.5&-1&6.33\\
+$a_3$&10&6&3&6.33\\
+\hline
+\end{tabular}
+\end{center}
+所以综合考虑这两种决策准则，该公司应考虑按$a_1$进行经营。\\
+
+16、
+
+$X(D_{1})=650\times0.6-150\times0.4=330$
+
+$X(D_{2})=400\times0.6+100\times0.4=280$
+
+$X(D_{3})=350\times0.6+5\times0.4=212$
+
+所以应该选用方案一，即引进国外生产线。\\
+
+17.解：根据题意建立决策树如图所示：
+  \begin{figure}[htp]
+    \centering
+    \includegraphics[width=0.64\linewidth]{17.png}
+    \caption{方案决策树 }
+    \label{fig:my_label}
+  \end{figure}
+  根据上图，在情况1-4(选择方案一)下的获利分别为：
+  \begin{center}
+    $E_{1}=60*0.7*3+60*0.85*5=381$\\
+    $E_{2}=60*0.7*3+40*0.15*5=156$\\
+    $E_{3}=40*0.3*3+60*0.1*5=66$\\
+    $E_{4}=40*0.3*3+40*0.9*5=216$\\
+    $E_{A}=E_{1}+E_{2}+E_{3}+E_{4}-400=419$
+  \end{center}
+  在情况5-8(选择方案二)下的获利情况分别为：
+  \begin{center}
+    $E_{5}=100*0.7*3+120*0.85*5=720$\\
+    $E_{6}=100*0.7*3+30*0.15*5=232.5$\\
+    $E_{7}=30*0.3*3+30*0.1*5=42$\\
+    $E_{8}=30*0.3*3+30*0.9*5=162$\\
+    $E_{B}=E_{5}+E_{6}+E_{7}+E_{8}-300=856.5$
+  \end{center}
+  又因为
+  \begin{center}
+    $E_{A}<E_{B}$
+  \end{center}
+  所以应该选择方案二收益较高.\\
+
+18.
+由决策树可知，建大厂的期望值\\
+$E(A)=100\times0.5+60\times0.3+(-20)\times0.2-28=36$(百万元)\\
+建小厂的期望值\\
+$E(A)=25\times0.5+45\times0.3+55\times0.2-14=23$(百万元)\\
+因此应该建大厂。\\
+~\\
+19.\\
+用EXCEL计算求得每一种车型的生产成本和预计销售利润矩阵：\\
+$$\mbox{【车型，成本，利润】}=\begin{bmatrix}
+Nh20 & 11.4 & 2.6 \\
+Na20 & 12.3 & 2.9 \\
+Hh20 & 11.9 & 2.8 \\
+Ha20 & 12.8 & 2.1 \\
+Eh20 & 12.2 & 2.8 \\
+Ea20 & 13.1 & 3.1 \\
+Nh18 & 11 & 2.5 \\
+Na18 & 11.9 & 2.8 \\
+Hh18 & 11.5 & 2.7 \\
+Ha18 & 12.4 & 3 \\
+Eh18 & 11.8 & 2.7 \\
+Ea18 & 12.7 & 3 \\
+Nh16 & 10.8 & 2.6 \\
+Na16 & 11.7 & 2.5 \\
+Hh16 & 11.3 & 2.6 \\
+Ha16 & 12.2 & 2.8 \\
+Eh16 & 11.6 & 2.7 \\
+Ea16 & 12.5 & 2.8
+\end{bmatrix}$$
+因此选择生产型号Ea20获利最大\\
+
+20.\\
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{20.jpg}\\
+\end{center}
+按照最大期望效益决策准则的最佳决策策略为：Ea20型号车。\\
+
+21.把表格转化为每天分数增加值：
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+天数&1&2&3&4&5&6\\
+\hline
+运筹学&14&21&10&8&5&2\\
+管理学&12&10&8&7&6&15\\
+统计学&10&8&2&1&1&1\\
+\hline
+\end{tabular}
+\end{center}
+我们每次从表格最左端选取一个最大值，直到选满六个为止，
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+天数&1&2&3&4&5&6\\
+\hline
+运筹学&\fcolorbox{black}{lightgray}{14}&\fcolorbox{black}{lightgray}{21}&\fcolorbox{black}{lightgray}{10}&8&5&2\\
+管理学&\fcolorbox{black}{lightgray}{12}&\fcolorbox{black}{lightgray}{10}&8&7&6&15\\
+统计学&\fcolorbox{black}{lightgray}{10}&8&2&1&1&1\\
+\hline
+\end{tabular}
+\end{center}
+可见，应该复习3天运筹学，2天管理学，1天统计学。\\
+
+22、
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{22.jpg}\\
+\end{center}
+
+23 .解：
+  根据题意，将零件的各个指标($K_{i},R_{i},M_{i}$)分别加上权重$\alpha_{1}=0.2,\alpha_{2}=0.4,\alpha_{3}=0.4$,然后利用公式：
+  \begin{center}
+    $C_{i}=\frac{K_{i}*\alpha_{1}+R_{i}*\alpha_{2}+M_{i}*\alpha_{3}}{P_{i}}$
+  \end{center}
+  对所有零件求出单位价格的加权平均零件质量分别为：
+  \begin{center}
+    $C_{1}=\frac{0.8*0.2+0.91*0.4+0.77*0.4}{0.52}=1.6$\\
+    $C_{2}=\frac{0.4*0.2+0.65*0.4+0.54*0.4}{0.45}=1.24$\\
+    $C_{3}=\frac{0.6*0.2+0.97*0.4+0.67*0.4}{0.78}=1.39$\\
+    $C_{4}=\frac{0.5*0.2+0.81*0.4+0.72*0.4}{1.11}=0.64$\\
+    $C_{5}=\frac{0.4*0.2+0.75*0.4+0.85*0.4}{0.98}=0.73$\\
+  \end{center}
+  所以性价比最高的是零件1，因此应该多购入零件1.\\
+
+24.
+设分配给$A_{1}，A_{2}，A_{3}$训练的权重分别为$x_{1},x_{2},x_{3}$\\
+可算出训练效果的期望值$z=31.5x_{1}+33.5x_{2}+29.4x_{3}$
+\begin{center}
+max{z}
+\end{center}
+\begin{equation*}
+s.t.
+  \begin{cases}
+ x_{1}+x_{2}+x_{3}=1\\
+ \forall x均大于0\\
+     \end{cases}
+\end{equation*}
+解得$x_{1}=0,x_{2}=1,x_{3}=0$\\
+即下周都安排训练2合适。\\
+
+25.\\
+某柑橘果园，每年最后一个季度都将面临大量柑橘的采摘问题. 正常情况下，他们在每年的最后一个季度应该采摘所有的柑橘，然后销售出去，将可以得
+到120万元的收入. 如果将这些柑橘晚采一个月，则可以将这些柑橘以更高的价格卖出，即140万元. 当然，在这段期间有25\% 的可能性发生霜害. 若发生了霜害，则这些柑橘将被完全毁坏，对果园将造成巨大的损失. 在这种情况下，柑橘园应该用什么样的采摘策略使得果园的收入最多？进一步考虑，当出现霜害的概率增加到35\% 的时候，又该如何？10\% 又将如何？\\
+\begin{center}
+\includegraphics[width=0.8\textwidth]{q2_13.jpg}
+\end{center}
+(1).$p=0.25,140(1-p)=105<120$,此时选择立刻采摘\\
+(2).$p=0.35,140(1-p)=91<120$,此时选择立刻采摘\\
+(3).$p=0.1,140(1-p)=126>120$,此时选择晚一个月采摘\\
+令$140(1-p_{0})=120$,得到$p_{0}=\frac{1}{7}\approx 0.143$,从而$p$大于$p_{0}$时选择立即采摘,否则选择晚一个月\\
+
+26.\\
+根据最小机会损失准则，应该进购300个面包。\\
+
+27.(1)假设费用和距离的权重分别为$k,(1-k)$，
+则$$
+\begin{aligned}
+&\min\limits_{i=1,...,6}[k\frac{x_i-36}{\overline{x}}+(1-k)\frac{y_i-0.8}{\overline{y}}]\\
+=&\min\limits_{i=1,...,6}[k\frac{x_i-36}{44}+(1-k)\frac{y_i-0.8}{1.483}]\\
+\end{aligned}
+$$
+\begin{lstlisting}[language=Matlab][b]
+x=[60 50 44 36 44 30];
+y=[1 0.8 1.2 2 1.5 2.4];
+for k=0:0.1:1;
+    i=1;
+    z(i,:)=k*(x-36)/44+(1-k)*(y-0.8)/1.4833
+    i=i+1;
+end
+
+%输出结果为：z =
+    0.1348         0    0.2697    0.8090    0.4719    1.0787
+    0.1759    0.0318    0.2609    0.7281    0.4429    0.9572
+    0.2170    0.0636    0.2521    0.6472    0.4139    0.8357
+    0.2580    0.0955    0.2433    0.5663    0.3849    0.7142
+    0.2991    0.1273    0.2345    0.4854    0.3559    0.5927
+    0.3401    0.1591    0.2257    0.4045    0.3269    0.4712
+    0.3812    0.1909    0.2170    0.3236    0.2979    0.3497
+    0.4223    0.2227    0.2082    0.2427    0.2688    0.2281
+    0.4633    0.2545    0.1994    0.1618    0.2398    0.1066
+    0.5044    0.2864    0.1906    0.0809    0.2108   -0.0149
+    0.5455    0.3182    0.1818         0    0.1818   -0.1364
+\end{lstlisting}
+自上而下分别是扩建费用权重从0-1递增，每一行我们从中选取最小值即可。\\
+(2)TOPSIS:
+\begin{lstlisting}[language=Matlab][b]
+x=[60 50 44 36 44 30];
+x1=x/sqrt(sumsqr(x))
+y=[1 0.8 1.2 2 1.5 2.4];
+y1=y/sqrt(sumsqr(y))
+z=sqrt(2/3*(x1-min(x1)).^2+1/3*(y1-min(y1)).^2)
+
+%输出：z =
+
+    0.2240    0.1480    0.1195    0.1838    0.1468    0.2378
+\end{lstlisting}
+所以选取3站扩建。\\
+
+28、
+
+阶梯式水价的目的是促进节约用水体现,而它使用的方式是节奖超罚。
+从经济角度来看,一旦稀缺资源的价格与价值背离,必然导致利用上的低效率。
+阶梯式水价扩大了不同分段的价格差异，如果用户消耗水量超过一定的数量,就必须支付高额的边际成本,
+这种水价属于意愿支付的范围，是消费者偏好的选择结果。
+如果用户不愿支付高价,就必须节约用水、杜绝浪费。
+采用这种分段定价结构,将在一定程度上遏制水资源的浪费及不合理的低效利用现象.
+
+\end{document} 

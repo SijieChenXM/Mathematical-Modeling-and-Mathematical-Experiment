@@ -1,0 +1,461 @@
+\documentclass[a4paper,12pt]{article} %文档类型
+\usepackage{CJK}
+\usepackage{ctex}
+\usepackage{color}
+\usepackage{amsmath,amssymb,amstext} %多种公式环境和数学命令
+\usepackage{float}
+\usepackage{array}           %数组和表格制作
+\usepackage{fancyhdr}        %页眉页脚设置
+\usepackage{graphicx}        %插图
+\usepackage{tabularx}        %自动设置表格列宽
+\usepackage{multirow}        %跨行表格
+\usepackage{multicol}        %跨列表格
+\usepackage{titlesec}        %标题设置
+\usepackage{titletoc}        %目录格式设置
+\usepackage{epstopdf}        %编译生成pdf时，能够插入eps格式图片
+\usepackage[top=2.5cm,bottom=2.0cm,left=2.0cm,right=2.0cm]{geometry} % 页边距
+\newcommand{\hei}{\CJKfamily{hei}}  % 定义的新命令
+\newcommand{\li}{\CJKfamily{li}}
+\renewcommand{\figurename}{{图}}
+\linespread{1.7}   %1.5倍行距
+\usepackage{listings}
+\usepackage{xcolor}
+ %\lstset{
+%   %行号
+%   numbers=left,
+%   %背景框
+%   framexleftmargin=10mm,
+%   frame=none,
+%   %背景色
+%   %backgroundcolor=\color[rgb]{1,1,0.76},
+%   backgroundcolor=\color[RGB]{245,245,244},
+%   %样式
+%   keywordstyle=\bf\color{blue},
+%   identifierstyle=\bf,
+%   numberstyle=\color[RGB]{0,192,192},
+%   commentstyle=\it\color[RGB]{0,96,96},
+%   stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+%   %显示空格
+%   showstringspaces=false
+%}
+%\lstset{numbers=left, numberstyle=\tiny, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, frame=shadowbox, rulesepcolor=\color{red!20!green!20!blue!20},escapeinside=``, xleftmargin=2em,xrightmargin=2em, aboveskip=1em, escapeinside=``}
+
+\lstset{numbers=left, %设置行号位置
+        numberstyle=\tiny, %设置行号大小
+        keywordstyle=\color{blue!70}, %设置关键字颜色
+        commentstyle=\color[cmyk]{1,0,1,0}, %设置注释颜色
+        frame=shadowbox, %设置边框格式
+        rulesepcolor=\color{red!20!green!20!blue!20},
+        escapeinside=``, %逃逸字符(1 左面的键)，用于显示中文
+        breaklines, %自动折行
+        extendedchars=false, %解决代码跨页时，章节标题，页眉等汉字不显示的问题
+        xleftmargin=2em,xrightmargin=2em, aboveskip=1em, % 设置边距
+        %tabsize=4, %设置tab空格数
+        %showspaces=false %不显示空格
+       }
+\begin{document}
+
+\begin{center}
+\large
+\heiti{530~~陈斯杰~~电子信息工程~~第17次作业}
+\end{center}
+
+1、
+
+$A^{c}=\frac{0.20}{x_{1}}+\frac{0.45}{x_{2}}+\frac{1}{x_{3}}+\frac{0.70}{x_{4}}+\frac{0}{x_{5}}$
+
+$A\bigcap B=\frac{0.10}{x_{1}}+\frac{0.21}{x_{2}}+\frac{0}{x_{3}}+\frac{0.30}{x_{4}}+\frac{0}{x_{5}}$
+
+$A\bigcup B=\frac{0.80}{x_{1}}+\frac{0.55}{x_{2}}+\frac{0.86}{x_{3}}+\frac{0.60}{x_{4}}+\frac{1}{x_{5}}$
+
+~\\
+2 解：
+  根据题意写出适用于所有n*n阶模糊传递矩阵相乘的matlab代码：
+  \begin{lstlisting}[language=matlab, linewidth=0.9\linewidth]
+  function [ R ] = Vague( x,y )
+    [mx,nx] = size(x);
+    [my,ny] = size(y);
+    R = zeros(mx,ny);
+    s = zeros(1,nx);
+    if nx ~=  my
+        fprintf('error!\n')
+    else
+        for i = 1:mx
+            for j=1:ny
+                for k=1:nx
+                    s(k) = min(x(i,k),y(k,j));
+                end
+                R(i,j) = max(s);
+            end
+        end
+    end
+    clear
+    clc
+    R = [1 0.2 0.8 0.5 0.3;
+        0.2 1 0.1 0.2 0.4;
+        0.8 0.1 1 0.3 0.1;
+        0.5 0.2 0.3 1 0.6;
+        0.3 0.4 0.1 0.6 1];
+    R2 = Vague(R,R)
+    R3 = Vague(R2,R)
+    R4 = Vague(R3,R)
+    R5 = Vague(R4,R)
+    R6 = Vague(R5,R)
+  \end{lstlisting}
+  利用该函数求出的结果为：
+  \begin{center}
+    $R^{2}=\begin{pmatrix}
+    1 & 0.3 &0.8  &0.5 & 0.5\\
+    0.3 & 1 & 0.2 & 0.4 & 0.4\\
+    0.8 & 0.2 & 1 & 0.5 & 0.3\\
+    0.5 & 0.4 & 0.5 &1  & 0.6\\
+    0.5 & 0.4 & 0.3  & 0.6 & 1
+    \end{pmatrix}$,
+    $R^{4}=\begin{pmatrix}
+    1 & 0.4 &0.8  &0.5 & 0.5\\
+    0.4 & 1 & 0.4 & 0.4 & 0.4\\
+    0.8 & 0.4 & 1 & 0.5 & 0.5\\
+    0.5 & 0.4 & 0.5 &1  & 0.6\\
+    0.5 & 0.4 & 0.5  & 0.6 & 1
+    \end{pmatrix}$,
+    $R^{5}=\begin{pmatrix}
+    1 & 0.4 &0.8  &0.5 & 0.5\\
+    0.4 & 1 & 0.4 & 0.4 & 0.4\\
+    0.8 & 0.4 & 1 & 0.5 & 0.5\\
+    0.5 & 0.4 & 0.5 &1  & 0.6\\
+    0.5 & 0.4 & 0.5  & 0.6 & 1\\
+    \end{pmatrix}$,
+    $R^{4} = R^{5} = R^{6}$\\
+  \end{center}
+  因此矩阵R的传递闭包t(R)为：
+  \begin{center}
+    $t(R)=\begin{pmatrix}
+    1 & 0.4 &0.8  &0.5 & 0.5\\
+    0.4 & 1 & 0.4 & 0.4 & 0.4\\
+    0.8 & 0.4 & 1 & 0.5 & 0.5\\
+    0.5 & 0.4 & 0.5 &1  & 0.6\\
+    0.5 & 0.4 & 0.5  & 0.6 & 1
+    \end{pmatrix}$
+  \end{center}
+~\\
+3.\begin{eqnarray*}
+        A\circ B &=& (0.4,0.6,0.3,0.5)\circ(0.1,0.7,0.5,0.2)^T\\
+        &=& (0.4\wedge0.1)\vee(0.6\wedge0.7)\vee(0.3\wedge0.5)\vee(0.5\wedge0.2)\\
+        &=& 0.1\vee0.6\vee0.3\vee0.2\\
+        &=& 0.6
+      \end{eqnarray*}
+~\\
+4.由分解定理\\
+$1A_{1}=\frac{1}{\mu_{6}}$\\
+$0.9A_{0.9}=\frac{0.9}{\mu_{3}}+\frac{0.9}{\mu_{6}}+\frac{0.9}{\mu_{7}}$\\
+$0.3A_{0.3}=\frac{0.3}{\mu_{2}}+\frac{0.3}{\mu_{3}}+\frac{0.3}{\mu_{6}}+\frac{0.3}{\mu_{7}}$\\
+$0.2A_{0.2}=\frac{0.2}{\mu_{2}}+\frac{0.2}{\mu_{3}}+\frac{0.2}{\mu_{4}}+\frac{0.2}{\mu_{6}}+\frac{0.2}{\mu_{7}}+\frac{0.2}{\mu_{8}}$\\
+$0.1A_{0.1}=\frac{0.1}{\mu_{1}}+\frac{0.1}{\mu_{2}}+\frac{0.1}{\mu_{3}}+\frac{0.1}{\mu_{4}}+\frac{0.1}{\mu_{5}}+\frac{0.1}{\mu_{6}}+\frac{0.1}{\mu_{7}}+\frac{0.1}{\mu_{8}}$\\
+模糊集$A=1A_{1}\bigcup0.9A_{0.9}\bigcup0.3A_{0.3}\bigcup0.2A_{0.2}\bigcup0.1A_{0.1}=\frac{0.1}{\mu_{1}}+\frac{0.3}{\mu_{2}}+\frac{0.9}{\mu_{3}}+\frac{0.2}{\mu_{4}}+\frac{0.1}{\mu_{5}}+\frac{1}{\mu_{6}}+\frac{0.9}{\mu_{7}}+\frac{0.2}{\mu_{8}}$\\
+~\\
+5.\\
+\begin{center}
+$R=\begin{bmatrix}
+0.45 & 0.25 & 0.2 & 0.1 \\
+0.5 & 0.4 & 0.1 & 0 \\
+0.3 & 0.4 & 0.2 & 0.1 \\
+0.4 & 0.4 & 0.1 & 0.1 \\
+0.3 & 0.5 & 0.1 & 0.1
+\end{bmatrix},A=\begin{bmatrix}
+0.3 & 0.2 & 0.2 & 0.2 & 0.1
+\end{bmatrix}$\\
+$B=A*R=\begin{bmatrix}
+0.405 & 0.365 & 0.15 & 0.08
+\end{bmatrix}$
+\end{center}
+取B中数值最大，得到评判结果为“很好”\\
+~\\
+6.\\
+Y(x$_1$)=0.86：0.86$>$$\lambda_1$$>$$\lambda_2$,属于年轻人\\
+Y(x$_2$)=0.5：0.5$<$$\lambda_1$,属于非年轻人,0.5=$\lambda_2$,处于模糊状态.\\
+~\\
+7、
+
+设模糊综合评价结果为矢量B
+
+\begin{equation*}
+B=A\circ R= (0.28,0.35,0.20,0.17)\circ\left(\begin{array}{ccccc}
+                                        0.40 & 0.31 & 0.15 & 0.08 & 0.06 \\
+                                        0.12 & 0.13 & 0.15 & 0.28 & 0.32 \\
+                                        0.11 & 0.22 & 0.47 & 0.17 & 0.03 \\
+                                        0.15 & 0.20 & 0.41 & 0.16 & 0.08
+                                      \end{array}\right)
+\end{equation*}
+~\\
+
+又依题意，使用模糊综合评判模型$M(\wedge,\vee)$进行评价，即使用的模糊合成算子为：
+
+$b_{j}=\vee\{(a_{ik}\wedge b_{kj}|1\leq k\leq s)\}$
+~\\
+
+求得$B=(0.28,0.31,0.2,0.28,0.32)$
+
+~\\
+8.解：
+  根据定义可得:
+  \begin{center}
+    $R\circ Q=\begin{pmatrix}
+    0.4 & 0.45 & 0.4 \\
+    0.47 & 0.53 & 0.80 \\
+    0.47 & 0.53 & 0.63 \\
+    0.47 & 0.53 & 0.60\\
+    \end{pmatrix}$
+  \end{center}
+~\\
+9.
+ 1) $D = 1-A = \frac{0}{u_1}+\frac{0.9}{u_2}+\frac{1}{u_3}+\frac{0.4}{u_4}+\frac{0.5}{u_5}+\frac{0.6}{u_6}$.
+          2) $D$和$C$的关系为$C\subseteq D$
+          3) 设又滞销又畅销的商品模糊集为$E$：
+                    $$E = A\wedge C = \frac{0}{u_1}+\frac{0.1}{u_2}+\frac{0}{u_3}+\frac{0.4}{u_4}+\frac{0.4}{u_5}+\frac{0.4}{u_6}$$
+          4) \begin{itemize}
+                       \item $\lambda = 0.5$
+                            \begin{center}
+                                滞销：$u_1$、$u_4$、$u_5$;\\
+                                脱销：$u_3$;\\
+                                畅销：$u_2$、$u_3$、$u_6$.\\
+                            \end{center}
+                       \item $\lambda = 0.7$
+                            \begin{center}
+                                滞销：$u_1$;\\
+                                脱销：无;\\
+                                畅销：$u_2$、$u_3$.\\
+                            \end{center}
+                     \end{itemize}
+ ~\\
+ 10.
+用最大值规格化处理数据得到。\\
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{10_1.jpg}\\
+\end{center}
+用绝对指数法构造模糊相似矩阵，得到。\\
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{10_2.jpg}\\
+\end{center}
+用平方法得到传递闭包。\\
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{10_3.jpg}\\
+\end{center}
+$\lambda$取不同值可得到不同的聚类，动态聚类图如下。\\
+\begin{center}
+  \includegraphics[width=0.7\textwidth]{10_4.jpg}\\
+\end{center}
+~\\
+11.\\
+\small
+\begin{lstlisting}[language=Matlab][b]
+%q11
+clear;clc;
+X=[0.5 5 10
+    0.7 8 22
+    0.6 4 12
+    0.5 5 10
+    1.2 9 25
+    0.8 12 28];
+%标准差标准化
+for i=1:6
+    X(i,:)=zscore(X(i,:));
+end
+%绝对值指数法建立模糊相似矩阵
+R=zeros(6,6);
+for i=1:6
+    for j=1:6
+        tmp=0;
+        for k=1:3
+            tmp=tmp+abs(X(i,k)-X(j,k));
+        end
+        R(i,j)=exp(-tmp);
+    end
+end
+%求传递闭包tR
+tmpR=R;
+tR=rsquare(tmpR);
+while ~isequal(tmpR, tR)
+    tmpR=tR;
+    tR=rsquare(tmpR);
+end
+tmp=callambda(tR,1);
+callambda(tR,1)
+for i=1:-0.1:0.7
+    cl=callambda(tR,i);
+    if ~isequal(cl,tmp)
+        callambda(tR,i)
+    end
+    tmp=cl;
+end
+%-----------------------------
+function [B]=rsquare(R)
+a=size(R);
+B=zeros(a);
+for i=1:a
+    for j=1:a
+        for k=1:a
+            B(i,j)=max(min(R(i,k),R(k,j)),B(i,j));
+        end
+    end
+end
+end
+%-------------------------------
+function [lamda]=callambda(R,l)
+[a,b]=size(R);
+lamda=zeros(a,b);
+for i=1:a
+    for j=1:b
+        if R(i,j)>=l
+            lamda(i,j)=1;
+        end
+    end
+end
+end
+
+% ans =
+%
+%      1     0     0     1     0     0
+%      0     1     0     0     0     0
+%      0     0     1     0     0     0
+%      1     0     0     1     0     0
+%      0     0     0     0     1     0
+%      0     0     0     0     0     1
+%
+%
+% ans =
+%
+%      1     0     0     1     0     0
+%      0     1     1     0     1     0
+%      0     1     1     0     1     0
+%      1     0     0     1     0     0
+%      0     1     1     0     1     0
+%      0     0     0     0     0     1
+%
+%
+% ans =
+%
+%      1     1     1     1     1     1
+%      1     1     1     1     1     1
+%      1     1     1     1     1     1
+%      1     1     1     1     1     1
+%      1     1     1     1     1     1
+%      1     1     1     1     1     1
+\end{lstlisting}
+\large
+根据matlab计算结果得到的聚类过程：\\
+(1).$\{x_{1},x_{4}\},\{x_{2}\},\{x_{3}\},\{x_{5}\},\{x_{6}\}$\\
+(2).$\{x_{1},x_{4}\},\{x_{2},x_{3},x_{5}\},\{x_{6}\}$\\
+(3).$\{x_{1},x_{2},x_{3},x_{4},x_{5},x_{6}\}$\\
+~\\
+12.\\
+使用Floyd算法计算，代码如下：
+\begin{lstlisting}[language=Matlab][b]
+R=[1 0.5 0.4 0.8;
+0.5 1 0.7 0.5;
+0.4 0.7 1 0.6;
+0.8 0.5 0.6 1;];
+a=size(R);
+B=zeros(a);
+flag=0;
+while flag==0
+for i= 1: a
+for j= 1: a
+for k=1:a
+B( i , j ) = max(min( R( i , k) , R( k, j) ) , B( i , j ) ) ;%R与R内积，先取小再取大
+end
+end
+end
+if B==R
+flag=1;
+else
+R=B;%循环计算R传递闭包
+end
+end
+\end{lstlisting}
+得到结果t(R)=$\left(\begin{array}{cccc}
+1&0.5&0.4&0.8\\
+0.5&1&0.7&0.5\\
+0.4&0.7&1&0.6\\
+0.8&0.5&0.6&1
+\end{array}\right)$
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{12.jpg}\\
+\end{center}
+~\\
+14、1) 解：
+    根据模糊关系方程的定义，$x_{1}\leq 0.6,x_{2}\leq 0.6,x_{3}\leq 0.6,0.3\leq x_{4}\leq 0.6$，因此模糊方程的解为:
+    \begin{center}
+      $x=(0.6,[0,0.6],[0,0.6],[0,0.6])\cup([0,0.6],0.6,[0,0.6],[0,0.6])\cup([0,0.6],[0,0.6],0.6,[0,0.6])$
+    \end{center}
+    2) 解：
+    \begin{center}
+      $x=(0.6,[0,0.6],[0,0.6],[0,0.6],[0,0.6])\cup([0,0.6],0.6,[0,0.6],[0,0.6],[0,0.6])\cup([0,0.6],[0,0.6],[0,0.6],0.6,[0,0.6])$
+    \end{center}
+    3) 解：
+    根据题意列出方程组：
+    \begin{center}
+      $\left\{\begin{matrix}
+      (x_{1}\wedge 0.4)\vee (x_{2}\wedge 0.5)\vee (x_{3}\wedge 0.8) \vee(x_{4}\wedge 0.4)=0.4\\
+      (x_{1}\wedge 0.5)\vee (x_{2}\wedge 0.4)\vee (x_{3}\wedge 0.6) \vee(x_{4}\wedge 0.6)=0.5\\
+      (x_{1}\wedge 0.7)\vee (x_{2}\wedge 0  )\vee (x_{3}\wedge 0.1) \vee(x_{4}\wedge 0.3)=0.7\\
+      (x_{1}\wedge 0.1)\vee (x_{2}\wedge 0.6)\vee (x_{3}\wedge 0  ) \vee(x_{4}\wedge 0.7)=0.5
+      \end{matrix} \right. $
+    \end{center}
+    因此模糊方程的解为：
+    \begin{center}
+      $x=(0.7,[0,0.4],[0,0.5],0.5)$
+    \end{center}
+~\\
+15.对于$U_1$，采用$M(\wedge,\vee)$模型进行综合评判得：
+      \begin{eqnarray*}
+        A_1\circ R_1 &=& (0.2,0.57,0.21,0.02)\circ\left(
+                                                    \begin{array}{cccc}
+                                                      0.81 & 0.19 & 0 & 0 \\
+                                                      0.79 & 0.20 & 0.01 & 0\\
+                                                      0.88 & 0.09 & 0.03 & 0\\
+                                                       0 & 0.01 & 0.49 & 0.5 \\
+                                                    \end{array}
+                                                  \right)
+        \\
+        &=& (0.57,0.20,0.03,0.02)
+      \end{eqnarray*}
+      归一化得到
+      $$B_1 = (0.70,0.24,0.04,0.02)$$
+      对于$U_2$、$U_3$,同理可得
+      $$B_2 = A_2\circ R_2 = (0.1,0.6,0.2,0.1)$$
+      $$B_3 = A_3\circ R_3 = (0.46,0.36,0.09,0.09)$$
+
+      根据上述综合评价集$B_1$、$B_2$、$B_3$得到二级综合评价矩阵R为：
+      $$R = \left(
+              \begin{array}{c}
+                B_1 \\
+                B_2 \\
+                B_3 \\
+              \end{array}
+            \right)
+            = \left(
+                \begin{array}{cccc}
+                  0.70 & 0.24 & 0.04 & 0.02 \\
+                  0.1 & 0.6 & 0.2 & 0.1 \\
+                  0.46 & 0.36 & 0.09 & 0.09 \\
+                \end{array}
+              \right)$$
+      因为对于因素集$U = {U_1,U_2,U_3}$的因素重要程度为$A = (0.5,0.3,0.2)$，根据$M(\wedge,\vee)$模型进行综合评判得：
+      $$B = A\circ R = (0.5,0.3,0.2,0.1)$$
+      根据最大隶属原则，犯罪事实是存在的。
+~\\
+16.利用最大值规格化进行数据预处理与绝对指数法构造模糊相似矩阵，可得到以下动态聚类图。\\
+\begin{center}
+  \includegraphics[width=0.7\textwidth]{16_1.jpg}\\
+\end{center}
+由以上动态聚类图，可以由保留的监测站个数确定聚类个数，在每类中保留一个监测站。\\
+~\\
+17.\\
+$A=\begin{bmatrix}
+0.5 & 0 & 0.5 \\
+0.5 & 0.75 & 0.5 \\
+0.5 & 0.25 & 0.5 \\
+0 & 0.25 & 0
+\end{bmatrix}$\\
+得到该过程为$A_{2}$"退火过程"\\
+\end{document}
